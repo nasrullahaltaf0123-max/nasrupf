@@ -78,7 +78,7 @@ const PortalSlider = () => {
     }
   }, []);
 
-
+  const next = useCallback(() => {
     setCurrent((c) => (c + 1) % projects.length);
   }, []);
 
