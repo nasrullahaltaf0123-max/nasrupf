@@ -68,7 +68,7 @@ const PortalSlider = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.7 }}
-        className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-14 lg:gap-20"
+        className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 lg:gap-16"
       >
         {/* ─── Orbit Circle ─── */}
         <motion.div
