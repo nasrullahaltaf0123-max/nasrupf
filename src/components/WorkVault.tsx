@@ -3,6 +3,7 @@ import { FolderOpen, ExternalLink } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
 
 const WorkVault = () => {
+  const { play } = useHoverSound();
   return (
     <section className="py-6 px-4">
       <motion.div
