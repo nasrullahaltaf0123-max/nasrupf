@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { FolderOpen, ExternalLink } from 'lucide-react';
+import { motion } from "framer-motion";
+import { FolderOpen, ExternalLink } from "lucide-react";
 
 const WorkVault = () => {
   return (
@@ -7,13 +7,13 @@ const WorkVault = () => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
+        viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6 }}
         className="max-w-2xl mx-auto text-center"
       >
         <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-6">Digital Lab</h2>
         <a
-          href="#"
+          href="https://drive.google.com/drive/folders/1Cv_Rnev1EzoyB9hnwia7JdY7AfPSAD6H"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-3 card-glow rounded-xl px-8 py-5 group transition-all hover:scale-[1.03]"
