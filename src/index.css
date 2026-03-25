@@ -145,3 +145,22 @@
   0%, 100% { box-shadow: 0 0 15px hsl(var(--neon-purple) / 0.15), inset 0 1px 0 hsl(var(--neon-purple) / 0.1); }
   50% { box-shadow: 0 0 25px hsl(var(--neon-purple) / 0.25), 0 0 50px hsl(var(--neon-cyan) / 0.1), inset 0 1px 0 hsl(var(--neon-purple) / 0.15); }
 }
+
+/* Mobile tap glow flash */
+@keyframes tapGlow {
+  0% { box-shadow: 0 0 0 hsl(var(--neon-cyan) / 0); }
+  50% { box-shadow: 0 0 20px hsl(var(--neon-cyan) / 0.25), 0 0 40px hsl(var(--neon-purple) / 0.15); }
+  100% { box-shadow: 0 0 0 hsl(var(--neon-cyan) / 0); }
+}
+
+@media (max-width: 767px) {
+  .mobile-tap-glow {
+    animation: tapGlow 0.3s ease-out;
+  }
+
+  /* Scroll snap on sections */
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
