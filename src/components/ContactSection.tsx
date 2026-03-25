@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Linkedin, Mail, Facebook, MessageCircle } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
+import useMobileTap from "@/hooks/useMobileTap";
 
 const links = [
   {
@@ -27,8 +28,9 @@ const links = [
 
 const ContactSection = () => {
   const { play } = useHoverSound();
+  const { mobileTapProps, isPressed, isMobile } = useMobileTap();
   return (
-    <section className="py-8 px-4 pb-16">
+    <section className="py-8 px-4 pb-16 snap-section">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -48,8 +50,9 @@ const ContactSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.4 }}
-              className="card-glow rounded-xl px-5 py-3 flex items-center gap-3 group transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.25),0_0_35px_hsl(var(--neon-purple)/0.1)]"
+              className={`card-glow rounded-xl px-5 py-3 flex items-center gap-3 group transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.25),0_0_35px_hsl(var(--neon-purple)/0.1)] ${isMobile && isPressed ? 'mobile-tap-glow' : ''}`}
               onMouseEnter={play}
+              {...mobileTapProps}
             >
               <link.icon className="w-5 h-5 text-neon-cyan group-hover:scale-110 transition-transform duration-300" />
               <span className="font-medium text-foreground text-sm">{link.label}</span>

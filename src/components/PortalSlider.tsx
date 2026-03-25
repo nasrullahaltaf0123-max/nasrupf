@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
+import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const projects = [
@@ -21,6 +22,8 @@ const PortalSlider = () => {
   const [cardRect, setCardRect] = useState<{ x: number; y: number } | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const { play } = useHoverSound();
+  const { mobileTapProps: portalTapProps, isPressed: portalPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
+  const { mobileTapProps: cardTapProps, isPressed: cardPressed } = useMobileTap();
   const isMobile = useIsMobile();
 
   // Easter egg state
@@ -107,7 +110,7 @@ const PortalSlider = () => {
     : { originX: 0.5, originY: 0.5 };
 
   return (
-    <section className="py-4 md:py-8 px-4 relative overflow-hidden">
+    <section className="py-4 md:py-8 px-4 relative overflow-hidden snap-section">
       {/* Screen flash overlay for easter egg */}
       <AnimatePresence>
         {screenFlash && (
@@ -166,13 +169,15 @@ const PortalSlider = () => {
       >
         {/* ─── Orbit Circle ─── */}
         <motion.div
-          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle cursor-pointer"
+          className={`relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle cursor-pointer ${portalPressed ? 'mobile-tap-glow' : ''}`}
           whileHover={{ scale: 1.04 }}
+          whileTap={isMobile ? { scale: 0.96 } : {}}
           animate={portalUnlocked ? { scale: [1, 1.08, 1.02, 1.06, 1] } : {}}
           transition={portalUnlocked ? { duration: 0.6, ease: 'easeInOut' } : { type: 'spring', stiffness: 200, damping: 20 }}
           onMouseEnter={() => { play(); handlePortalHoverStart(); }}
           onMouseLeave={handlePortalHoverEnd}
           onClick={handlePortalClick}
+          {...portalTapProps}
         >
           <div
             className="absolute -inset-10 md:-inset-14 rounded-full -z-10 transition-opacity duration-300"
@@ -267,7 +272,8 @@ const PortalSlider = () => {
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               onClick={handleCardClick}
               onMouseEnter={play}
-              className="block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group text-center md:text-left relative transition-all duration-[400ms] ease-out hover:scale-105 hover:-translate-y-1"
+              {...cardTapProps}
+              className={`block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group text-center md:text-left relative transition-all duration-[400ms] ease-out hover:scale-105 hover:-translate-y-1 ${cardPressed ? 'mobile-tap-glow' : ''}`}
               style={{
                 background: 'linear-gradient(145deg, hsl(var(--muted) / 0.45), hsl(var(--background) / 0.65))',
                 backdropFilter: 'blur(24px)',
