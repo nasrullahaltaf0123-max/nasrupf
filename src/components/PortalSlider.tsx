@@ -23,6 +23,61 @@ const PortalSlider = () => {
   const { play } = useHoverSound();
   const isMobile = useIsMobile();
 
+  // Easter egg state
+  const [portalUnlocked, setPortalUnlocked] = useState(false);
+  const [showUnlockText, setShowUnlockText] = useState(false);
+  const [screenFlash, setScreenFlash] = useState(false);
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clickTimestamps = useRef<number[]>([]);
+
+  const triggerEasterEgg = useCallback(() => {
+    if (portalUnlocked) return;
+    setPortalUnlocked(true);
+    setScreenFlash(true);
+    setShowUnlockText(true);
+    // Play a deeper unlock sound
+    try {
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(600, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.15);
+      osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.35);
+    } catch {}
+    setTimeout(() => setScreenFlash(false), 300);
+    setTimeout(() => setShowUnlockText(false), 1800);
+    setTimeout(() => setPortalUnlocked(false), 2500);
+  }, [portalUnlocked]);
+
+  const handlePortalClick = useCallback(() => {
+    const now = Date.now();
+    clickTimestamps.current.push(now);
+    clickTimestamps.current = clickTimestamps.current.filter(t => now - t < 800);
+    if (clickTimestamps.current.length >= 3) {
+      clickTimestamps.current = [];
+      triggerEasterEgg();
+    }
+  }, [triggerEasterEgg]);
+
+  const handlePortalHoverStart = useCallback(() => {
+    if (isMobile) return;
+    hoverTimerRef.current = setTimeout(triggerEasterEgg, 2000);
+  }, [isMobile, triggerEasterEgg]);
+
+  const handlePortalHoverEnd = useCallback(() => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+  }, []);
+
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % projects.length);
   }, []);
@@ -53,6 +108,19 @@ const PortalSlider = () => {
 
   return (
     <section className="py-4 md:py-8 px-4 relative overflow-hidden">
+      {/* Screen flash overlay for easter egg */}
+      <AnimatePresence>
+        {screenFlash && (
+          <motion.div
+            initial={{ opacity: 0.5 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[90] pointer-events-none"
+            style={{ background: 'radial-gradient(circle at 50% 50%, hsl(var(--neon-cyan) / 0.25), hsl(var(--neon-purple) / 0.15) 40%, transparent 70%)' }}
+          />
+        )}
+      </AnimatePresence>
       {/* Section-wide radial glow (desktop only) */}
       <div
         className="hidden md:block absolute inset-0 -z-10 pointer-events-none"
@@ -98,15 +166,18 @@ const PortalSlider = () => {
       >
         {/* ─── Orbit Circle ─── */}
         <motion.div
-          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle"
+          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle cursor-pointer"
           whileHover={{ scale: 1.04 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-          onMouseEnter={play}
+          animate={portalUnlocked ? { scale: [1, 1.08, 1.02, 1.06, 1] } : {}}
+          transition={portalUnlocked ? { duration: 0.6, ease: 'easeInOut' } : { type: 'spring', stiffness: 200, damping: 20 }}
+          onMouseEnter={() => { play(); handlePortalHoverStart(); }}
+          onMouseLeave={handlePortalHoverEnd}
+          onClick={handlePortalClick}
         >
           <div
-            className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
+            className="absolute -inset-10 md:-inset-14 rounded-full -z-10 transition-opacity duration-300"
             style={{
-              background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.12), hsl(var(--neon-purple) / 0.1) 40%, transparent 70%)',
+              background: `radial-gradient(circle, hsl(var(--neon-cyan) / ${portalUnlocked ? '0.35' : '0.12'}), hsl(var(--neon-purple) / ${portalUnlocked ? '0.3' : '0.1'}) 40%, transparent 70%)`,
               animation: 'glowPulse 4s ease-in-out infinite',
             }}
           />
@@ -114,15 +185,17 @@ const PortalSlider = () => {
             className="absolute inset-0 rounded-full"
             style={{
               background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.7), hsl(195 100% 50% / 0.5), hsl(270 80% 53% / 0.8), hsl(270 80% 53% / 0.3), transparent 60%)',
-              animation: 'semiRotate 10s linear infinite',
+              animation: `semiRotate ${portalUnlocked ? '4s' : '10s'} linear infinite`,
               filter: 'blur(5px)',
             }}
           />
           <div
-            className="absolute inset-1 md:inset-2 rounded-full"
+            className="absolute inset-1 md:inset-2 rounded-full transition-all duration-300"
             style={{
-              border: '1px solid hsl(var(--neon-cyan) / 0.15)',
-              boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
+              border: `1px solid hsl(var(--neon-cyan) / ${portalUnlocked ? '0.4' : '0.15'})`,
+              boxShadow: portalUnlocked
+                ? 'inset 0 0 50px hsl(var(--neon-purple) / 0.25), 0 0 40px hsl(var(--neon-cyan) / 0.2)'
+                : 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
               animation: 'glowPulse 3s ease-in-out infinite 0.5s',
             }}
           />
@@ -132,6 +205,31 @@ const PortalSlider = () => {
               <p className="text-base md:text-2xl lg:text-3xl font-bold gradient-text">My Creations</p>
             </div>
           </div>
+          {/* Floating unlock text */}
+          <AnimatePresence>
+            {showUnlockText && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                animate={{ opacity: 1, y: -20, scale: 1 }}
+                exit={{ opacity: 0, y: -40, scale: 0.9 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="absolute left-1/2 -translate-x-1/2 -bottom-8 md:-bottom-10 whitespace-nowrap z-20 pointer-events-none"
+              >
+                <span
+                  className="text-xs md:text-sm font-bold tracking-wider px-3 py-1.5 rounded-full"
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(var(--neon-purple) / 0.2), hsl(var(--neon-cyan) / 0.15))',
+                    border: '1px solid hsl(var(--neon-cyan) / 0.3)',
+                    color: 'hsl(var(--neon-cyan))',
+                    textShadow: '0 0 12px hsl(var(--neon-cyan) / 0.6)',
+                    boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.2)',
+                  }}
+                >
+                  Portal Unlocked ⚡
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* ─── Connecting line (desktop only) ─── */}
