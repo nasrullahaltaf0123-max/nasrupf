@@ -108,6 +108,19 @@ const PortalSlider = () => {
 
   return (
     <section className="py-4 md:py-8 px-4 relative overflow-hidden">
+      {/* Screen flash overlay for easter egg */}
+      <AnimatePresence>
+        {screenFlash && (
+          <motion.div
+            initial={{ opacity: 0.5 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[90] pointer-events-none"
+            style={{ background: 'radial-gradient(circle at 50% 50%, hsl(var(--neon-cyan) / 0.25), hsl(var(--neon-purple) / 0.15) 40%, transparent 70%)' }}
+          />
+        )}
+      </AnimatePresence>
       {/* Section-wide radial glow (desktop only) */}
       <div
         className="hidden md:block absolute inset-0 -z-10 pointer-events-none"
