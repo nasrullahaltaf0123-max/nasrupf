@@ -22,6 +22,8 @@ const PortalSlider = () => {
   const [cardRect, setCardRect] = useState<{ x: number; y: number } | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const { play } = useHoverSound();
+  const { mobileTapProps: portalTapProps, isPressed: portalPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
+  const { mobileTapProps: cardTapProps, isPressed: cardPressed } = useMobileTap();
   const isMobile = useIsMobile();
 
   // Easter egg state
