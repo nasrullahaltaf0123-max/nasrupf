@@ -128,7 +128,7 @@ const PortalSlider = () => {
 
         {/* ─── Card Slider ─── */}
         <div
-          className="w-full flex-1 max-w-md md:max-w-xl lg:max-w-2xl relative min-h-[160px] md:min-h-[220px] lg:min-h-[260px]"
+          className="w-full flex-1 max-w-md md:max-w-lg lg:max-w-xl relative min-h-[160px] md:min-h-[220px] lg:min-h-[260px]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
