@@ -28,8 +28,9 @@ const links = [
 
 const ContactSection = () => {
   const { play } = useHoverSound();
+  const { mobileTapProps, isPressed, isMobile } = useMobileTap();
   return (
-    <section className="py-8 px-4 pb-16">
+    <section className="py-8 px-4 pb-16 snap-section">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
