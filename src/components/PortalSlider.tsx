@@ -153,7 +153,7 @@ const PortalSlider = () => {
             >
               {/* Card glow aura */}
               <div
-                className="absolute -inset-3 rounded-2xl -z-10 opacity-30 group-hover:opacity-70 transition-opacity duration-600"
+                className="absolute -inset-3 rounded-2xl -z-10 opacity-40 group-hover:opacity-90 transition-opacity duration-[400ms] ease-out"
                 style={{
                   background: 'radial-gradient(ellipse at center, hsl(var(--neon-purple) / 0.2), hsl(var(--neon-cyan) / 0.08) 50%, transparent 70%)',
                   filter: 'blur(30px)',
