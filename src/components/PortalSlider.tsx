@@ -272,7 +272,8 @@ const PortalSlider = () => {
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               onClick={handleCardClick}
               onMouseEnter={play}
-              className="block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group text-center md:text-left relative transition-all duration-[400ms] ease-out hover:scale-105 hover:-translate-y-1"
+              {...cardTapProps}
+              className={`block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group text-center md:text-left relative transition-all duration-[400ms] ease-out hover:scale-105 hover:-translate-y-1 ${cardPressed ? 'mobile-tap-glow' : ''}`}
               style={{
                 background: 'linear-gradient(145deg, hsl(var(--muted) / 0.45), hsl(var(--background) / 0.65))',
                 backdropFilter: 'blur(24px)',
