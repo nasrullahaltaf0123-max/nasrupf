@@ -26,6 +26,7 @@ const links = [
 ];
 
 const ContactSection = () => {
+  const { play } = useHoverSound();
   return (
     <section className="py-8 px-4 pb-16">
       <motion.div
