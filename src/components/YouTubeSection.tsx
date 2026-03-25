@@ -25,7 +25,7 @@ const YouTubeSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15, duration: 0.5 }}
-              className="card-glow rounded-xl p-5 flex items-center gap-4 cursor-pointer group transition-all duration-400 hover:scale-105 hover:-translate-y-1"
+              className="card-glow rounded-xl p-5 flex items-center gap-4 cursor-pointer group transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 hover:border-[hsl(var(--neon-purple)/0.35)] hover:shadow-[0_0_25px_hsl(var(--neon-purple)/0.25),0_0_50px_hsl(var(--neon-cyan)/0.1)]"
             >
               <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center group-hover:shadow-[0_0_15px_hsl(0_80%_50%/0.3)] transition-shadow duration-300">
                 <Youtube className="w-6 h-6 text-red-500 group-hover:scale-110 transition-transform duration-300" />
