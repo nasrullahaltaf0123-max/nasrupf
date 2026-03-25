@@ -8,7 +8,7 @@ const channels = [
 
 const YouTubeSection = () => {
   return (
-    <section className="py-10 px-4">
+    <section className="py-6 px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

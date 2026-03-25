@@ -26,7 +26,7 @@ const PortalSlider = () => {
   }, [isPaused, next]);
 
   return (
-    <section className="py-6 md:py-10 px-4 relative overflow-hidden">
+    <section className="py-4 md:py-8 px-4 relative overflow-hidden">
       {/* Section-wide radial glow (desktop only) */}
       <div
         className="hidden md:block absolute inset-0 -z-10 pointer-events-none"

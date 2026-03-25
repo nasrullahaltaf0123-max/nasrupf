@@ -26,7 +26,7 @@ const links = [
 
 const ContactSection = () => {
   return (
-    <section className="py-12 px-4 pb-20">
+    <section className="py-8 px-4 pb-16">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
