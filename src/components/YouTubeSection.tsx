@@ -8,8 +8,9 @@ const channels = [
 ];
 
 const YouTubeSection = () => {
+  const { mobileTapProps, isPressed, isMobile } = useMobileTap();
   return (
-    <section className="py-6 px-4">
+    <section className="py-6 px-4 snap-section">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
