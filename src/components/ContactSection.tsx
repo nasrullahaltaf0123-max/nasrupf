@@ -1,11 +1,27 @@
-import { motion } from 'framer-motion';
-import { Linkedin, Mail, Facebook, MessageCircle } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Linkedin, Mail, Facebook, MessageCircle } from "lucide-react";
 
 const links = [
-  { icon: Linkedin, label: 'LinkedIn', href: '#', color: 'hover:shadow-[0_0_20px_hsl(210_80%_50%/0.4)]' },
-  { icon: Mail, label: 'Email', href: 'mailto:', color: 'hover:shadow-[0_0_20px_hsl(0_80%_60%/0.4)]' },
-  { icon: Facebook, label: 'Facebook', href: '#', color: 'hover:shadow-[0_0_20px_hsl(220_80%_50%/0.4)]' },
-  { icon: MessageCircle, label: 'WhatsApp', href: '#', color: 'hover:shadow-[0_0_20px_hsl(140_70%_45%/0.4)]' },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/md-nasrullah-abb499330/",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    href: "mailto:nasrullah.altaf2003@gmail.com",
+  },
+  {
+    icon: Facebook,
+    label: "Facebook",
+    href: "https://www.facebook.com/share/1AjG3RoZdq/",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    href: "https://wa.me/8801760208757",
+  },
 ];
 
 const ContactSection = () => {
@@ -14,7 +30,7 @@ const ContactSection = () => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
+        viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6 }}
         className="max-w-2xl mx-auto text-center"
       >
