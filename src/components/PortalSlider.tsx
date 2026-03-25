@@ -30,7 +30,55 @@ const PortalSlider = () => {
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const clickTimestamps = useRef<number[]>([]);
 
-  const next = useCallback(() => {
+  const triggerEasterEgg = useCallback(() => {
+    if (portalUnlocked) return;
+    setPortalUnlocked(true);
+    setScreenFlash(true);
+    setShowUnlockText(true);
+    // Play a deeper unlock sound
+    try {
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(600, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.15);
+      osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.35);
+    } catch {}
+    setTimeout(() => setScreenFlash(false), 300);
+    setTimeout(() => setShowUnlockText(false), 1800);
+    setTimeout(() => setPortalUnlocked(false), 2500);
+  }, [portalUnlocked]);
+
+  const handlePortalClick = useCallback(() => {
+    const now = Date.now();
+    clickTimestamps.current.push(now);
+    clickTimestamps.current = clickTimestamps.current.filter(t => now - t < 800);
+    if (clickTimestamps.current.length >= 3) {
+      clickTimestamps.current = [];
+      triggerEasterEgg();
+    }
+  }, [triggerEasterEgg]);
+
+  const handlePortalHoverStart = useCallback(() => {
+    if (isMobile) return;
+    hoverTimerRef.current = setTimeout(triggerEasterEgg, 2000);
+  }, [isMobile, triggerEasterEgg]);
+
+  const handlePortalHoverEnd = useCallback(() => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+  }, []);
+
+
     setCurrent((c) => (c + 1) % projects.length);
   }, []);
 
