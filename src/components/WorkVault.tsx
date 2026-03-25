@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FolderOpen, ExternalLink } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
+import useMobileTap from "@/hooks/useMobileTap";
 
 const WorkVault = () => {
   const { play } = useHoverSound();
