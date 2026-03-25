@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Linkedin, Mail, Facebook, MessageCircle } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
+import useMobileTap from "@/hooks/useMobileTap";
 
 const links = [
   {
