@@ -9,7 +9,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative mb-6"
+        className="relative mb-4"
         style={{ animation: 'float 4s ease-in-out infinite' }}
       >
         <div
