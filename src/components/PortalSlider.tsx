@@ -72,7 +72,7 @@ const PortalSlider = () => {
       >
         {/* ─── Orbit Circle ─── */}
         <motion.div
-          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[320px] md:h-[320px] lg:w-[400px] lg:h-[400px] group/circle"
+          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle"
           whileHover={{ scale: 1.04 }}
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         >
