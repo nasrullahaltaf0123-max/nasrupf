@@ -3,7 +3,7 @@ import profileImg from '@/assets/profile.jpg';
 
 const HeroSection = () => {
   return (
-    <section className="h-[70vh] flex flex-col items-center justify-center relative px-4">
+    <section className="min-h-[60vh] flex flex-col items-center justify-center relative px-4 pt-8 pb-4">
       {/* Profile with soft neon glow */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
