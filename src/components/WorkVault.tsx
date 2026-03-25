@@ -5,8 +5,9 @@ import useMobileTap from "@/hooks/useMobileTap";
 
 const WorkVault = () => {
   const { play } = useHoverSound();
+  const { mobileTapProps, isPressed, isMobile } = useMobileTap();
   return (
-    <section className="py-6 px-4">
+    <section className="py-6 px-4 snap-section">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
