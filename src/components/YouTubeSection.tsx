@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Youtube } from 'lucide-react';
+import useMobileTap from '@/hooks/useMobileTap';
 
 const channels = [
   { name: 'SlurpNova ASMR', emoji: '🎧' },
