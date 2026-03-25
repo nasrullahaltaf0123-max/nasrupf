@@ -3,13 +3,13 @@ import profileImg from '@/assets/profile.jpg';
 
 const HeroSection = () => {
   return (
-    <section className="h-[70vh] flex flex-col items-center justify-center relative px-4">
+    <section className="min-h-[60vh] flex flex-col items-center justify-center relative px-4 pt-8 pb-4">
       {/* Profile with soft neon glow */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative mb-6"
+        className="relative mb-4"
         style={{ animation: 'float 4s ease-in-out infinite' }}
       >
         <div
@@ -21,7 +21,7 @@ const HeroSection = () => {
         <img
           src={profileImg}
           alt="Md Nasrullah"
-          className="relative w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-2 border-background z-10"
+          className="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-2 border-background z-10"
         />
       </motion.div>
 
