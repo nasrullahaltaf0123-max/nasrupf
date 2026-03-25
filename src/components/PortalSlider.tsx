@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
+import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const projects = [
