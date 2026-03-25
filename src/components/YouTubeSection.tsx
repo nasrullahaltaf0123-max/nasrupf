@@ -34,8 +34,8 @@ const YouTubeSection = () => {
                 boxShadow: '0 0 15px hsl(var(--neon-purple) / 0.1), inset 0 1px 0 hsl(var(--neon-purple) / 0.08)',
               }}
             >
-              <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center group-hover:shadow-[0_0_15px_hsl(0_80%_50%/0.3)] transition-shadow duration-300">
-                <Youtube className="w-6 h-6 text-red-500 group-hover:scale-110 transition-transform duration-300" />
+              <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center group-hover:shadow-[0_0_15px_hsl(0_80%_50%/0.3)] transition-all duration-300">
+                <Youtube className="w-6 h-6 text-red-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_6px_hsl(0_80%_50%/0.5)] transition-all duration-300" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-foreground">{ch.name}</p>
