@@ -14,14 +14,14 @@ const Particles = () => {
 
   useEffect(() => {
     const colors = [
-      'hsl(270 80% 53% / 0.4)',
-      'hsl(195 100% 50% / 0.3)',
-      'hsl(180 100% 50% / 0.3)',
+      'hsl(270 80% 53% / 0.5)',
+      'hsl(195 100% 50% / 0.4)',
+      'hsl(180 100% 50% / 0.4)',
     ];
-    const p: Particle[] = Array.from({ length: 30 }, (_, i) => ({
+    const p: Particle[] = Array.from({ length: 40 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
-      size: Math.random() * 3 + 1,
+      size: Math.random() * 3.5 + 1.5,
       duration: Math.random() * 15 + 10,
       delay: Math.random() * 10,
       color: colors[i % colors.length],
