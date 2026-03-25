@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const projects = [
   { name: 'NasruShop', url: 'https://nasrushop.lovable.app', emoji: '🛍️', desc: 'A modern e-commerce storefront built with AI — browse, discover, and shop.' },
@@ -16,7 +17,11 @@ const PortalSlider = () => {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [burstActive, setBurstActive] = useState(false);
+  const [cardRect, setCardRect] = useState<{ x: number; y: number } | null>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const { play } = useHoverSound();
+  const isMobile = useIsMobile();
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % projects.length);
@@ -30,8 +35,21 @@ const PortalSlider = () => {
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setModalOpen(true);
+    // Capture card center for origin-based animation
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      setCardRect({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    }
+    // Trigger glow burst
+    setBurstActive(true);
+    setTimeout(() => setBurstActive(false), 350);
+    // Open modal after brief delay for zoom effect
+    setTimeout(() => setModalOpen(true), isMobile ? 100 : 200);
   };
+
+  const modalOrigin = cardRect
+    ? { originX: cardRect.x / window.innerWidth, originY: cardRect.y / window.innerHeight }
+    : { originX: 0.5, originY: 0.5 };
 
   return (
     <section className="py-4 md:py-8 px-4 relative overflow-hidden">
@@ -139,11 +157,16 @@ const PortalSlider = () => {
         >
           <AnimatePresence mode="wait">
             <motion.div
+              ref={cardRef}
               key={current}
               initial={{ opacity: 0, scale: 0.9, y: 8 }}
-              animate={{ opacity: 1, scale: 1.02, y: 0 }}
+              animate={{
+                opacity: modalOpen && !isMobile ? 0.3 : 1,
+                scale: modalOpen && !isMobile ? 1.1 : 1.02,
+                y: 0,
+              }}
               exit={{ opacity: 0.1, scale: 0.9, y: -8 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               onClick={handleCardClick}
               onMouseEnter={play}
               className="block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group text-center md:text-left relative transition-all duration-[400ms] ease-out hover:scale-105 hover:-translate-y-1"
@@ -155,6 +178,22 @@ const PortalSlider = () => {
                 boxShadow: '0 0 40px hsl(var(--neon-purple) / 0.12), 0 0 80px hsl(var(--neon-purple) / 0.05), 0 4px 30px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--neon-purple) / 0.08)',
               }}
             >
+              {/* Glow burst on click */}
+              <AnimatePresence>
+                {burstActive && (
+                  <motion.div
+                    initial={{ opacity: 0.8, scale: 0.3 }}
+                    animate={{ opacity: 0, scale: 2.5 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="absolute inset-0 rounded-2xl pointer-events-none z-10"
+                    style={{
+                      background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.4), hsl(var(--neon-purple) / 0.3) 40%, transparent 70%)',
+                    }}
+                  />
+                )}
+              </AnimatePresence>
+
               <div
                 className="absolute -inset-3 rounded-2xl -z-10 opacity-40 group-hover:opacity-90 transition-opacity duration-[400ms] ease-out"
                 style={{
@@ -197,27 +236,45 @@ const PortalSlider = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] flex items-center justify-center px-4"
             onClick={() => setModalOpen(false)}
           >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-background/70" style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }} />
-
-            {/* Modal card */}
+            {/* Backdrop with blur */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ backdropFilter: 'blur(0px)' }}
+              animate={{ backdropFilter: 'blur(12px)' }}
+              exit={{ backdropFilter: 'blur(0px)' }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 bg-background/70"
+            />
+
+            {/* Modal card — emerges from card position on desktop */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: isMobile ? 0.92 : 0.6,
+                y: isMobile ? 30 : 0,
+              }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              exit={{
+                opacity: 0,
+                scale: isMobile ? 0.92 : 0.7,
+                y: isMobile ? 20 : 0,
+              }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformOrigin: `${modalOrigin.originX * 100}% ${modalOrigin.originY * 100}%` }}
               onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-md rounded-2xl p-8 z-10"
-              style={{
-                background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
-                backdropFilter: 'blur(32px)',
-                WebkitBackdropFilter: 'blur(32px)',
-                border: '1px solid hsl(var(--neon-purple) / 0.3)',
-                boxShadow: '0 0 60px hsl(var(--neon-purple) / 0.2), 0 0 120px hsl(var(--neon-cyan) / 0.08), 0 8px 40px hsl(0 0% 0% / 0.4)',
+              {...{
+                style: {
+                  transformOrigin: `${modalOrigin.originX * 100}% ${modalOrigin.originY * 100}%`,
+                  background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
+                  backdropFilter: 'blur(32px)',
+                  WebkitBackdropFilter: 'blur(32px)',
+                  border: '1px solid hsl(var(--neon-purple) / 0.3)',
+                  boxShadow: '0 0 60px hsl(var(--neon-purple) / 0.2), 0 0 120px hsl(var(--neon-cyan) / 0.08), 0 8px 40px hsl(0 0% 0% / 0.4)',
+                },
               }}
             >
               {/* Close button */}
@@ -229,10 +286,34 @@ const PortalSlider = () => {
               </button>
 
               <div className="text-center">
-                <span className="text-5xl mb-4 block">{projects[current].emoji}</span>
-                <h3 className="text-2xl font-bold text-foreground mb-2 text-glow">{projects[current].name}</h3>
-                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">{projects[current].desc}</p>
-                <a
+                <motion.span
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.15, duration: 0.35, type: 'spring', stiffness: 300 }}
+                  className="text-5xl mb-4 block"
+                >
+                  {projects[current].emoji}
+                </motion.span>
+                <motion.h3
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                  className="text-2xl font-bold text-foreground mb-2 text-glow"
+                >
+                  {projects[current].name}
+                </motion.h3>
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25, duration: 0.3 }}
+                  className="text-muted-foreground text-sm mb-6 leading-relaxed"
+                >
+                  {projects[current].desc}
+                </motion.p>
+                <motion.a
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
                   href={projects[current].url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -244,7 +325,7 @@ const PortalSlider = () => {
                 >
                   Open Project
                   <ExternalLink className="w-4 h-4" />
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           </motion.div>
