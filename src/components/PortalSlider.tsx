@@ -1,29 +1,37 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, X } from 'lucide-react';
+import useHoverSound from '@/hooks/useHoverSound';
 
 const projects = [
-  { name: 'NasruShop', url: 'https://nasrushop.lovable.app', emoji: '🛍️' },
-  { name: 'NasruTools', url: 'https://nasrutools.lovable.app', emoji: '🛠️' },
-  { name: 'PromptNovaAI', url: 'https://promptnovaai.lovable.app/', emoji: '🤖' },
-  { name: 'StudyFlowAI', url: 'https://studyandcareer-ai.lovable.app/', emoji: '📚' },
-  { name: 'Cricket N', url: 'https://cricketnasrumade.lovable.app/', emoji: '🏏' },
-  { name: 'Nasru Store', url: 'https://nasrustore.netlify.app/#', emoji: '🏪' },
+  { name: 'NasruShop', url: 'https://nasrushop.lovable.app', emoji: '🛍️', desc: 'A modern e-commerce storefront built with AI — browse, discover, and shop.' },
+  { name: 'NasruTools', url: 'https://nasrutools.lovable.app', emoji: '🛠️', desc: 'Handy AI-powered utility tools for everyday productivity and creativity.' },
+  { name: 'PromptNovaAI', url: 'https://promptnovaai.lovable.app/', emoji: '🤖', desc: 'AI prompt engineering toolkit — craft, refine, and master your prompts.' },
+  { name: 'StudyFlowAI', url: 'https://studyandcareer-ai.lovable.app/', emoji: '📚', desc: 'AI-driven study companion for smarter learning and career planning.' },
+  { name: 'Cricket N', url: 'https://cricketnasrumade.lovable.app/', emoji: '🏏', desc: 'Live cricket experience app — scores, stats, and match insights.' },
+  { name: 'Nasru Store', url: 'https://nasrustore.netlify.app/#', emoji: '🏪', desc: 'Digital storefront showcasing curated products and collections.' },
 ];
 
 const PortalSlider = () => {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { play } = useHoverSound();
 
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % projects.length);
   }, []);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || modalOpen) return;
     const timer = setInterval(next, 3000);
     return () => clearInterval(timer);
-  }, [isPaused, next]);
+  }, [isPaused, modalOpen, next]);
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setModalOpen(true);
+  };
 
   return (
     <section className="py-4 md:py-8 px-4 relative overflow-hidden">
@@ -75,8 +83,8 @@ const PortalSlider = () => {
           className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle"
           whileHover={{ scale: 1.04 }}
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+          onMouseEnter={play}
         >
-          {/* Deep outer glow */}
           <div
             className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
             style={{
@@ -84,7 +92,6 @@ const PortalSlider = () => {
               animation: 'glowPulse 4s ease-in-out infinite',
             }}
           />
-          {/* Rotating neon ring */}
           <div
             className="absolute inset-0 rounded-full"
             style={{
@@ -93,7 +100,6 @@ const PortalSlider = () => {
               filter: 'blur(5px)',
             }}
           />
-          {/* Inner breathing glow ring */}
           <div
             className="absolute inset-1 md:inset-2 rounded-full"
             style={{
@@ -102,7 +108,6 @@ const PortalSlider = () => {
               animation: 'glowPulse 3s ease-in-out infinite 0.5s',
             }}
           />
-          {/* Inner content circle */}
           <div className="absolute inset-3 md:inset-5 lg:inset-6 rounded-full bg-background flex items-center justify-center">
             <div className="text-center">
               <p className="text-[10px] md:text-xs lg:text-sm uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
@@ -133,15 +138,14 @@ const PortalSlider = () => {
           onMouseLeave={() => setIsPaused(false)}
         >
           <AnimatePresence mode="wait">
-            <motion.a
+            <motion.div
               key={current}
-              href={projects[current].url}
-              target="_blank"
-              rel="noopener noreferrer"
               initial={{ opacity: 0, scale: 0.9, y: 8 }}
               animate={{ opacity: 1, scale: 1.02, y: 0 }}
               exit={{ opacity: 0.1, scale: 0.9, y: -8 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              onClick={handleCardClick}
+              onMouseEnter={play}
               className="block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group text-center md:text-left relative transition-all duration-[400ms] ease-out hover:scale-105 hover:-translate-y-1"
               style={{
                 background: 'linear-gradient(145deg, hsl(var(--muted) / 0.45), hsl(var(--background) / 0.65))',
@@ -151,7 +155,6 @@ const PortalSlider = () => {
                 boxShadow: '0 0 40px hsl(var(--neon-purple) / 0.12), 0 0 80px hsl(var(--neon-purple) / 0.05), 0 4px 30px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--neon-purple) / 0.08)',
               }}
             >
-              {/* Card glow aura */}
               <div
                 className="absolute -inset-3 rounded-2xl -z-10 opacity-40 group-hover:opacity-90 transition-opacity duration-[400ms] ease-out"
                 style={{
@@ -166,8 +169,8 @@ const PortalSlider = () => {
                 </h3>
                 <ExternalLink className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 transition-all duration-300" />
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm lg:text-base group-hover:text-neon-cyan transition-colors duration-300">Explore Project →</p>
-            </motion.a>
+              <p className="text-muted-foreground text-xs md:text-sm lg:text-base group-hover:text-neon-cyan transition-colors duration-300">Click to explore →</p>
+            </motion.div>
           </AnimatePresence>
 
           {/* Dots */}
@@ -186,6 +189,67 @@ const PortalSlider = () => {
           </div>
         </div>
       </motion.div>
+
+      {/* ─── Project Modal ─── */}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+            onClick={() => setModalOpen(false)}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-background/70" style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }} />
+
+            {/* Modal card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-md rounded-2xl p-8 z-10"
+              style={{
+                background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
+                backdropFilter: 'blur(32px)',
+                WebkitBackdropFilter: 'blur(32px)',
+                border: '1px solid hsl(var(--neon-purple) / 0.3)',
+                boxShadow: '0 0 60px hsl(var(--neon-purple) / 0.2), 0 0 120px hsl(var(--neon-cyan) / 0.08), 0 8px 40px hsl(0 0% 0% / 0.4)',
+              }}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setModalOpen(false)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all duration-200"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="text-center">
+                <span className="text-5xl mb-4 block">{projects[current].emoji}</span>
+                <h3 className="text-2xl font-bold text-foreground mb-2 text-glow">{projects[current].name}</h3>
+                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">{projects[current].desc}</p>
+                <a
+                  href={projects[current].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-primary-foreground transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
+                  style={{
+                    background: 'linear-gradient(135deg, hsl(var(--neon-purple)), hsl(var(--neon-cyan)))',
+                    boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.3)',
+                  }}
+                >
+                  Open Project
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
