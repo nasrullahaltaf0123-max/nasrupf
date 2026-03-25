@@ -23,6 +23,13 @@ const PortalSlider = () => {
   const { play } = useHoverSound();
   const isMobile = useIsMobile();
 
+  // Easter egg state
+  const [portalUnlocked, setPortalUnlocked] = useState(false);
+  const [showUnlockText, setShowUnlockText] = useState(false);
+  const [screenFlash, setScreenFlash] = useState(false);
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clickTimestamps = useRef<number[]>([]);
+
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % projects.length);
   }, []);
