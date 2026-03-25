@@ -26,77 +26,110 @@ const PortalSlider = () => {
   }, [isPaused, next]);
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-12 px-4 relative">
+      {/* Background particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: Math.random() * 4 + 2,
+              height: Math.random() * 4 + 2,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              background: i % 2 === 0
+                ? 'hsl(var(--neon-purple) / 0.3)'
+                : 'hsl(var(--neon-cyan) / 0.25)',
+              animation: `float ${Math.random() * 4 + 3}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 3}s`,
+            }}
+          />
+        ))}
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
+        viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.7 }}
-        className="max-w-5xl mx-auto"
+        className="max-w-2xl mx-auto flex flex-col items-center gap-6"
       >
-        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-          {/* LEFT: Semi-circle portal */}
-          <div className="relative flex-shrink-0 w-48 h-48 md:w-56 md:h-56">
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: 'conic-gradient(from 180deg, hsl(270 80% 53% / 0.6), hsl(195 100% 50% / 0.4), hsl(180 100% 50% / 0.3), transparent 50%)',
-                animation: 'semiRotate 8s linear infinite',
-                filter: 'blur(2px)',
-              }}
-            />
-            <div className="absolute inset-4 rounded-full bg-background flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
-                <p className="text-lg font-bold gradient-text">My Creations</p>
-              </div>
+        {/* Orbit Circle */}
+        <div className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[260px] md:h-[260px] lg:w-[320px] lg:h-[320px]">
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: 'conic-gradient(from 180deg, hsl(270 80% 53% / 0.6), hsl(195 100% 50% / 0.4), hsl(180 100% 50% / 0.3), transparent 50%)',
+              animation: 'semiRotate 8s linear infinite',
+              filter: 'blur(3px)',
+            }}
+          />
+          <div className="absolute inset-3 md:inset-4 rounded-full bg-background flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
+              <p className="text-base md:text-xl lg:text-2xl font-bold gradient-text">My Creations</p>
             </div>
           </div>
+        </div>
 
-          {/* RIGHT: Slider */}
-          <div
-            className="flex-1 w-full min-h-[220px] relative"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            <AnimatePresence mode="wait">
-              <motion.a
-                key={current}
-                href={projects[current].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, x: 60, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -60, scale: 0.95 }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                className="block card-glow rounded-2xl p-8 md:p-10 cursor-pointer group transition-all duration-300 hover:scale-[1.02]"
-                style={{ animation: 'float 4s ease-in-out infinite' }}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl">{projects[current].emoji}</span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-glow transition-all">
-                    {projects[current].name}
-                  </h3>
-                  <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-neon-cyan transition-colors ml-auto" />
-                </div>
-                <p className="text-muted-foreground text-sm">Click to explore →</p>
-              </motion.a>
-            </AnimatePresence>
+        {/* Card Slider */}
+        <div
+          className="w-full max-w-md md:max-w-xl lg:max-w-2xl relative min-h-[160px] md:min-h-[180px]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <AnimatePresence mode="wait">
+            <motion.a
+              key={current}
+              href={projects[current].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.45, ease: 'easeInOut' }}
+              className="block rounded-2xl p-6 md:p-8 cursor-pointer group transition-all duration-300 hover:scale-105 text-center relative"
+              style={{
+                background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid hsl(var(--neon-purple) / 0.15)',
+                boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.15), inset 0 1px 0 hsl(var(--neon-purple) / 0.1)',
+              }}
+            >
+              {/* Active glow behind card */}
+              <div
+                className="absolute -inset-1 rounded-2xl -z-10 opacity-40 group-hover:opacity-70 transition-opacity duration-300"
+                style={{
+                  background: 'radial-gradient(ellipse at center, hsl(var(--neon-purple) / 0.2), transparent 70%)',
+                  filter: 'blur(20px)',
+                }}
+              />
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <span className="text-3xl md:text-4xl">{projects[current].emoji}</span>
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground group-hover:text-glow transition-all">
+                  {projects[current].name}
+                </h3>
+                <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-neon-cyan transition-colors" />
+              </div>
+              <p className="text-muted-foreground text-xs md:text-sm">Click to explore →</p>
+            </motion.a>
+          </AnimatePresence>
 
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              {projects.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? 'bg-neon-purple w-6 shadow-[0_0_10px_hsl(270_80%_53%/0.6)]'
-                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                  }`}
-                />
-              ))}
-            </div>
+          {/* Dots */}
+          <div className="flex justify-center gap-2 mt-5">
+            {projects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  i === current
+                    ? 'bg-neon-purple w-6 shadow-[0_0_10px_hsl(270_80%_53%/0.6)]'
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </motion.div>

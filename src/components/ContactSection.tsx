@@ -46,7 +46,7 @@ const ContactSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.4 }}
-              className={`card-glow rounded-xl px-6 py-4 flex items-center gap-3 transition-all duration-300 hover:scale-105 ${link.color}`}
+              className="card-glow rounded-xl px-6 py-4 flex items-center gap-3 transition-all duration-300 hover:scale-105"
             >
               <link.icon className="w-5 h-5 text-neon-cyan" />
               <span className="font-medium text-foreground text-sm">{link.label}</span>
