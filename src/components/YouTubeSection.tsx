@@ -27,7 +27,8 @@ const YouTubeSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15, duration: 0.5 }}
-              className="rounded-xl p-5 flex items-center gap-4 cursor-pointer group transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1"
+              className={`rounded-xl p-5 flex items-center gap-4 cursor-pointer group transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 ${isMobile && isPressed ? 'mobile-tap-glow' : ''}`}
+              {...mobileTapProps}
               style={{
                 background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.7))',
                 backdropFilter: 'blur(16px)',

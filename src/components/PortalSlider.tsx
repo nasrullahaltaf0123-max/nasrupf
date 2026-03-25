@@ -108,7 +108,7 @@ const PortalSlider = () => {
     : { originX: 0.5, originY: 0.5 };
 
   return (
-    <section className="py-4 md:py-8 px-4 relative overflow-hidden">
+    <section className="py-4 md:py-8 px-4 relative overflow-hidden snap-section">
       {/* Screen flash overlay for easter egg */}
       <AnimatePresence>
         {screenFlash && (
