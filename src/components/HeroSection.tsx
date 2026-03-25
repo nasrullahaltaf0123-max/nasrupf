@@ -3,7 +3,7 @@ import profileImg from '@/assets/profile.jpg';
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-6 pb-2">
+    <section className="min-h-[50vh] flex flex-col items-center justify-center relative px-4 pt-6 pb-0">
       {/* Profile with glow pulse */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -30,7 +30,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="text-3xl md:text-5xl lg:text-6xl font-bold gradient-text mb-1 tracking-tight"
+        className="text-3xl md:text-5xl lg:text-7xl font-bold gradient-text mb-1 tracking-tight"
       >
         Md Nasrullah
       </motion.h1>
@@ -39,7 +39,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-base md:text-lg lg:text-xl font-semibold text-neon-purple text-glow mb-1 tracking-wide"
+        className="text-base md:text-xl lg:text-2xl font-semibold text-neon-purple text-glow mb-1 tracking-wide"
       >
         AI Creator & Visual Builder
       </motion.p>
@@ -48,7 +48,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.6 }}
-        className="text-muted-foreground text-sm md:text-base max-w-sm text-center"
+        className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-md text-center"
       >
         I build visuals, tools & ideas using AI.
       </motion.p>

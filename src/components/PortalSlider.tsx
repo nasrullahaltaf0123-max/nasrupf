@@ -26,21 +26,21 @@ const PortalSlider = () => {
   }, [isPaused, next]);
 
   return (
-    <section className="py-10 px-4 relative">
+    <section className="py-6 md:py-10 px-4 relative">
       {/* Background particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 10 }).map((_, i) => (
+        {Array.from({ length: 12 }).map((_, i) => (
           <div
             key={i}
             className="absolute rounded-full"
             style={{
-              width: Math.random() * 4 + 2,
-              height: Math.random() * 4 + 2,
+              width: Math.random() * 5 + 2,
+              height: Math.random() * 5 + 2,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               background: i % 2 === 0
-                ? 'hsl(var(--neon-purple) / 0.35)'
-                : 'hsl(var(--neon-cyan) / 0.3)',
+                ? 'hsl(var(--neon-purple) / 0.4)'
+                : 'hsl(var(--neon-cyan) / 0.35)',
               animation: `float ${Math.random() * 4 + 3}s ease-in-out infinite`,
               animationDelay: `${Math.random() * 3}s`,
             }}
@@ -53,37 +53,39 @@ const PortalSlider = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.7 }}
-        className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-10"
+        className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-12 lg:gap-16"
       >
         {/* Orbit Circle */}
-        <div className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[260px] md:h-[260px] lg:w-[320px] lg:h-[320px]">
+        <div className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[380px] lg:h-[380px] group/circle">
+          {/* Outer glow */}
           <div
-            className="absolute inset-0 rounded-full"
+            className="absolute -inset-6 md:-inset-8 rounded-full -z-10 transition-opacity duration-500 group-hover/circle:opacity-100 opacity-60"
             style={{
-              background: 'conic-gradient(from 180deg, hsl(270 80% 53% / 0.6), hsl(195 100% 50% / 0.4), hsl(180 100% 50% / 0.3), transparent 50%)',
-              animation: 'semiRotate 8s linear infinite',
-              filter: 'blur(3px)',
-            }}
-          />
-          {/* Glow pulse behind circle */}
-          <div
-            className="absolute -inset-4 rounded-full -z-10"
-            style={{
-              background: 'radial-gradient(circle, hsl(var(--neon-purple) / 0.15), transparent 70%)',
+              background: 'radial-gradient(circle, hsl(var(--neon-purple) / 0.2), hsl(var(--neon-cyan) / 0.08), transparent 70%)',
               animation: 'glowPulse 3s ease-in-out infinite',
             }}
           />
-          <div className="absolute inset-3 md:inset-4 rounded-full bg-background flex items-center justify-center">
+          {/* Rotating ring */}
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: 'conic-gradient(from 180deg, hsl(270 80% 53% / 0.7), hsl(195 100% 50% / 0.5), hsl(180 100% 50% / 0.4), transparent 50%)',
+              animation: 'semiRotate 6s linear infinite',
+              filter: 'blur(4px)',
+            }}
+          />
+          {/* Inner circle */}
+          <div className="absolute inset-3 md:inset-4 lg:inset-5 rounded-full bg-background flex items-center justify-center">
             <div className="text-center">
-              <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
-              <p className="text-base md:text-xl lg:text-2xl font-bold gradient-text">My Creations</p>
+              <p className="text-[10px] md:text-xs lg:text-sm uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
+              <p className="text-base md:text-2xl lg:text-3xl font-bold gradient-text">My Creations</p>
             </div>
           </div>
         </div>
 
         {/* Card Slider */}
         <div
-          className="w-full max-w-md md:max-w-xl lg:max-w-2xl relative min-h-[160px] md:min-h-[180px]"
+          className="w-full flex-1 max-w-md md:max-w-xl lg:max-w-2xl relative min-h-[160px] md:min-h-[200px] lg:min-h-[220px]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -93,40 +95,40 @@ const PortalSlider = () => {
               href={projects[current].url}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.45, ease: 'easeInOut' }}
-              className="block rounded-2xl p-6 md:p-8 cursor-pointer group transition-all duration-300 hover:scale-105 hover:-translate-y-1 text-center relative"
+              className="block rounded-2xl p-6 md:p-8 lg:p-10 cursor-pointer group transition-all duration-300 hover:scale-105 hover:-translate-y-1 text-center md:text-left relative"
               style={{
-                background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid hsl(var(--neon-purple) / 0.15)',
-                boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.15), inset 0 1px 0 hsl(var(--neon-purple) / 0.1)',
+                background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.7))',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                border: '1px solid hsl(var(--neon-purple) / 0.2)',
+                boxShadow: '0 0 30px hsl(var(--neon-purple) / 0.15), 0 0 60px hsl(var(--neon-purple) / 0.05), inset 0 1px 0 hsl(var(--neon-purple) / 0.1)',
               }}
             >
               {/* Active glow behind card */}
               <div
-                className="absolute -inset-1 rounded-2xl -z-10 opacity-40 group-hover:opacity-70 transition-opacity duration-500"
+                className="absolute -inset-2 rounded-2xl -z-10 opacity-40 group-hover:opacity-80 transition-opacity duration-500"
                 style={{
-                  background: 'radial-gradient(ellipse at center, hsl(var(--neon-purple) / 0.2), transparent 70%)',
-                  filter: 'blur(20px)',
+                  background: 'radial-gradient(ellipse at center, hsl(var(--neon-purple) / 0.25), transparent 70%)',
+                  filter: 'blur(25px)',
                 }}
               />
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300">{projects[current].emoji}</span>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground group-hover:text-glow transition-all">
+              <div className="flex items-center justify-center md:justify-start gap-3 md:gap-4 mb-2">
+                <span className="text-3xl md:text-4xl lg:text-5xl group-hover:scale-110 transition-transform duration-300">{projects[current].emoji}</span>
+                <h3 className="text-xl md:text-2xl lg:text-4xl font-bold text-foreground group-hover:text-glow transition-all">
                   {projects[current].name}
                 </h3>
-                <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 transition-all duration-300" />
+                <ExternalLink className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 transition-all duration-300" />
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm">Click to explore →</p>
+              <p className="text-muted-foreground text-xs md:text-sm lg:text-base">Click to explore →</p>
             </motion.a>
           </AnimatePresence>
 
           {/* Dots */}
-          <div className="flex justify-center gap-2 mt-5">
+          <div className="flex justify-center md:justify-start gap-2 mt-5 md:ml-8">
             {projects.map((_, i) => (
               <button
                 key={i}
