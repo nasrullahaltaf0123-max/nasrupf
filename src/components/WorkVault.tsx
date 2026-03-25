@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FolderOpen, ExternalLink } from "lucide-react";
+import useHoverSound from "@/hooks/useHoverSound";
 
 const WorkVault = () => {
   return (
