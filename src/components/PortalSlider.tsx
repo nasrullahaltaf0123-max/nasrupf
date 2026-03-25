@@ -166,7 +166,7 @@ const PortalSlider = () => {
                 </h3>
                 <ExternalLink className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 transition-all duration-300" />
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm lg:text-base">Click to explore →</p>
+              <p className="text-muted-foreground text-xs md:text-sm lg:text-base group-hover:text-neon-cyan transition-colors duration-300">Explore Project →</p>
             </motion.a>
           </AnimatePresence>
 
