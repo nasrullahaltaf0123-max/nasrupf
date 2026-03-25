@@ -62,6 +62,13 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /* Mobile scroll snap — proximity so it's natural, not forced */
+  @media (max-width: 767px) {
+    html {
+      scroll-snap-type: y proximity;
+    }
+  }
 }
 
 @layer utilities {
