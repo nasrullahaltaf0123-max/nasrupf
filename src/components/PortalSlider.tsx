@@ -169,13 +169,15 @@ const PortalSlider = () => {
       >
         {/* ─── Orbit Circle ─── */}
         <motion.div
-          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle cursor-pointer"
+          className={`relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle cursor-pointer ${portalPressed ? 'mobile-tap-glow' : ''}`}
           whileHover={{ scale: 1.04 }}
+          whileTap={isMobile ? { scale: 0.96 } : {}}
           animate={portalUnlocked ? { scale: [1, 1.08, 1.02, 1.06, 1] } : {}}
           transition={portalUnlocked ? { duration: 0.6, ease: 'easeInOut' } : { type: 'spring', stiffness: 200, damping: 20 }}
           onMouseEnter={() => { play(); handlePortalHoverStart(); }}
           onMouseLeave={handlePortalHoverEnd}
           onClick={handlePortalClick}
+          {...portalTapProps}
         >
           <div
             className="absolute -inset-10 md:-inset-14 rounded-full -z-10 transition-opacity duration-300"
