@@ -21,7 +21,7 @@ const WorkVault = () => {
         >
           <FolderOpen className="w-6 h-6 text-neon-orange group-hover:scale-110 group-hover:drop-shadow-[0_0_6px_hsl(var(--neon-orange)/0.5)] transition-all duration-300" />
           <span className="font-semibold text-foreground">Access My Digital Lab 🚀</span>
-          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 transition-all duration-300" />
+          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 group-hover:translate-x-0.5 transition-all duration-300" />
         </a>
       </motion.div>
     </section>

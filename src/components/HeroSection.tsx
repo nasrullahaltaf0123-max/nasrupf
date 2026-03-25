@@ -30,7 +30,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="text-3xl md:text-5xl lg:text-7xl font-bold gradient-text mb-1 tracking-tight"
+        className="text-3xl md:text-5xl lg:text-7xl font-bold gradient-text mb-1 tracking-tight drop-shadow-[0_0_15px_hsl(var(--neon-purple)/0.3)]"
       >
         Md Nasrullah
       </motion.h1>

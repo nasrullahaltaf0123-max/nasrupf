@@ -38,7 +38,7 @@ const YouTubeSection = () => {
                 <Youtube className="w-6 h-6 text-red-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_6px_hsl(0_80%_50%/0.5)] transition-all duration-300" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-foreground">{ch.name}</p>
+                <p className="font-semibold text-foreground group-hover:text-glow transition-all duration-300">{ch.name}</p>
                 <p className="text-xs text-muted-foreground">{ch.emoji} YouTube Channel</p>
               </div>
             </motion.div>
