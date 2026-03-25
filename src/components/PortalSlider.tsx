@@ -26,7 +26,7 @@ const PortalSlider = () => {
   }, [isPaused, next]);
 
   return (
-    <section className="py-6 md:py-10 px-4 relative overflow-hidden">
+    <section className="py-4 md:py-8 px-4 relative overflow-hidden">
       {/* Section-wide radial glow (desktop only) */}
       <div
         className="hidden md:block absolute inset-0 -z-10 pointer-events-none"
@@ -68,11 +68,11 @@ const PortalSlider = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.7 }}
-        className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6 md:gap-14 lg:gap-20"
+        className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 lg:gap-16"
       >
         {/* ─── Orbit Circle ─── */}
         <motion.div
-          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[320px] md:h-[320px] lg:w-[400px] lg:h-[400px] group/circle"
+          className="relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle"
           whileHover={{ scale: 1.04 }}
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         >
@@ -128,7 +128,7 @@ const PortalSlider = () => {
 
         {/* ─── Card Slider ─── */}
         <div
-          className="w-full flex-1 max-w-md md:max-w-xl lg:max-w-2xl relative min-h-[160px] md:min-h-[220px] lg:min-h-[260px]"
+          className="w-full flex-1 max-w-md md:max-w-lg lg:max-w-xl relative min-h-[160px] md:min-h-[220px] lg:min-h-[260px]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -166,7 +166,7 @@ const PortalSlider = () => {
                 </h3>
                 <ExternalLink className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-muted-foreground group-hover:text-neon-cyan group-hover:rotate-12 transition-all duration-300" />
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm lg:text-base">Click to explore →</p>
+              <p className="text-muted-foreground text-xs md:text-sm lg:text-base group-hover:text-neon-cyan transition-colors duration-300">Explore Project →</p>
             </motion.a>
           </AnimatePresence>
 
