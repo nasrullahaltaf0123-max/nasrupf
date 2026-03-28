@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion, animate } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Rocket, Eye, Globe } from 'lucide-react';
 
@@ -14,19 +14,23 @@ const AnimatedNumber = ({ value, suffix }: { value: number; suffix: string }) =>
   const hasAnimated = useRef(false);
 
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
-          const mv = useMotionValue(0);
-          const unsub = mv.on('change', (v) => setDisplay(Math.round(v)));
-          animate(mv, value, { duration: 1.5, ease: 'easeOut' });
-          return () => unsub();
+          const controls = animate(0, value, {
+            duration: 1.5,
+            ease: 'easeOut',
+            onUpdate: (v) => setDisplay(Math.round(v)),
+          });
+          return () => controls.stop();
         }
       },
       { threshold: 0.5 }
     );
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(el);
     return () => observer.disconnect();
   }, [value]);
 
