@@ -38,7 +38,8 @@ const ContactSection = () => {
         transition={{ duration: 0.6 }}
         className="max-w-2xl mx-auto text-center"
       >
-        <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-6">Let's Connect</h2>
+        <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Let's Work Together 🚀</h2>
+        <p className="text-muted-foreground text-sm mb-6">Got an idea? Let's build something amazing.</p>
         <div className="flex flex-wrap justify-center gap-3">
           {links.map((link, i) => (
             <motion.a
