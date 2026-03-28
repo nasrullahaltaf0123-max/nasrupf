@@ -2,7 +2,12 @@ import GradientMesh from '@/components/GradientMesh';
 import Particles from '@/components/Particles';
 import CursorGlow from '@/components/CursorGlow';
 import HeroSection from '@/components/HeroSection';
+import AboutSection from '@/components/AboutSection';
+import WhatIDoSection from '@/components/WhatIDoSection';
 import PortalSlider from '@/components/PortalSlider';
+import ProjectsSection from '@/components/ProjectsSection';
+import StatsSection from '@/components/StatsSection';
+import MyToolsSection from '@/components/MyToolsSection';
 import YouTubeSection from '@/components/YouTubeSection';
 import EducationSection from '@/components/EducationSection';
 import WorkVault from '@/components/WorkVault';
@@ -15,7 +20,12 @@ const Index = () => {
       <Particles />
       <CursorGlow />
       <HeroSection />
+      <AboutSection />
+      <WhatIDoSection />
       <PortalSlider />
+      <ProjectsSection />
+      <StatsSection />
+      <MyToolsSection />
       <YouTubeSection />
       <EducationSection />
       <WorkVault />
