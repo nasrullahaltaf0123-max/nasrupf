@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Linkedin, Mail, Facebook, MessageCircle } from "lucide-react";
+import { Linkedin, Mail, Facebook, MessageCircle, Rocket } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
 import useMobileTap from "@/hooks/useMobileTap";
 
@@ -30,7 +30,7 @@ const ContactSection = () => {
   const { play } = useHoverSound();
   const { mobileTapProps, isPressed, isMobile } = useMobileTap();
   return (
-    <section className="py-8 px-4 pb-16 snap-section">
+    <section className="py-10 px-4 pb-16 snap-section">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,8 +38,57 @@ const ContactSection = () => {
         transition={{ duration: 0.6 }}
         className="max-w-2xl mx-auto text-center"
       >
-        <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Let's Work Together 🚀</h2>
-        <p className="text-muted-foreground text-sm mb-6">Got an idea? Let's build something amazing.</p>
+        <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-2">Let's Build Something Powerful 🚀</h2>
+        <p className="text-muted-foreground text-sm mb-8">Ready to bring your idea to life? Let's make it happen.</p>
+
+        {/* Primary CTA buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <motion.a
+            href="mailto:nasrullah.altaf2003@gmail.com"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-primary-foreground transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, hsl(var(--neon-purple)), hsl(var(--neon-cyan)))',
+              boxShadow: '0 0 25px hsl(var(--neon-purple) / 0.3), 0 0 50px hsl(var(--neon-cyan) / 0.1)',
+            }}
+          >
+            <Rocket className="w-4 h-4" />
+            Hire Me
+          </motion.a>
+          <motion.a
+            href="https://wa.me/8801760208757"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-foreground transition-all duration-300"
+            style={{
+              background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
+              border: '1px solid hsl(var(--neon-cyan) / 0.25)',
+              boxShadow: '0 0 15px hsl(var(--neon-cyan) / 0.1)',
+            }}
+          >
+            <MessageCircle className="w-4 h-4 text-neon-cyan" />
+            WhatsApp
+          </motion.a>
+          <motion.a
+            href="mailto:nasrullah.altaf2003@gmail.com"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-foreground transition-all duration-300"
+            style={{
+              background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.8))',
+              border: '1px solid hsl(var(--neon-purple) / 0.25)',
+              boxShadow: '0 0 15px hsl(var(--neon-purple) / 0.1)',
+            }}
+          >
+            <Mail className="w-4 h-4 text-neon-purple" />
+            Email
+          </motion.a>
+        </div>
+
+        {/* Social links */}
         <div className="flex flex-wrap justify-center gap-3">
           {links.map((link, i) => (
             <motion.a
