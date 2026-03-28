@@ -7,6 +7,9 @@ import WhatIDoSection from '@/components/WhatIDoSection';
 import PortalSlider from '@/components/PortalSlider';
 import ProjectsSection from '@/components/ProjectsSection';
 import StatsSection from '@/components/StatsSection';
+import WhyChooseMeSection from '@/components/WhyChooseMeSection';
+import MyProcessSection from '@/components/MyProcessSection';
+import TestimonialSection from '@/components/TestimonialSection';
 import MyToolsSection from '@/components/MyToolsSection';
 import YouTubeSection from '@/components/YouTubeSection';
 import EducationSection from '@/components/EducationSection';
@@ -25,6 +28,9 @@ const Index = () => {
       <PortalSlider />
       <ProjectsSection />
       <StatsSection />
+      <WhyChooseMeSection />
+      <MyProcessSection />
+      <TestimonialSection />
       <MyToolsSection />
       <YouTubeSection />
       <EducationSection />
