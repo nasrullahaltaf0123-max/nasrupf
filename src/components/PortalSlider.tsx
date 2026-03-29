@@ -1,109 +1,52 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MousePointerClick } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { MousePointerClick, ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const orbitIcons = [
-  { emoji: '🛠️', label: 'Tools' },
-  { emoji: '🤖', label: 'AI' },
-  { emoji: '📚', label: 'Study' },
-  { emoji: '🏏', label: 'Cricket' },
-  { emoji: '🛍️', label: 'Shop' },
-  { emoji: '🏪', label: 'Store' },
+  { emoji: '🛠️', label: 'NasruTools', url: 'https://nasrutools.lovable.app' },
+  { emoji: '🤖', label: 'PromptNovaAI', url: 'https://promptnovaai.lovable.app/' },
+  { emoji: '📚', label: 'StudyFlowAI', url: 'https://studyandcareer-ai.lovable.app/' },
+  { emoji: '🏏', label: 'Cricket N', url: 'https://cricketnasrumade.lovable.app/' },
+  { emoji: '🛍️', label: 'NasruShop', url: 'https://nasrushop.lovable.app' },
+  { emoji: '🏪', label: 'Nasru Store', url: 'https://nasrustore.netlify.app/#' },
+];
+
+const allTools = [
+  { emoji: '🤖', name: 'PromptNovaAI', desc: 'AI prompt engineering toolkit', url: 'https://promptnovaai.lovable.app/' },
+  { emoji: '📚', name: 'StudyFlowAI', desc: 'AI-driven study companion', url: 'https://studyandcareer-ai.lovable.app/' },
+  { emoji: '🛠️', name: 'NasruTools', desc: 'AI-powered utility tools', url: 'https://nasrutools.lovable.app' },
+  { emoji: '🛍️', name: 'NasruShop', desc: 'Modern AI e-commerce', url: 'https://nasrushop.lovable.app' },
+  { emoji: '🏪', name: 'Nasru Store', desc: 'Curated products & collections', url: 'https://nasrustore.netlify.app/#' },
+  { emoji: '🏏', name: 'Cricket N', desc: 'Live cricket experience', url: 'https://cricketnasrumade.lovable.app/' },
+  { emoji: '🍛', name: 'মাছে ভাতে বাঙ্গালী', desc: 'Bengali food experience', url: 'https://xn--r5bdf0b1bef2b3gccc1a2gd3h.xn--45bl4db.xn--54b7fta0cc/' },
+  { emoji: '📖', name: 'Literaria', desc: 'Writers & literature platform', url: 'https://literariahub.lovable.app/' },
 ];
 
 const PortalSlider = () => {
   const [cursorAnim, setCursorAnim] = useState(false);
-  const [portalUnlocked, setPortalUnlocked] = useState(false);
-  const [showUnlockText, setShowUnlockText] = useState(false);
-  const [screenFlash, setScreenFlash] = useState(false);
-  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const clickTimestamps = useRef<number[]>([]);
+  const [expanded, setExpanded] = useState(false);
   const { play } = useHoverSound();
-  const { mobileTapProps: portalTapProps, isPressed: portalPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
+  const { mobileTapProps, isPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
 
-  // Animated cursor hint every 4 seconds
+  // Cursor hint every 4s
   useEffect(() => {
+    if (expanded) return;
     const interval = setInterval(() => {
       setCursorAnim(true);
       setTimeout(() => setCursorAnim(false), 1500);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [expanded]);
 
-  const triggerEasterEgg = useCallback(() => {
-    if (portalUnlocked) return;
-    setPortalUnlocked(true);
-    setScreenFlash(true);
-    setShowUnlockText(true);
-    try {
-      const ctx = new AudioContext();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.15);
-      osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.3);
-      gain.gain.setValueAtTime(0.06, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.35);
-    } catch {}
-    setTimeout(() => setScreenFlash(false), 300);
-    setTimeout(() => setShowUnlockText(false), 1800);
-    setTimeout(() => setPortalUnlocked(false), 2500);
-  }, [portalUnlocked]);
-
-  const handlePortalClick = useCallback(() => {
-    const now = Date.now();
-    clickTimestamps.current.push(now);
-    clickTimestamps.current = clickTimestamps.current.filter(t => now - t < 800);
-    if (clickTimestamps.current.length >= 3) {
-      clickTimestamps.current = [];
-      triggerEasterEgg();
-      return;
-    }
-    navigate('/creations');
-  }, [triggerEasterEgg, navigate]);
-
-  const handlePortalHoverStart = useCallback(() => {
-    if (isMobile) return;
-    hoverTimerRef.current = setTimeout(triggerEasterEgg, 2000);
-  }, [isMobile, triggerEasterEgg]);
-
-  const handlePortalHoverEnd = useCallback(() => {
-    if (hoverTimerRef.current) {
-      clearTimeout(hoverTimerRef.current);
-      hoverTimerRef.current = null;
-    }
-  }, []);
-
-  const orbitSize = isMobile ? 180 : 300;
   const orbitRadius = isMobile ? 105 : 175;
+  const coreSize = isMobile ? 160 : 260;
 
   return (
     <section className="py-10 md:py-16 px-4 relative overflow-hidden snap-section">
-      {/* Screen flash overlay for easter egg */}
-      <AnimatePresence>
-        {screenFlash && (
-          <motion.div
-            initial={{ opacity: 0.5 }}
-            animate={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[90] pointer-events-none"
-            style={{ background: 'radial-gradient(circle at 50% 50%, hsl(var(--neon-cyan) / 0.25), hsl(var(--neon-purple) / 0.15) 40%, transparent 70%)' }}
-          />
-        )}
-      </AnimatePresence>
-
       {/* Section radial glow */}
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
@@ -119,27 +62,39 @@ const PortalSlider = () => {
         transition={{ duration: 0.7 }}
         className="max-w-3xl mx-auto flex flex-col items-center justify-center"
       >
-        {/* Orbit System */}
-        <div className="relative" style={{ width: isMobile ? 260 : 420, height: isMobile ? 260 : 420 }}>
-          {/* Orbit track */}
+        {/* Orbit System Container */}
+        <div className="relative" style={{ width: isMobile ? 280 : 440, height: isMobile ? 280 : 440 }}>
+          {/* Orbit track ring */}
           <div
             className="absolute rounded-full"
             style={{
-              width: orbitRadius * 2 + (isMobile ? 40 : 50),
-              height: orbitRadius * 2 + (isMobile ? 40 : 50),
+              width: orbitRadius * 2 + (isMobile ? 44 : 54),
+              height: orbitRadius * 2 + (isMobile ? 44 : 54),
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
               border: '1px dashed hsl(var(--neon-purple) / 0.12)',
             }}
           />
+          {/* Neon trail glow on orbit path */}
+          <div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: orbitRadius * 2 + (isMobile ? 44 : 54),
+              height: orbitRadius * 2 + (isMobile ? 44 : 54),
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              boxShadow: 'inset 0 0 20px hsl(var(--neon-cyan) / 0.04), 0 0 15px hsl(var(--neon-purple) / 0.04)',
+            }}
+          />
 
-          {/* Orbiting icons container */}
+          {/* Orbiting icons */}
           <div
             className="absolute"
             style={{
-              width: orbitRadius * 2 + (isMobile ? 40 : 50),
-              height: orbitRadius * 2 + (isMobile ? 40 : 50),
+              width: orbitRadius * 2 + (isMobile ? 44 : 54),
+              height: orbitRadius * 2 + (isMobile ? 44 : 54),
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
@@ -149,12 +104,15 @@ const PortalSlider = () => {
             {orbitIcons.map((icon, i) => {
               const angle = (i / orbitIcons.length) * 360;
               const rad = (angle * Math.PI) / 180;
-              const r = orbitRadius + (isMobile ? 10 : 15);
+              const r = orbitRadius + (isMobile ? 12 : 17);
               const x = Math.cos(rad) * r;
               const y = Math.sin(rad) * r;
               return (
-                <motion.div
+                <motion.a
                   key={icon.label}
+                  href={icon.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="absolute cursor-pointer"
                   style={{
                     left: '50%',
@@ -164,6 +122,7 @@ const PortalSlider = () => {
                   }}
                   whileHover={{ scale: 1.35 }}
                   onMouseEnter={play}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <div
                     className="w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.5)]"
@@ -175,35 +134,33 @@ const PortalSlider = () => {
                   >
                     <span className="text-base md:text-xl">{icon.emoji}</span>
                   </div>
-                </motion.div>
+                </motion.a>
               );
             })}
           </div>
 
-          {/* Inner circle — My Creation */}
+          {/* Center Core */}
           <motion.div
-            className={`absolute rounded-full cursor-pointer group ${portalPressed ? 'mobile-tap-glow' : ''}`}
+            className={`absolute rounded-full cursor-pointer group ${isPressed ? 'mobile-tap-glow' : ''}`}
             style={{
-              width: orbitSize,
-              height: orbitSize,
+              width: coreSize,
+              height: coreSize,
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
             }}
             whileHover={{ scale: 1.04 }}
-            whileTap={isMobile ? { scale: 0.96 } : {}}
-            animate={portalUnlocked ? { scale: [1, 1.08, 1.02, 1.06, 1] } : {}}
-            transition={portalUnlocked ? { duration: 0.6, ease: 'easeInOut' } : { type: 'spring', stiffness: 200, damping: 20 }}
-            onMouseEnter={() => { play(); handlePortalHoverStart(); }}
-            onMouseLeave={handlePortalHoverEnd}
-            onClick={handlePortalClick}
-            {...portalTapProps}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            onMouseEnter={play}
+            onClick={() => { play(); setExpanded(true); }}
+            {...mobileTapProps}
           >
             {/* Ambient glow */}
             <div
               className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
               style={{
-                background: `radial-gradient(circle, hsl(var(--neon-cyan) / ${portalUnlocked ? '0.35' : '0.1'}), hsl(var(--neon-purple) / ${portalUnlocked ? '0.3' : '0.08'}) 40%, transparent 70%)`,
+                background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.1), hsl(var(--neon-purple) / 0.08) 40%, transparent 70%)',
                 animation: 'glowPulse 4s ease-in-out infinite',
               }}
             />
@@ -212,7 +169,7 @@ const PortalSlider = () => {
               className="absolute inset-0 rounded-full"
               style={{
                 background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.6), hsl(195 100% 50% / 0.4), hsl(270 80% 53% / 0.7), hsl(270 80% 53% / 0.2), transparent 60%)',
-                animation: `semiRotate ${portalUnlocked ? '4s' : '10s'} linear infinite`,
+                animation: 'semiRotate 10s linear infinite',
                 filter: 'blur(5px)',
               }}
             />
@@ -220,10 +177,8 @@ const PortalSlider = () => {
             <div
               className="absolute inset-1.5 md:inset-2 rounded-full transition-all duration-300"
               style={{
-                border: `1px solid hsl(var(--neon-cyan) / ${portalUnlocked ? '0.4' : '0.15'})`,
-                boxShadow: portalUnlocked
-                  ? 'inset 0 0 50px hsl(var(--neon-purple) / 0.25), 0 0 40px hsl(var(--neon-cyan) / 0.2)'
-                  : 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
+                border: '1px solid hsl(var(--neon-cyan) / 0.15)',
+                boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
                 animation: 'glowPulse 3s ease-in-out infinite 0.5s',
               }}
             />
@@ -232,7 +187,7 @@ const PortalSlider = () => {
               <div className="text-center relative">
                 <p className="text-[9px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
                 <p className="text-lg md:text-2xl lg:text-3xl font-bold gradient-text">My Creations</p>
-                {/* Animated cursor hint */}
+                {/* Cursor hint */}
                 <AnimatePresence>
                   {cursorAnim && !isMobile && (
                     <motion.div
@@ -247,35 +202,109 @@ const PortalSlider = () => {
                 </AnimatePresence>
               </div>
             </div>
-
-            {/* Floating unlock text */}
-            <AnimatePresence>
-              {showUnlockText && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                  animate={{ opacity: 1, y: -20, scale: 1 }}
-                  exit={{ opacity: 0, y: -40, scale: 0.9 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className="absolute left-1/2 -translate-x-1/2 -bottom-8 md:-bottom-10 whitespace-nowrap z-20 pointer-events-none"
-                >
-                  <span
-                    className="text-xs md:text-sm font-bold tracking-wider px-3 py-1.5 rounded-full"
-                    style={{
-                      background: 'linear-gradient(135deg, hsl(var(--neon-purple) / 0.2), hsl(var(--neon-cyan) / 0.15))',
-                      border: '1px solid hsl(var(--neon-cyan) / 0.3)',
-                      color: 'hsl(var(--neon-cyan))',
-                      textShadow: '0 0 12px hsl(var(--neon-cyan) / 0.6)',
-                      boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.2)',
-                    }}
-                  >
-                    Portal Unlocked ⚡
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </motion.div>
         </div>
       </motion.div>
+
+      {/* ===== FULLSCREEN TOOL UNIVERSE OVERLAY ===== */}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+            style={{ backdropFilter: 'blur(16px)', background: 'hsl(var(--background) / 0.85)' }}
+            onClick={() => setExpanded(false)}
+          >
+            {/* Close button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ delay: 0.2 }}
+              onClick={() => setExpanded(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-300 hover:scale-110"
+              style={{
+                background: 'hsl(var(--muted) / 0.6)',
+                border: '1px solid hsl(var(--neon-cyan) / 0.2)',
+              }}
+            >
+              <X className="w-5 h-5 text-foreground" />
+            </motion.button>
+
+            {/* Title */}
+            <div className="absolute top-8 left-0 right-0 text-center pointer-events-none">
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="text-xl md:text-3xl font-bold gradient-text"
+              >
+                My Creations ✦
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25 }}
+                className="text-xs text-muted-foreground mt-1"
+              >
+                Tools, projects & experiments
+              </motion.p>
+            </div>
+
+            {/* Bubble Grid */}
+            <div
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 max-w-3xl w-full max-h-[70vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {allTools.map((tool, i) => (
+                <motion.a
+                  key={tool.name}
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ delay: 0.1 + i * 0.06, type: 'spring', stiffness: 200, damping: 18 }}
+                  whileHover={{ scale: 1.08, y: -6 }}
+                  whileTap={{ scale: 0.95 }}
+                  onMouseEnter={play}
+                  className="flex flex-col items-center text-center group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Bubble */}
+                  <div
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-2.5 transition-all duration-300 relative"
+                    style={{
+                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.9))',
+                      border: '1px solid hsl(var(--neon-purple) / 0.15)',
+                      boxShadow: '0 4px 20px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--neon-purple) / 0.08)',
+                    }}
+                  >
+                    {/* Hover glow ring */}
+                    <div
+                      className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 -z-10"
+                      style={{
+                        background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.15), transparent 70%)',
+                        filter: 'blur(8px)',
+                      }}
+                    />
+                    <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300">{tool.emoji}</span>
+                  </div>
+                  <span className={`text-xs md:text-sm font-semibold text-foreground group-hover:text-glow transition-all duration-300 ${/[\u0980-\u09FF]/.test(tool.name) ? 'font-bengali' : ''}`}>
+                    {tool.name}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{tool.desc}</span>
+                  <ExternalLink className="w-3 h-3 text-muted-foreground mt-1 group-hover:text-neon-cyan transition-colors duration-300" />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

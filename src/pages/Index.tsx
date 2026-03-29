@@ -10,7 +10,6 @@ import StatsSection from '@/components/StatsSection';
 import WhyChooseMeSection from '@/components/WhyChooseMeSection';
 import MyProcessSection from '@/components/MyProcessSection';
 import TestimonialSection from '@/components/TestimonialSection';
-import ToolStrip from '@/components/ToolStrip';
 import YouTubeSection from '@/components/YouTubeSection';
 import EducationSection from '@/components/EducationSection';
 import WorkVault from '@/components/WorkVault';
@@ -31,7 +30,6 @@ const Index = () => {
       <WhyChooseMeSection />
       <MyProcessSection />
       <TestimonialSection />
-      <ToolStrip />
       <YouTubeSection />
       <EducationSection />
       <WorkVault />
