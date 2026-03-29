@@ -1,28 +1,18 @@
 import { motion } from "framer-motion";
-import { Linkedin, Mail, Facebook, MessageCircle, Rocket } from "lucide-react";
+import { Linkedin, Facebook, Rocket, MessageCircle, Mail } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
 import useMobileTap from "@/hooks/useMobileTap";
 
-const links = [
+const socialLinks = [
   {
     icon: Linkedin,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/md-nasrullah-abb499330/",
   },
   {
-    icon: Mail,
-    label: "Email",
-    href: "mailto:nasrullah.altaf2003@gmail.com",
-  },
-  {
     icon: Facebook,
     label: "Facebook",
     href: "https://www.facebook.com/share/1AjG3RoZdq/",
-  },
-  {
-    icon: MessageCircle,
-    label: "WhatsApp",
-    href: "https://wa.me/8801760208757",
   },
 ];
 
@@ -88,9 +78,10 @@ const ContactSection = () => {
           </motion.a>
         </div>
 
-        {/* Social links */}
+        {/* Find Me Online */}
+        <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Find Me Online</p>
         <div className="flex flex-wrap justify-center gap-3">
-          {links.map((link, i) => (
+          {socialLinks.map((link, i) => (
             <motion.a
               key={link.label}
               href={link.href}
