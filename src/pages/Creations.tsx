@@ -75,66 +75,92 @@ const Creations = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: ci * 0.15, duration: 0.6 }}
-              className="mb-10"
+              className="mb-12"
             >
               {/* Shelf label */}
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-5">
                 <cat.icon className="w-4 h-4 text-neon-purple" />
                 <h2 className="text-sm md:text-base font-bold text-foreground uppercase tracking-widest">{cat.label}</h2>
               </div>
 
-              {/* Shelf */}
-              <div
-                className="rounded-2xl p-4 md:p-6 relative overflow-hidden"
-                style={{
-                  background: 'linear-gradient(180deg, hsl(var(--muted) / 0.3), hsl(var(--background) / 0.5))',
-                  border: '1px solid hsl(var(--neon-purple) / 0.1)',
-                  boxShadow: '0 8px 30px hsl(0 0% 0% / 0.2), inset 0 -2px 0 hsl(var(--neon-purple) / 0.08)',
-                }}
-              >
-                {/* Shelf edge line */}
+              {/* 3D Shelf */}
+              <div className="relative">
+                {/* Shelf surface */}
                 <div
-                  className="absolute bottom-0 left-4 right-4 h-px"
-                  style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--neon-cyan) / 0.2), transparent)' }}
-                />
-                {/* Shelf bottom reflection */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-8 pointer-events-none"
+                  className="rounded-2xl p-5 md:p-7 relative overflow-hidden"
                   style={{
-                    background: 'linear-gradient(to top, hsl(var(--neon-purple) / 0.04), transparent)',
+                    background: 'linear-gradient(180deg, hsl(var(--muted) / 0.25), hsl(var(--background) / 0.4))',
+                    border: '1px solid hsl(var(--neon-purple) / 0.1)',
+                    boxShadow: '0 12px 40px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(var(--neon-purple) / 0.06)',
                   }}
-                />
+                >
+                  {/* Shelf wood-grain top edge */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl"
+                    style={{
+                      background: 'linear-gradient(90deg, hsl(var(--neon-purple) / 0.08), hsl(var(--neon-cyan) / 0.12), hsl(var(--neon-purple) / 0.08))',
+                    }}
+                  />
+                  {/* Shelf bottom shadow (3D depth) */}
+                  <div
+                    className="absolute -bottom-2 left-4 right-4 h-4 rounded-b-xl pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(to bottom, hsl(0 0% 0% / 0.15), transparent)',
+                      filter: 'blur(4px)',
+                    }}
+                  />
+                  {/* Inner reflection */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(to top, hsl(var(--neon-purple) / 0.03), transparent)',
+                    }}
+                  />
+                  {/* Shelf edge highlight */}
+                  <div
+                    className="absolute bottom-0 left-6 right-6 h-px"
+                    style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--neon-cyan) / 0.15), transparent)' }}
+                  />
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
-                  {catItems.map((item, i) => (
-                    <motion.a
-                      key={item.name}
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: ci * 0.15 + i * 0.08, duration: 0.4 }}
-                      whileHover={{ y: -6, scale: 1.04 }}
-                      whileTap={{ scale: 0.97 }}
-                      onMouseEnter={play}
-                      className="group block rounded-xl p-4 text-center transition-all duration-300"
-                      style={{
-                        background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))',
-                        border: '1px solid hsl(var(--neon-purple) / 0.12)',
-                        boxShadow: '0 2px 10px hsl(0 0% 0% / 0.15)',
-                      }}
-                    >
-                      <span className="text-3xl md:text-4xl block mb-2 group-hover:scale-110 transition-transform duration-300">
-                        {item.emoji}
-                      </span>
-                      <h3 className="text-xs md:text-sm font-bold text-foreground mb-1 group-hover:text-glow transition-all duration-300 truncate">
-                        {item.name}
-                      </h3>
-                      <p className="text-[10px] text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
-                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground mx-auto group-hover:text-neon-cyan transition-colors duration-300" />
-                    </motion.a>
-                  ))}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
+                    {catItems.map((item, i) => (
+                      <motion.a
+                        key={item.name}
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: ci * 0.15 + i * 0.1, duration: 0.5 }}
+                        whileHover={{ y: -8, scale: 1.05 }}
+                        whileTap={{ scale: 0.97 }}
+                        onMouseEnter={play}
+                        className="group block rounded-xl p-4 md:p-5 text-center transition-all duration-300 relative"
+                        style={{
+                          background: 'linear-gradient(160deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.85))',
+                          border: '1px solid hsl(var(--neon-purple) / 0.1)',
+                          boxShadow: '0 4px 16px hsl(0 0% 0% / 0.2), 0 1px 3px hsl(0 0% 0% / 0.15)',
+                        }}
+                      >
+                        {/* Hover glow */}
+                        <div
+                          className="absolute -inset-1 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+                          style={{
+                            background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.12), transparent 70%)',
+                            filter: 'blur(12px)',
+                          }}
+                        />
+                        <span className="text-3xl md:text-4xl block mb-2.5 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg">
+                          {item.emoji}
+                        </span>
+                        <h3 className={`text-xs md:text-sm font-bold text-foreground mb-1 group-hover:text-glow transition-all duration-300 truncate ${/[\u0980-\u09FF]/.test(item.name) ? 'font-bengali' : ''}`}>
+                          {item.name}
+                        </h3>
+                        <p className="text-[10px] text-muted-foreground mb-2.5 line-clamp-2 leading-relaxed">{item.desc}</p>
+                        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground mx-auto group-hover:text-neon-cyan transition-colors duration-300" />
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
