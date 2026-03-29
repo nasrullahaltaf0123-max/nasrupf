@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Space Grotesk"', 'sans-serif'],
+        bengali: ['"Hind Siliguri"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
