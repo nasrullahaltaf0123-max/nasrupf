@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, X } from 'lucide-react';
+import { ExternalLink, X, MousePointerClick } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import useHoverSound from '@/hooks/useHoverSound';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -14,17 +15,28 @@ const projects = [
   { name: 'Nasru Store', url: 'https://nasrustore.netlify.app/#', emoji: '🏪', desc: 'Digital storefront showcasing curated products and collections.' },
 ];
 
+const orbitIcons = [
+  { emoji: '🛠️', label: 'Tools' },
+  { emoji: '🤖', label: 'AI' },
+  { emoji: '📚', label: 'Study' },
+  { emoji: '🏏', label: 'Cricket' },
+  { emoji: '🛍️', label: 'Shop' },
+  { emoji: '🏪', label: 'Store' },
+];
+
 const PortalSlider = () => {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [burstActive, setBurstActive] = useState(false);
   const [cardRect, setCardRect] = useState<{ x: number; y: number } | null>(null);
+  const [cursorAnim, setCursorAnim] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const { play } = useHoverSound();
   const { mobileTapProps: portalTapProps, isPressed: portalPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
   const { mobileTapProps: cardTapProps, isPressed: cardPressed } = useMobileTap();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Easter egg state
   const [portalUnlocked, setPortalUnlocked] = useState(false);
@@ -33,12 +45,20 @@ const PortalSlider = () => {
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const clickTimestamps = useRef<number[]>([]);
 
+  // Animated cursor hint every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCursorAnim(true);
+      setTimeout(() => setCursorAnim(false), 1500);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const triggerEasterEgg = useCallback(() => {
     if (portalUnlocked) return;
     setPortalUnlocked(true);
     setScreenFlash(true);
     setShowUnlockText(true);
-    // Play a deeper unlock sound
     try {
       const ctx = new AudioContext();
       const osc = ctx.createOscillator();
@@ -66,6 +86,7 @@ const PortalSlider = () => {
     if (clickTimestamps.current.length >= 3) {
       clickTimestamps.current = [];
       triggerEasterEgg();
+      return;
     }
   }, [triggerEasterEgg]);
 
@@ -81,6 +102,11 @@ const PortalSlider = () => {
     }
   }, []);
 
+  // Navigate to creations page on single click (non-easter-egg)
+  const handleCreationClick = () => {
+    navigate('/creations');
+  };
+
   const next = useCallback(() => {
     setCurrent((c) => (c + 1) % projects.length);
   }, []);
@@ -93,21 +119,21 @@ const PortalSlider = () => {
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Capture card center for origin-based animation
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
       setCardRect({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
     }
-    // Trigger glow burst
     setBurstActive(true);
     setTimeout(() => setBurstActive(false), 350);
-    // Open modal after brief delay for zoom effect
     setTimeout(() => setModalOpen(true), isMobile ? 100 : 200);
   };
 
   const modalOrigin = cardRect
     ? { originX: cardRect.x / window.innerWidth, originY: cardRect.y / window.innerHeight }
     : { originX: 0.5, originY: 0.5 };
+
+  const orbitSize = isMobile ? 180 : 360;
+  const orbitRadius = isMobile ? 100 : 200;
 
   return (
     <section className="py-4 md:py-8 px-4 relative overflow-hidden snap-section">
@@ -124,6 +150,7 @@ const PortalSlider = () => {
           />
         )}
       </AnimatePresence>
+
       {/* Section-wide radial glow (desktop only) */}
       <div
         className="hidden md:block absolute inset-0 -z-10 pointer-events-none"
@@ -167,75 +194,167 @@ const PortalSlider = () => {
         transition={{ duration: 0.7 }}
         className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 lg:gap-16"
       >
-        {/* ─── Orbit Circle ─── */}
-        <motion.div
-          className={`relative flex-shrink-0 w-[180px] h-[180px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] group/circle cursor-pointer ${portalPressed ? 'mobile-tap-glow' : ''}`}
-          whileHover={{ scale: 1.04 }}
-          whileTap={isMobile ? { scale: 0.96 } : {}}
-          animate={portalUnlocked ? { scale: [1, 1.08, 1.02, 1.06, 1] } : {}}
-          transition={portalUnlocked ? { duration: 0.6, ease: 'easeInOut' } : { type: 'spring', stiffness: 200, damping: 20 }}
-          onMouseEnter={() => { play(); handlePortalHoverStart(); }}
-          onMouseLeave={handlePortalHoverEnd}
-          onClick={handlePortalClick}
-          {...portalTapProps}
-        >
+        {/* ─── Dual Orbit System ─── */}
+        <div className="relative flex-shrink-0" style={{ width: isMobile ? 220 : 420, height: isMobile ? 220 : 420 }}>
+          {/* Outer orbit ring */}
           <div
-            className="absolute -inset-10 md:-inset-14 rounded-full -z-10 transition-opacity duration-300"
+            className="absolute rounded-full"
             style={{
-              background: `radial-gradient(circle, hsl(var(--neon-cyan) / ${portalUnlocked ? '0.35' : '0.12'}), hsl(var(--neon-purple) / ${portalUnlocked ? '0.3' : '0.1'}) 40%, transparent 70%)`,
-              animation: 'glowPulse 4s ease-in-out infinite',
+              width: orbitSize + (isMobile ? 40 : 60),
+              height: orbitSize + (isMobile ? 40 : 60),
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              border: '1px solid hsl(var(--neon-purple) / 0.1)',
             }}
           />
+
+          {/* Orbiting icons */}
           <div
-            className="absolute inset-0 rounded-full"
+            className="absolute"
             style={{
-              background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.7), hsl(195 100% 50% / 0.5), hsl(270 80% 53% / 0.8), hsl(270 80% 53% / 0.3), transparent 60%)',
-              animation: `semiRotate ${portalUnlocked ? '4s' : '10s'} linear infinite`,
-              filter: 'blur(5px)',
+              width: orbitSize + (isMobile ? 40 : 60),
+              height: orbitSize + (isMobile ? 40 : 60),
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              animation: 'semiRotate 20s linear infinite',
             }}
-          />
-          <div
-            className="absolute inset-1 md:inset-2 rounded-full transition-all duration-300"
-            style={{
-              border: `1px solid hsl(var(--neon-cyan) / ${portalUnlocked ? '0.4' : '0.15'})`,
-              boxShadow: portalUnlocked
-                ? 'inset 0 0 50px hsl(var(--neon-purple) / 0.25), 0 0 40px hsl(var(--neon-cyan) / 0.2)'
-                : 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
-              animation: 'glowPulse 3s ease-in-out infinite 0.5s',
-            }}
-          />
-          <div className="absolute inset-3 md:inset-5 lg:inset-6 rounded-full bg-background flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-[10px] md:text-xs lg:text-sm uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
-              <p className="text-base md:text-2xl lg:text-3xl font-bold gradient-text">My Creations</p>
-            </div>
-          </div>
-          {/* Floating unlock text */}
-          <AnimatePresence>
-            {showUnlockText && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                animate={{ opacity: 1, y: -20, scale: 1 }}
-                exit={{ opacity: 0, y: -40, scale: 0.9 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="absolute left-1/2 -translate-x-1/2 -bottom-8 md:-bottom-10 whitespace-nowrap z-20 pointer-events-none"
-              >
-                <span
-                  className="text-xs md:text-sm font-bold tracking-wider px-3 py-1.5 rounded-full"
+          >
+            {orbitIcons.map((icon, i) => {
+              const angle = (i / orbitIcons.length) * 360;
+              const rad = (angle * Math.PI) / 180;
+              const r = orbitRadius + (isMobile ? 10 : 20);
+              const x = Math.cos(rad) * r;
+              const y = Math.sin(rad) * r;
+              return (
+                <motion.div
+                  key={icon.label}
+                  className="absolute cursor-pointer"
                   style={{
-                    background: 'linear-gradient(135deg, hsl(var(--neon-purple) / 0.2), hsl(var(--neon-cyan) / 0.15))',
-                    border: '1px solid hsl(var(--neon-cyan) / 0.3)',
-                    color: 'hsl(var(--neon-cyan))',
-                    textShadow: '0 0 12px hsl(var(--neon-cyan) / 0.6)',
-                    boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.2)',
+                    left: '50%',
+                    top: '50%',
+                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                    animation: `semiRotate 20s linear infinite reverse`,
                   }}
+                  whileHover={{ scale: 1.3 }}
+                  onMouseEnter={play}
                 >
-                  Portal Unlocked ⚡
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                  <div
+                    className="w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_15px_hsl(var(--neon-cyan)/0.4)]"
+                    style={{
+                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
+                      border: '1px solid hsl(var(--neon-purple) / 0.2)',
+                    }}
+                  >
+                    <span className="text-sm md:text-xl">{icon.emoji}</span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Inner circle — My Creation */}
+          <motion.div
+            className={`absolute rounded-full cursor-pointer group/circle ${portalPressed ? 'mobile-tap-glow' : ''}`}
+            style={{
+              width: orbitSize,
+              height: orbitSize,
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={isMobile ? { scale: 0.96 } : {}}
+            animate={portalUnlocked ? { scale: [1, 1.08, 1.02, 1.06, 1] } : {}}
+            transition={portalUnlocked ? { duration: 0.6, ease: 'easeInOut' } : { type: 'spring', stiffness: 200, damping: 20 }}
+            onMouseEnter={() => { play(); handlePortalHoverStart(); }}
+            onMouseLeave={handlePortalHoverEnd}
+            onClick={(e) => {
+              handlePortalClick();
+              // Navigate only if not easter-egg triggered
+              if (clickTimestamps.current.length < 2) {
+                handleCreationClick();
+              }
+            }}
+            {...portalTapProps}
+          >
+            {/* Ambient glow */}
+            <div
+              className="absolute -inset-10 md:-inset-14 rounded-full -z-10 transition-opacity duration-300"
+              style={{
+                background: `radial-gradient(circle, hsl(var(--neon-cyan) / ${portalUnlocked ? '0.35' : '0.12'}), hsl(var(--neon-purple) / ${portalUnlocked ? '0.3' : '0.1'}) 40%, transparent 70%)`,
+                animation: 'glowPulse 4s ease-in-out infinite',
+              }}
+            />
+            {/* Spinning gradient ring */}
+            <div
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.7), hsl(195 100% 50% / 0.5), hsl(270 80% 53% / 0.8), hsl(270 80% 53% / 0.3), transparent 60%)',
+                animation: `semiRotate ${portalUnlocked ? '4s' : '10s'} linear infinite`,
+                filter: 'blur(5px)',
+              }}
+            />
+            {/* Inner border */}
+            <div
+              className="absolute inset-1 md:inset-2 rounded-full transition-all duration-300"
+              style={{
+                border: `1px solid hsl(var(--neon-cyan) / ${portalUnlocked ? '0.4' : '0.15'})`,
+                boxShadow: portalUnlocked
+                  ? 'inset 0 0 50px hsl(var(--neon-purple) / 0.25), 0 0 40px hsl(var(--neon-cyan) / 0.2)'
+                  : 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
+                animation: 'glowPulse 3s ease-in-out infinite 0.5s',
+              }}
+            />
+            {/* Center content */}
+            <div className="absolute inset-3 md:inset-5 lg:inset-6 rounded-full bg-background flex items-center justify-center">
+              <div className="text-center relative">
+                <p className="text-[10px] md:text-xs lg:text-sm uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
+                <p className="text-base md:text-2xl lg:text-3xl font-bold gradient-text">My Creations</p>
+                {/* Animated cursor hint */}
+                <AnimatePresence>
+                  {cursorAnim && !isMobile && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: [0, 1, 1, 0], y: [0, 8, 8, 12] }}
+                      transition={{ duration: 1.5, times: [0, 0.2, 0.7, 1] }}
+                      className="absolute -bottom-5 left-1/2 -translate-x-1/2"
+                    >
+                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.6))' }} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Floating unlock text */}
+            <AnimatePresence>
+              {showUnlockText && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                  animate={{ opacity: 1, y: -20, scale: 1 }}
+                  exit={{ opacity: 0, y: -40, scale: 0.9 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="absolute left-1/2 -translate-x-1/2 -bottom-8 md:-bottom-10 whitespace-nowrap z-20 pointer-events-none"
+                >
+                  <span
+                    className="text-xs md:text-sm font-bold tracking-wider px-3 py-1.5 rounded-full"
+                    style={{
+                      background: 'linear-gradient(135deg, hsl(var(--neon-purple) / 0.2), hsl(var(--neon-cyan) / 0.15))',
+                      border: '1px solid hsl(var(--neon-cyan) / 0.3)',
+                      color: 'hsl(var(--neon-cyan))',
+                      textShadow: '0 0 12px hsl(var(--neon-cyan) / 0.6)',
+                      boxShadow: '0 0 20px hsl(var(--neon-purple) / 0.2)',
+                    }}
+                  >
+                    Portal Unlocked ⚡
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
 
         {/* ─── Connecting line (desktop only) ─── */}
         <div className="hidden md:block w-16 lg:w-24 h-px relative flex-shrink-0 -mx-7 lg:-mx-10">
@@ -344,7 +463,6 @@ const PortalSlider = () => {
             className="fixed inset-0 z-[100] flex items-center justify-center px-4"
             onClick={() => setModalOpen(false)}
           >
-            {/* Backdrop with blur */}
             <motion.div
               initial={{ backdropFilter: 'blur(0px)' }}
               animate={{ backdropFilter: 'blur(12px)' }}
@@ -352,8 +470,6 @@ const PortalSlider = () => {
               transition={{ duration: 0.4 }}
               className="absolute inset-0 bg-background/70"
             />
-
-            {/* Modal card — emerges from card position on desktop */}
             <motion.div
               initial={{
                 opacity: 0,
@@ -381,14 +497,12 @@ const PortalSlider = () => {
                 },
               }}
             >
-              {/* Close button */}
               <button
                 onClick={() => setModalOpen(false)}
                 className="absolute top-4 right-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all duration-200"
               >
                 <X className="w-4 h-4" />
               </button>
-
               <div className="text-center">
                 <motion.span
                   initial={{ scale: 0.5, opacity: 0 }}
