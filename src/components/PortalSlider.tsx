@@ -41,17 +41,17 @@ const PortalSlider = () => {
     return () => clearInterval(interval);
   }, [expanded]);
 
-  const orbitRadius = isMobile ? 105 : 175;
-  const containerSize = isMobile ? 280 : 440;
-  const coreSize = isMobile ? 120 : 200;
-  const iconSize = isMobile ? 36 : 48;
+  const orbitRadius = isMobile ? 115 : 195;
+  const containerSize = isMobile ? 300 : 490;
+  const coreSize = isMobile ? 125 : 210;
+  const iconSize = isMobile ? 40 : 54;
 
   return (
-    <section className="py-10 md:py-16 px-4 relative overflow-hidden snap-section">
+    <section className="py-14 md:py-20 px-4 relative overflow-hidden snap-section">
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--neon-purple) / 0.06), hsl(var(--neon-cyan) / 0.03) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--neon-purple) / 0.05), hsl(var(--neon-cyan) / 0.02) 40%, transparent 70%)',
         }}
       />
 
@@ -62,10 +62,9 @@ const PortalSlider = () => {
         transition={{ duration: 0.7 }}
         className="max-w-3xl mx-auto flex flex-col items-center justify-center"
       >
-        {/* Orbit System — uses relative container with centered children */}
         <div className="relative" style={{ width: containerSize, height: containerSize }}>
 
-          {/* Orbit track ring — centered via inset auto + margin */}
+          {/* Orbit track ring */}
           <div
             className="absolute rounded-full pointer-events-none"
             style={{
@@ -75,12 +74,12 @@ const PortalSlider = () => {
               left: '50%',
               marginTop: -orbitRadius,
               marginLeft: -orbitRadius,
-              border: '1px dashed hsl(var(--neon-purple) / 0.12)',
-              boxShadow: 'inset 0 0 20px hsl(var(--neon-cyan) / 0.04), 0 0 15px hsl(var(--neon-purple) / 0.04)',
+              border: '1px dashed hsl(var(--neon-purple) / 0.1)',
+              boxShadow: 'inset 0 0 30px hsl(var(--neon-cyan) / 0.03), 0 0 20px hsl(var(--neon-purple) / 0.03)',
             }}
           />
 
-          {/* Rotating orbit wrapper — positioned at center, then rotated */}
+          {/* Rotating orbit wrapper */}
           <div
             className="absolute"
             style={{
@@ -88,7 +87,7 @@ const PortalSlider = () => {
               height: 0,
               top: '50%',
               left: '50%',
-              animation: 'semiRotate 22s linear infinite',
+              animation: 'semiRotate 26s linear infinite',
             }}
           >
             {orbitIcons.map((icon, i) => {
@@ -107,28 +106,28 @@ const PortalSlider = () => {
                     top: y - iconSize / 2,
                     width: iconSize,
                     height: iconSize,
-                    animation: 'semiRotate 22s linear infinite reverse',
+                    animation: 'semiRotate 26s linear infinite reverse',
                   }}
                   whileHover={{ scale: 1.35 }}
                   onMouseEnter={play}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div
-                    className="w-full h-full rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.5)]"
+                    className="w-full h-full rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_22px_hsl(var(--neon-cyan)/0.4)]"
                     style={{
-                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.8), hsl(var(--background) / 0.95))',
-                      border: '1px solid hsl(var(--neon-purple) / 0.2)',
-                      boxShadow: '0 2px 8px hsl(0 0% 0% / 0.3)',
+                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
+                      border: '1px solid hsl(var(--neon-purple) / 0.15)',
+                      boxShadow: '0 4px 16px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
                     }}
                   >
-                    <span className="text-base md:text-xl">{icon.emoji}</span>
+                    <span className="text-lg md:text-2xl">{icon.emoji}</span>
                   </div>
                 </motion.a>
               );
             })}
           </div>
 
-          {/* Center Core — fixed position, never moves */}
+          {/* Center Core */}
           <motion.div
             className={`absolute rounded-full cursor-pointer group ${isPressed ? 'mobile-tap-glow' : ''}`}
             style={{
@@ -149,9 +148,9 @@ const PortalSlider = () => {
           >
             {/* Ambient glow */}
             <div
-              className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
+              className="absolute -inset-12 md:-inset-16 rounded-full -z-10"
               style={{
-                background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.1), hsl(var(--neon-purple) / 0.08) 40%, transparent 70%)',
+                background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.08), hsl(var(--neon-purple) / 0.06) 40%, transparent 70%)',
                 animation: 'glowPulse 4s ease-in-out infinite',
               }}
             />
@@ -159,25 +158,25 @@ const PortalSlider = () => {
             <div
               className="absolute inset-0 rounded-full"
               style={{
-                background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.6), hsl(195 100% 50% / 0.4), hsl(270 80% 53% / 0.7), hsl(270 80% 53% / 0.2), transparent 60%)',
+                background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.5), hsl(195 100% 50% / 0.3), hsl(270 80% 53% / 0.6), hsl(270 80% 53% / 0.15), transparent 60%)',
                 animation: 'semiRotate 10s linear infinite',
-                filter: 'blur(5px)',
+                filter: 'blur(6px)',
               }}
             />
             {/* Inner border */}
             <div
               className="absolute inset-1.5 md:inset-2 rounded-full"
               style={{
-                border: '1px solid hsl(var(--neon-cyan) / 0.15)',
-                boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
+                border: '1px solid hsl(var(--neon-cyan) / 0.12)',
+                boxShadow: 'inset 0 0 40px hsl(var(--neon-purple) / 0.08), 0 0 20px hsl(var(--neon-cyan) / 0.06)',
                 animation: 'glowPulse 3s ease-in-out infinite 0.5s',
               }}
             />
             {/* Center content */}
             <div className="absolute inset-3 md:inset-5 rounded-full bg-background flex items-center justify-center">
               <div className="text-center relative">
-                <p className="text-[8px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-0.5">Explore</p>
-                <p className="text-sm md:text-2xl font-bold gradient-text leading-tight">My Creations</p>
+                <p className="text-[8px] md:text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-1 font-semibold">Explore</p>
+                <p className="text-sm md:text-2xl font-extrabold gradient-text leading-tight tracking-tight">My Creations</p>
                 <AnimatePresence>
                   {cursorAnim && !isMobile && (
                     <motion.div
@@ -186,7 +185,7 @@ const PortalSlider = () => {
                       transition={{ duration: 1.5, times: [0, 0.2, 0.7, 1] }}
                       className="absolute -bottom-4 left-1/2 -translate-x-1/2"
                     >
-                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.6))' }} />
+                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 6px hsl(var(--neon-cyan) / 0.6))' }} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -196,7 +195,7 @@ const PortalSlider = () => {
         </div>
       </motion.div>
 
-      {/* ===== FULLSCREEN TOOL UNIVERSE OVERLAY ===== */}
+      {/* FULLSCREEN TOOL UNIVERSE OVERLAY */}
       <AnimatePresence>
         {expanded && (
           <motion.div
@@ -205,7 +204,7 @@ const PortalSlider = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
             className="fixed inset-0 z-[100] flex items-center justify-center"
-            style={{ backdropFilter: 'blur(16px)', background: 'hsl(var(--background) / 0.85)' }}
+            style={{ backdropFilter: 'blur(20px)', background: 'hsl(var(--background) / 0.88)' }}
             onClick={() => setExpanded(false)}
           >
             <motion.button
@@ -214,11 +213,7 @@ const PortalSlider = () => {
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ delay: 0.2 }}
               onClick={() => setExpanded(false)}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-300 hover:scale-110"
-              style={{
-                background: 'hsl(var(--muted) / 0.6)',
-                border: '1px solid hsl(var(--neon-cyan) / 0.2)',
-              }}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-300 hover:scale-110 premium-card"
             >
               <X className="w-5 h-5 text-foreground" />
             </motion.button>
@@ -228,7 +223,7 @@ const PortalSlider = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 }}
-                className="text-xl md:text-3xl font-bold gradient-text"
+                className="text-xl md:text-3xl font-extrabold gradient-text tracking-tight"
               >
                 My Creations ✦
               </motion.h2>
@@ -236,14 +231,14 @@ const PortalSlider = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.25 }}
-                className="text-xs text-muted-foreground mt-1"
+                className="text-xs text-muted-foreground mt-1.5"
               >
                 Tools, projects & experiments
               </motion.p>
             </div>
 
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 max-w-3xl w-full max-h-[70vh] overflow-y-auto"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8 p-6 max-w-3xl w-full max-h-[70vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {allTools.map((tool, i) => (
@@ -263,27 +258,22 @@ const PortalSlider = () => {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div
-                    className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-2.5 transition-all duration-300 relative"
-                    style={{
-                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.6), hsl(var(--background) / 0.9))',
-                      border: '1px solid hsl(var(--neon-purple) / 0.15)',
-                      boxShadow: '0 4px 20px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--neon-purple) / 0.08)',
-                    }}
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-3 transition-all duration-300 relative premium-card !rounded-full"
                   >
                     <div
                       className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 -z-10"
                       style={{
                         background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.15), transparent 70%)',
-                        filter: 'blur(8px)',
+                        filter: 'blur(10px)',
                       }}
                     />
                     <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300">{tool.emoji}</span>
                   </div>
-                  <span className={`text-xs md:text-sm font-semibold text-foreground group-hover:text-glow transition-all duration-300 ${/[\u0980-\u09FF]/.test(tool.name) ? 'font-bengali' : ''}`}>
+                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${/[\u0980-\u09FF]/.test(tool.name) ? 'font-bengali' : ''}`}>
                     {tool.name}
                   </span>
                   <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{tool.desc}</span>
-                  <ExternalLink className="w-3 h-3 text-muted-foreground mt-1 group-hover:text-neon-cyan transition-colors duration-300" />
+                  <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
                 </motion.a>
               ))}
             </div>

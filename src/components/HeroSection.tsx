@@ -3,15 +3,24 @@ import profileImg from '@/assets/profile.jpg';
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[50vh] flex flex-col items-center justify-center relative px-4 pt-6 pb-0 snap-section">
+    <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2 snap-section">
       {/* Profile with glow pulse */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative mb-3"
+        className="relative mb-5"
         style={{ animation: 'float 4s ease-in-out infinite' }}
       >
+        {/* Outer ambient glow */}
+        <div
+          className="absolute -inset-8 rounded-full opacity-40 blur-2xl"
+          style={{
+            background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.3), hsl(var(--neon-purple) / 0.2), transparent 70%)',
+            animation: 'glowPulse 4s ease-in-out infinite',
+          }}
+        />
+        {/* Spinning ring */}
         <div
           className="absolute -inset-3 rounded-full opacity-60 blur-md"
           style={{
@@ -22,7 +31,8 @@ const HeroSection = () => {
         <img
           src={profileImg}
           alt="Md Nasrullah"
-          className="relative w-32 h-32 md:w-44 md:h-44 rounded-full object-cover border-2 border-background z-10"
+          className="relative w-36 h-36 md:w-48 md:h-48 rounded-full object-cover border-2 border-background z-10"
+          style={{ boxShadow: '0 0 40px hsl(var(--neon-purple) / 0.2), 0 0 80px hsl(var(--neon-cyan) / 0.1)' }}
         />
       </motion.div>
 
@@ -30,7 +40,8 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="text-3xl md:text-5xl lg:text-7xl font-bold gradient-text mb-1 tracking-tight drop-shadow-[0_0_15px_hsl(var(--neon-purple)/0.3)]"
+        className="text-4xl md:text-6xl lg:text-7xl font-extrabold gradient-text mb-2 tracking-tight"
+        style={{ filter: 'drop-shadow(0 0 25px hsl(var(--neon-purple) / 0.25))' }}
       >
         Md Nasrullah
       </motion.h1>
@@ -39,7 +50,8 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-base md:text-xl lg:text-2xl font-semibold text-neon-purple text-glow mb-1 tracking-wide"
+        className="text-base md:text-xl lg:text-2xl font-bold text-neon-purple text-glow mb-2 tracking-wide uppercase"
+        style={{ letterSpacing: '0.15em' }}
       >
         AI Creator & Visual Builder
       </motion.p>
@@ -48,7 +60,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.6 }}
-        className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-md text-center"
+        className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-lg text-center leading-relaxed"
       >
         I build visuals, tools & ideas using AI.
       </motion.p>
