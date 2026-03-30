@@ -1,29 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MousePointerClick, ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-const orbitIcons = [
-  { emoji: '🛠️', label: 'NasruTools', url: 'https://nasrutools.lovable.app' },
-  { emoji: '🤖', label: 'PromptNovaAI', url: 'https://promptnovaai.lovable.app/' },
-  { emoji: '📚', label: 'StudyFlowAI', url: 'https://studyandcareer-ai.lovable.app/' },
-  { emoji: '🏏', label: 'Cricket N', url: 'https://cricketnasrumade.lovable.app/' },
-  { emoji: '🛍️', label: 'NasruShop', url: 'https://nasrushop.lovable.app' },
-  { emoji: '🏪', label: 'Nasru Store', url: 'https://nasrustore.netlify.app/#' },
-];
-
-const allTools = [
-  { emoji: '🤖', name: 'PromptNovaAI', desc: 'AI prompt engineering toolkit', url: 'https://promptnovaai.lovable.app/' },
-  { emoji: '📚', name: 'StudyFlowAI', desc: 'AI-driven study companion', url: 'https://studyandcareer-ai.lovable.app/' },
-  { emoji: '🛠️', name: 'NasruTools', desc: 'AI-powered utility tools', url: 'https://nasrutools.lovable.app' },
-  { emoji: '🛍️', name: 'NasruShop', desc: 'Modern AI e-commerce', url: 'https://nasrushop.lovable.app' },
-  { emoji: '🏪', name: 'Nasru Store', desc: 'Curated products & collections', url: 'https://nasrustore.netlify.app/#' },
-  { emoji: '🏏', name: 'Cricket N', desc: 'Live cricket experience', url: 'https://cricketnasrumade.lovable.app/' },
-  { emoji: '🍛', name: 'মাছে ভাতে বাঙ্গালী', desc: 'Bengali food experience', url: 'https://xn--r5bdf0b1bef2b3gccc1a2gd3h.xn--45bl4db.xn--54b7fta0cc/' },
-  { emoji: '📖', name: 'Literaria', desc: 'Writers & literature platform', url: 'https://literariahub.lovable.app/' },
-];
+import { orbitProducts } from '@/data/digitalLabProducts';
 
 const PortalSlider = () => {
   const [cursorAnim, setCursorAnim] = useState(false);
@@ -41,17 +22,19 @@ const PortalSlider = () => {
     return () => clearInterval(interval);
   }, [expanded]);
 
-  const orbitRadius = isMobile ? 115 : 195;
-  const containerSize = isMobile ? 300 : 490;
-  const coreSize = isMobile ? 125 : 210;
-  const iconSize = isMobile ? 40 : 54;
+  const orbitRadius = isMobile ? 130 : 170;
+  const containerSize = isMobile ? 330 : 440;
+  const coreSize = isMobile ? 110 : 170;
+  const iconSize = 56;
+
+  const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
   return (
-    <section className="py-14 md:py-20 px-4 relative overflow-hidden snap-section">
+    <section className="py-16 md:py-24 px-4 relative overflow-hidden snap-section">
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--neon-purple) / 0.05), hsl(var(--neon-cyan) / 0.02) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--neon-purple) / 0.04), hsl(var(--neon-cyan) / 0.02) 40%, transparent 70%)',
         }}
       />
 
@@ -74,8 +57,8 @@ const PortalSlider = () => {
               left: '50%',
               marginTop: -orbitRadius,
               marginLeft: -orbitRadius,
-              border: '1px dashed hsl(var(--neon-purple) / 0.1)',
-              boxShadow: 'inset 0 0 30px hsl(var(--neon-cyan) / 0.03), 0 0 20px hsl(var(--neon-purple) / 0.03)',
+              border: '1px dashed hsl(var(--neon-purple) / 0.08)',
+              willChange: 'transform',
             }}
           />
 
@@ -87,17 +70,19 @@ const PortalSlider = () => {
               height: 0,
               top: '50%',
               left: '50%',
-              animation: 'semiRotate 26s linear infinite',
+              animation: 'semiRotate 30s linear infinite',
+              willChange: 'transform',
             }}
           >
-            {orbitIcons.map((icon, i) => {
-              const angle = (i / orbitIcons.length) * 2 * Math.PI;
+            {orbitProducts.map((item, i) => {
+              const angle = (i / orbitProducts.length) * 2 * Math.PI;
               const x = Math.cos(angle) * orbitRadius;
               const y = Math.sin(angle) * orbitRadius;
+              const Icon = item.icon;
               return (
                 <motion.a
-                  key={icon.label}
-                  href={icon.url}
+                  key={item.id}
+                  href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute cursor-pointer"
@@ -106,21 +91,22 @@ const PortalSlider = () => {
                     top: y - iconSize / 2,
                     width: iconSize,
                     height: iconSize,
-                    animation: 'semiRotate 26s linear infinite reverse',
+                    animation: 'semiRotate 30s linear infinite reverse',
+                    willChange: 'transform',
                   }}
-                  whileHover={{ scale: 1.35 }}
+                  whileHover={{ scale: 1.2 }}
                   onMouseEnter={play}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div
-                    className="w-full h-full rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_22px_hsl(var(--neon-cyan)/0.4)]"
+                    className="w-full h-full rounded-full flex items-center justify-center transition-shadow duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.3)]"
                     style={{
                       background: 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
-                      border: '1px solid hsl(var(--neon-purple) / 0.15)',
-                      boxShadow: '0 4px 16px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
+                      border: '1px solid hsl(var(--neon-cyan) / 0.12)',
+                      boxShadow: '0 2px 10px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
                     }}
                   >
-                    <span className="text-lg md:text-2xl">{icon.emoji}</span>
+                    <Icon className="w-6 h-6 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }} />
                   </div>
                 </motion.a>
               );
@@ -148,9 +134,9 @@ const PortalSlider = () => {
           >
             {/* Ambient glow */}
             <div
-              className="absolute -inset-12 md:-inset-16 rounded-full -z-10"
+              className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
               style={{
-                background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.08), hsl(var(--neon-purple) / 0.06) 40%, transparent 70%)',
+                background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.06), hsl(var(--neon-purple) / 0.04) 40%, transparent 70%)',
                 animation: 'glowPulse 4s ease-in-out infinite',
               }}
             />
@@ -158,25 +144,25 @@ const PortalSlider = () => {
             <div
               className="absolute inset-0 rounded-full"
               style={{
-                background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.5), hsl(195 100% 50% / 0.3), hsl(270 80% 53% / 0.6), hsl(270 80% 53% / 0.15), transparent 60%)',
+                background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.4), hsl(195 100% 50% / 0.2), hsl(270 80% 53% / 0.5), hsl(270 80% 53% / 0.1), transparent 60%)',
                 animation: 'semiRotate 10s linear infinite',
-                filter: 'blur(6px)',
+                filter: 'blur(4px)',
+                willChange: 'transform',
               }}
             />
             {/* Inner border */}
             <div
               className="absolute inset-1.5 md:inset-2 rounded-full"
               style={{
-                border: '1px solid hsl(var(--neon-cyan) / 0.12)',
-                boxShadow: 'inset 0 0 40px hsl(var(--neon-purple) / 0.08), 0 0 20px hsl(var(--neon-cyan) / 0.06)',
-                animation: 'glowPulse 3s ease-in-out infinite 0.5s',
+                border: '1px solid hsl(var(--neon-cyan) / 0.1)',
+                boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.06)',
               }}
             />
             {/* Center content */}
-            <div className="absolute inset-3 md:inset-5 rounded-full bg-background flex items-center justify-center">
+            <div className="absolute inset-3 md:inset-4 rounded-full bg-background flex items-center justify-center">
               <div className="text-center relative">
                 <p className="text-[8px] md:text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-1 font-semibold">Explore</p>
-                <p className="text-sm md:text-2xl font-extrabold gradient-text leading-tight tracking-tight">My Creations</p>
+                <p className="text-xs md:text-xl font-extrabold gradient-text leading-tight tracking-tight">My Creations</p>
                 <AnimatePresence>
                   {cursorAnim && !isMobile && (
                     <motion.div
@@ -185,7 +171,7 @@ const PortalSlider = () => {
                       transition={{ duration: 1.5, times: [0, 0.2, 0.7, 1] }}
                       className="absolute -bottom-4 left-1/2 -translate-x-1/2"
                     >
-                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 6px hsl(var(--neon-cyan) / 0.6))' }} />
+                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.5))' }} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -195,25 +181,26 @@ const PortalSlider = () => {
         </div>
       </motion.div>
 
-      {/* FULLSCREEN TOOL UNIVERSE OVERLAY */}
+      {/* FULLSCREEN TOOL UNIVERSE OVERLAY – lazy rendered */}
       <AnimatePresence>
         {expanded && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] flex items-center justify-center"
-            style={{ backdropFilter: 'blur(20px)', background: 'hsl(var(--background) / 0.88)' }}
+            style={{ backdropFilter: 'blur(10px)', background: 'hsl(var(--background) / 0.9)' }}
             onClick={() => setExpanded(false)}
           >
             <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15 }}
               onClick={() => setExpanded(false)}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-300 hover:scale-110 premium-card"
+              className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-colors duration-300 hover:bg-muted/60"
+              style={{ background: 'hsl(var(--muted) / 0.4)', border: '1px solid hsl(var(--neon-purple) / 0.1)' }}
             >
               <X className="w-5 h-5 text-foreground" />
             </motion.button>
@@ -222,7 +209,7 @@ const PortalSlider = () => {
               <motion.h2
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 }}
+                transition={{ delay: 0.1 }}
                 className="text-xl md:text-3xl font-extrabold gradient-text tracking-tight"
               >
                 My Creations ✦
@@ -230,7 +217,7 @@ const PortalSlider = () => {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.25 }}
+                transition={{ delay: 0.2 }}
                 className="text-xs text-muted-foreground mt-1.5"
               >
                 Tools, projects & experiments
@@ -238,44 +225,45 @@ const PortalSlider = () => {
             </div>
 
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8 p-6 max-w-3xl w-full max-h-[70vh] overflow-y-auto"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {allTools.map((tool, i) => (
-                <motion.a
-                  key={tool.name}
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ delay: 0.1 + i * 0.06, type: 'spring', stiffness: 200, damping: 18 }}
-                  whileHover={{ scale: 1.08, y: -6 }}
-                  whileTap={{ scale: 0.95 }}
-                  onMouseEnter={play}
-                  className="flex flex-col items-center text-center group"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div
-                    className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-3 transition-all duration-300 relative premium-card !rounded-full"
+              {orbitProducts.map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <motion.a
+                    key={item.id}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ delay: 0.08 + i * 0.05, type: 'spring', stiffness: 200, damping: 18 }}
+                    whileHover={{ scale: 1.06, y: -4 }}
+                    whileTap={{ scale: 0.95 }}
+                    onMouseEnter={play}
+                    className="flex flex-col items-center text-center group"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <div
-                      className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 -z-10"
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mb-2.5 transition-shadow duration-300 relative"
                       style={{
-                        background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.15), transparent 70%)',
-                        filter: 'blur(10px)',
+                        background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))',
+                        border: '1px solid hsl(var(--neon-cyan) / 0.1)',
+                        boxShadow: '0 2px 10px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(var(--foreground) / 0.02)',
                       }}
-                    />
-                    <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300">{tool.emoji}</span>
-                  </div>
-                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${/[\u0980-\u09FF]/.test(tool.name) ? 'font-bengali' : ''}`}>
-                    {tool.name}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{tool.desc}</span>
-                  <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
-                </motion.a>
-              ))}
+                    >
+                      <Icon className="w-7 h-7 md:w-8 md:h-8 text-neon-cyan group-hover:scale-110 transition-transform duration-300" style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }} />
+                    </div>
+                    <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
+                      {item.name}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{item.subtitle}</span>
+                    <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
+                  </motion.a>
+                );
+              })}
             </div>
           </motion.div>
         )}
