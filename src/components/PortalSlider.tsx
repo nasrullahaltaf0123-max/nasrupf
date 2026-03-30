@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MousePointerClick, ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
@@ -32,7 +32,6 @@ const PortalSlider = () => {
   const { mobileTapProps, isPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
   const isMobile = useIsMobile();
 
-  // Cursor hint every 4s
   useEffect(() => {
     if (expanded) return;
     const interval = setInterval(() => {
@@ -43,11 +42,12 @@ const PortalSlider = () => {
   }, [expanded]);
 
   const orbitRadius = isMobile ? 105 : 175;
-  const coreSize = isMobile ? 160 : 260;
+  const containerSize = isMobile ? 280 : 440;
+  const coreSize = isMobile ? 120 : 200;
+  const iconSize = isMobile ? 36 : 48;
 
   return (
     <section className="py-10 md:py-16 px-4 relative overflow-hidden snap-section">
-      {/* Section radial glow */}
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
@@ -62,51 +62,39 @@ const PortalSlider = () => {
         transition={{ duration: 0.7 }}
         className="max-w-3xl mx-auto flex flex-col items-center justify-center"
       >
-        {/* Orbit System Container */}
-        <div className="relative" style={{ width: isMobile ? 280 : 440, height: isMobile ? 280 : 440 }}>
-          {/* Orbit track ring */}
-          <div
-            className="absolute rounded-full"
-            style={{
-              width: orbitRadius * 2 + (isMobile ? 44 : 54),
-              height: orbitRadius * 2 + (isMobile ? 44 : 54),
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              border: '1px dashed hsl(var(--neon-purple) / 0.12)',
-            }}
-          />
-          {/* Neon trail glow on orbit path */}
+        {/* Orbit System — uses relative container with centered children */}
+        <div className="relative" style={{ width: containerSize, height: containerSize }}>
+
+          {/* Orbit track ring — centered via inset auto + margin */}
           <div
             className="absolute rounded-full pointer-events-none"
             style={{
-              width: orbitRadius * 2 + (isMobile ? 44 : 54),
-              height: orbitRadius * 2 + (isMobile ? 44 : 54),
+              width: orbitRadius * 2,
+              height: orbitRadius * 2,
               top: '50%',
               left: '50%',
-              transform: 'translate(-50%, -50%)',
+              marginTop: -orbitRadius,
+              marginLeft: -orbitRadius,
+              border: '1px dashed hsl(var(--neon-purple) / 0.12)',
               boxShadow: 'inset 0 0 20px hsl(var(--neon-cyan) / 0.04), 0 0 15px hsl(var(--neon-purple) / 0.04)',
             }}
           />
 
-          {/* Orbiting icons */}
+          {/* Rotating orbit wrapper — positioned at center, then rotated */}
           <div
             className="absolute"
             style={{
-              width: orbitRadius * 2 + (isMobile ? 44 : 54),
-              height: orbitRadius * 2 + (isMobile ? 44 : 54),
+              width: 0,
+              height: 0,
               top: '50%',
               left: '50%',
-              transform: 'translate(-50%, -50%)',
               animation: 'semiRotate 22s linear infinite',
             }}
           >
             {orbitIcons.map((icon, i) => {
-              const angle = (i / orbitIcons.length) * 360;
-              const rad = (angle * Math.PI) / 180;
-              const r = orbitRadius + (isMobile ? 12 : 17);
-              const x = Math.cos(rad) * r;
-              const y = Math.sin(rad) * r;
+              const angle = (i / orbitIcons.length) * 2 * Math.PI;
+              const x = Math.cos(angle) * orbitRadius;
+              const y = Math.sin(angle) * orbitRadius;
               return (
                 <motion.a
                   key={icon.label}
@@ -115,9 +103,10 @@ const PortalSlider = () => {
                   rel="noopener noreferrer"
                   className="absolute cursor-pointer"
                   style={{
-                    left: '50%',
-                    top: '50%',
-                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                    left: x - iconSize / 2,
+                    top: y - iconSize / 2,
+                    width: iconSize,
+                    height: iconSize,
                     animation: 'semiRotate 22s linear infinite reverse',
                   }}
                   whileHover={{ scale: 1.35 }}
@@ -125,7 +114,7 @@ const PortalSlider = () => {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div
-                    className="w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.5)]"
+                    className="w-full h-full rounded-full flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.5)]"
                     style={{
                       background: 'linear-gradient(145deg, hsl(var(--muted) / 0.8), hsl(var(--background) / 0.95))',
                       border: '1px solid hsl(var(--neon-purple) / 0.2)',
@@ -139,7 +128,7 @@ const PortalSlider = () => {
             })}
           </div>
 
-          {/* Center Core */}
+          {/* Center Core — fixed position, never moves */}
           <motion.div
             className={`absolute rounded-full cursor-pointer group ${isPressed ? 'mobile-tap-glow' : ''}`}
             style={{
@@ -147,7 +136,9 @@ const PortalSlider = () => {
               height: coreSize,
               top: '50%',
               left: '50%',
-              transform: 'translate(-50%, -50%)',
+              marginTop: -coreSize / 2,
+              marginLeft: -coreSize / 2,
+              zIndex: 10,
             }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
@@ -175,7 +166,7 @@ const PortalSlider = () => {
             />
             {/* Inner border */}
             <div
-              className="absolute inset-1.5 md:inset-2 rounded-full transition-all duration-300"
+              className="absolute inset-1.5 md:inset-2 rounded-full"
               style={{
                 border: '1px solid hsl(var(--neon-cyan) / 0.15)',
                 boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.1), 0 0 15px hsl(var(--neon-cyan) / 0.08)',
@@ -183,18 +174,17 @@ const PortalSlider = () => {
               }}
             />
             {/* Center content */}
-            <div className="absolute inset-4 md:inset-6 rounded-full bg-background flex items-center justify-center">
+            <div className="absolute inset-3 md:inset-5 rounded-full bg-background flex items-center justify-center">
               <div className="text-center relative">
-                <p className="text-[9px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-1">Explore</p>
-                <p className="text-lg md:text-2xl lg:text-3xl font-bold gradient-text">My Creations</p>
-                {/* Cursor hint */}
+                <p className="text-[8px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-0.5">Explore</p>
+                <p className="text-sm md:text-2xl font-bold gradient-text leading-tight">My Creations</p>
                 <AnimatePresence>
                   {cursorAnim && !isMobile && (
                     <motion.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: [0, 1, 1, 0], y: [0, 8, 8, 12] }}
                       transition={{ duration: 1.5, times: [0, 0.2, 0.7, 1] }}
-                      className="absolute -bottom-5 left-1/2 -translate-x-1/2"
+                      className="absolute -bottom-4 left-1/2 -translate-x-1/2"
                     >
                       <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.6))' }} />
                     </motion.div>
@@ -218,7 +208,6 @@ const PortalSlider = () => {
             style={{ backdropFilter: 'blur(16px)', background: 'hsl(var(--background) / 0.85)' }}
             onClick={() => setExpanded(false)}
           >
-            {/* Close button */}
             <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -234,7 +223,6 @@ const PortalSlider = () => {
               <X className="w-5 h-5 text-foreground" />
             </motion.button>
 
-            {/* Title */}
             <div className="absolute top-8 left-0 right-0 text-center pointer-events-none">
               <motion.h2
                 initial={{ opacity: 0, y: -20 }}
@@ -254,7 +242,6 @@ const PortalSlider = () => {
               </motion.p>
             </div>
 
-            {/* Bubble Grid */}
             <div
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 max-w-3xl w-full max-h-[70vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
@@ -275,7 +262,6 @@ const PortalSlider = () => {
                   className="flex flex-col items-center text-center group"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Bubble */}
                   <div
                     className="w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-2.5 transition-all duration-300 relative"
                     style={{
@@ -284,7 +270,6 @@ const PortalSlider = () => {
                       boxShadow: '0 4px 20px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(var(--neon-purple) / 0.08)',
                     }}
                   >
-                    {/* Hover glow ring */}
                     <div
                       className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400 -z-10"
                       style={{
