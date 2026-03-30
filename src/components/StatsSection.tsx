@@ -39,7 +39,7 @@ const AnimatedNumber = ({ value, suffix }: { value: number; suffix: string }) =>
 
 const StatsSection = () => {
   return (
-    <section className="py-10 px-4 snap-section">
+    <section className="py-14 md:py-20 px-4 snap-section">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -47,8 +47,8 @@ const StatsSection = () => {
         transition={{ duration: 0.6 }}
         className="max-w-3xl mx-auto"
       >
-        <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-8 text-center">Stats</h2>
-        <div className="grid grid-cols-3 gap-3 md:gap-6">
+        <h2 className="section-heading mb-10 text-center">Impact & Numbers</h2>
+        <div className="grid grid-cols-3 gap-4 md:gap-6">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -56,19 +56,18 @@ const StatsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.12, duration: 0.5 }}
-              className="rounded-2xl p-4 md:p-6 text-center group transition-all duration-300 hover:scale-105"
-              style={{
-                background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.7))',
-                backdropFilter: 'blur(16px)',
-                border: `1px solid hsl(var(${s.color}) / 0.15)`,
-                boxShadow: `0 0 15px hsl(var(${s.color}) / 0.08)`,
-              }}
+              className="premium-card rounded-2xl p-5 md:p-7 text-center group transition-all duration-300 hover:scale-105 hover:-translate-y-1"
             >
-              <s.icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-neon-cyan group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_hsl(var(--neon-cyan)/0.5)] transition-all duration-300" />
-              <p className="text-2xl md:text-4xl font-bold gradient-text mb-1">
+              <div
+                className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:shadow-[0_0_20px_hsl(var(--neon-cyan)/0.3)]"
+                style={{ background: `hsl(var(${s.color}) / 0.08)`, border: `1px solid hsl(var(${s.color}) / 0.1)` }}
+              >
+                <s.icon className="w-6 h-6 md:w-7 md:h-7 text-neon-cyan group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 6px hsl(var(--neon-cyan) / 0.4))' }} />
+              </div>
+              <p className="text-3xl md:text-5xl font-extrabold gradient-text mb-2 tracking-tight">
                 <AnimatedNumber value={s.value} suffix={s.suffix} />
               </p>
-              <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">{s.label}</p>
+              <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest font-semibold">{s.label}</p>
             </motion.div>
           ))}
         </div>
