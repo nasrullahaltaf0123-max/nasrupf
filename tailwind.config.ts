@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
+        sans: ['"Space Grotesk"', '"Inter"', 'sans-serif'],
         bengali: ['"Hind Siliguri"', 'sans-serif'],
       },
       colors: {
