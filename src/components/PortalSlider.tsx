@@ -1,10 +1,13 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MousePointerClick, ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { orbitProducts } from '@/data/digitalLabProducts';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
+const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
 const PortalSlider = () => {
   const [cursorAnim, setCursorAnim] = useState(false);
@@ -23,11 +26,9 @@ const PortalSlider = () => {
   }, [expanded]);
 
   const orbitRadius = isMobile ? 130 : 170;
-  const containerSize = isMobile ? 330 : 440;
+  const containerSize = isMobile ? 340 : 460;
   const coreSize = isMobile ? 110 : 170;
   const iconSize = 56;
-
-  const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
   return (
     <section className="py-16 md:py-24 px-4 relative overflow-hidden snap-section">
@@ -74,43 +75,68 @@ const PortalSlider = () => {
               willChange: 'transform',
             }}
           >
-            {orbitProducts.map((item, i) => {
-              const angle = (i / orbitProducts.length) * 2 * Math.PI;
-              const x = Math.cos(angle) * orbitRadius;
-              const y = Math.sin(angle) * orbitRadius;
-              const Icon = item.icon;
-              return (
-                <motion.a
-                  key={item.id}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute cursor-pointer"
-                  style={{
-                    left: x - iconSize / 2,
-                    top: y - iconSize / 2,
-                    width: iconSize,
-                    height: iconSize,
-                    animation: 'semiRotate 30s linear infinite reverse',
-                    willChange: 'transform',
-                  }}
-                  whileHover={{ scale: 1.2 }}
-                  onMouseEnter={play}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div
-                    className="w-full h-full rounded-full flex items-center justify-center transition-shadow duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.3)]"
-                    style={{
-                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
-                      border: '1px solid hsl(var(--neon-cyan) / 0.12)',
-                      boxShadow: '0 2px 10px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
-                    }}
-                  >
-                    <Icon className="w-6 h-6 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }} />
-                  </div>
-                </motion.a>
-              );
-            })}
+            <TooltipProvider delayDuration={200}>
+              {orbitProducts.map((item, i) => {
+                const angle = (i / orbitProducts.length) * 2 * Math.PI;
+                const x = Math.cos(angle) * orbitRadius;
+                const y = Math.sin(angle) * orbitRadius;
+                return (
+                  <Tooltip key={item.id}>
+                    <TooltipTrigger asChild>
+                      <motion.a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute cursor-pointer"
+                        style={{
+                          left: x - iconSize / 2,
+                          top: y - iconSize / 2,
+                          width: iconSize,
+                          height: iconSize,
+                          animation: 'semiRotate 30s linear infinite reverse',
+                          willChange: 'transform',
+                        }}
+                        whileHover={{ scale: 1.15 }}
+                        onMouseEnter={play}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div
+                          className="w-full h-full rounded-full flex items-center justify-center transition-shadow duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.3)] overflow-hidden"
+                          style={{
+                            background: 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
+                            border: '1px solid hsl(var(--neon-cyan) / 0.12)',
+                            boxShadow: '0 2px 10px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
+                          }}
+                        >
+                          <img
+                            src={item.icon}
+                            alt={item.name}
+                            loading="lazy"
+                            width={32}
+                            height={32}
+                            className="w-8 h-8 object-contain"
+                            style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
+                          />
+                        </div>
+                      </motion.a>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="top"
+                      className="px-3 py-1.5 text-xs font-semibold rounded-lg"
+                      style={{
+                        background: 'hsl(var(--muted) / 0.9)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid hsl(var(--neon-cyan) / 0.15)',
+                        boxShadow: '0 0 12px hsl(var(--neon-cyan) / 0.1)',
+                        color: 'hsl(var(--foreground))',
+                      }}
+                    >
+                      {item.tooltip}
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              })}
+            </TooltipProvider>
           </div>
 
           {/* Center Core */}
@@ -132,7 +158,6 @@ const PortalSlider = () => {
             onClick={() => { play(); setExpanded(true); }}
             {...mobileTapProps}
           >
-            {/* Ambient glow */}
             <div
               className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
               style={{
@@ -140,7 +165,6 @@ const PortalSlider = () => {
                 animation: 'glowPulse 4s ease-in-out infinite',
               }}
             />
-            {/* Spinning gradient ring */}
             <div
               className="absolute inset-0 rounded-full"
               style={{
@@ -150,7 +174,6 @@ const PortalSlider = () => {
                 willChange: 'transform',
               }}
             />
-            {/* Inner border */}
             <div
               className="absolute inset-1.5 md:inset-2 rounded-full"
               style={{
@@ -158,7 +181,6 @@ const PortalSlider = () => {
                 boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.06)',
               }}
             />
-            {/* Center content */}
             <div className="absolute inset-3 md:inset-4 rounded-full bg-background flex items-center justify-center">
               <div className="text-center relative">
                 <p className="text-[8px] md:text-[10px] uppercase tracking-[0.35em] text-muted-foreground mb-1 font-semibold">Explore</p>
@@ -181,7 +203,7 @@ const PortalSlider = () => {
         </div>
       </motion.div>
 
-      {/* FULLSCREEN TOOL UNIVERSE OVERLAY – lazy rendered */}
+      {/* FULLSCREEN OVERLAY */}
       <AnimatePresence>
         {expanded && (
           <motion.div
@@ -190,7 +212,7 @@ const PortalSlider = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] flex items-center justify-center"
-            style={{ backdropFilter: 'blur(10px)', background: 'hsl(var(--background) / 0.9)' }}
+            style={{ backdropFilter: 'blur(8px)', background: 'hsl(var(--background) / 0.9)' }}
             onClick={() => setExpanded(false)}
           >
             <motion.button
@@ -228,42 +250,47 @@ const PortalSlider = () => {
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {orbitProducts.map((item, i) => {
-                const Icon = item.icon;
-                return (
-                  <motion.a
-                    key={item.id}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{ delay: 0.08 + i * 0.05, type: 'spring', stiffness: 200, damping: 18 }}
-                    whileHover={{ scale: 1.06, y: -4 }}
-                    whileTap={{ scale: 0.95 }}
-                    onMouseEnter={play}
-                    className="flex flex-col items-center text-center group"
-                    onClick={(e) => e.stopPropagation()}
+              {orbitProducts.map((item, i) => (
+                <motion.a
+                  key={item.id}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ delay: 0.08 + i * 0.05, type: 'spring', stiffness: 200, damping: 18 }}
+                  whileHover={{ scale: 1.06, y: -4 }}
+                  whileTap={{ scale: 0.95 }}
+                  onMouseEnter={play}
+                  className="flex flex-col items-center text-center group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mb-2.5 transition-shadow duration-300 relative overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))',
+                      border: '1px solid hsl(var(--neon-cyan) / 0.1)',
+                      boxShadow: '0 2px 10px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(var(--foreground) / 0.02)',
+                    }}
                   >
-                    <div
-                      className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mb-2.5 transition-shadow duration-300 relative"
-                      style={{
-                        background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))',
-                        border: '1px solid hsl(var(--neon-cyan) / 0.1)',
-                        boxShadow: '0 2px 10px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(var(--foreground) / 0.02)',
-                      }}
-                    >
-                      <Icon className="w-7 h-7 md:w-8 md:h-8 text-neon-cyan group-hover:scale-110 transition-transform duration-300" style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }} />
-                    </div>
-                    <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
-                      {item.name}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{item.subtitle}</span>
-                    <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
-                  </motion.a>
-                );
-              })}
+                    <img
+                      src={item.icon}
+                      alt={item.name}
+                      loading="lazy"
+                      width={36}
+                      height={36}
+                      className="w-9 h-9 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform duration-300"
+                      style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
+                    />
+                  </div>
+                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
+                    {item.name}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{item.subtitle}</span>
+                  <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
+                </motion.a>
+              ))}
             </div>
           </motion.div>
         )}
