@@ -78,7 +78,7 @@ const PortalSlider = () => {
           >
             <TooltipProvider delayDuration={200}>
               {orbitProducts.map((item, i) => {
-                const angle = (i / orbitProducts.length) * 2 * Math.PI;
+                const angle = -Math.PI / 2 + (i / itemCount) * 2 * Math.PI;
                 const x = Math.cos(angle) * orbitRadius;
                 const y = Math.sin(angle) * orbitRadius;
                 return (
