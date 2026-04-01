@@ -25,10 +25,11 @@ const PortalSlider = () => {
     return () => clearInterval(interval);
   }, [expanded]);
 
-  const orbitRadius = isMobile ? 130 : 170;
-  const containerSize = isMobile ? 340 : 460;
-  const coreSize = isMobile ? 110 : 170;
-  const iconSize = 56;
+  const itemCount = orbitProducts.length;
+  const orbitRadius = isMobile ? 140 : 180;
+  const containerSize = isMobile ? 360 : 480;
+  const coreSize = isMobile ? 100 : 160;
+  const iconSize = isMobile ? 48 : 56;
 
   return (
     <section className="py-16 md:py-24 px-4 relative overflow-hidden snap-section">
