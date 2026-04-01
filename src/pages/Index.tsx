@@ -42,7 +42,7 @@ const Index = () => {
           }}
         />
         <p className="text-muted-foreground font-semibold" style={{ textShadow: '0 0 10px hsl(var(--neon-purple) / 0.2)' }}>
-          Crafted with AI ✦ Md Nasrullah
+          Crafted with AI Precision ✦ Built by Md Nasrullah
         </p>
       </footer>
     </div>
