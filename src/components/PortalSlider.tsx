@@ -286,10 +286,10 @@ const PortalSlider = () => {
                       style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
                     />
                   </div>
-                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
+                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 truncate max-w-full ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
                     {item.name}
                   </span>
-                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{item.subtitle}</span>
+                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight line-clamp-1">{item.subtitle}</span>
                   <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
                 </motion.a>
               ))}
