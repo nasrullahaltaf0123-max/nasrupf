@@ -25,10 +25,11 @@ const PortalSlider = () => {
     return () => clearInterval(interval);
   }, [expanded]);
 
-  const orbitRadius = isMobile ? 130 : 170;
-  const containerSize = isMobile ? 340 : 460;
-  const coreSize = isMobile ? 110 : 170;
-  const iconSize = 56;
+  const itemCount = orbitProducts.length;
+  const orbitRadius = isMobile ? 140 : 180;
+  const containerSize = isMobile ? 360 : 480;
+  const coreSize = isMobile ? 100 : 160;
+  const iconSize = isMobile ? 48 : 56;
 
   return (
     <section className="py-16 md:py-24 px-4 relative overflow-hidden snap-section">
@@ -77,7 +78,7 @@ const PortalSlider = () => {
           >
             <TooltipProvider delayDuration={200}>
               {orbitProducts.map((item, i) => {
-                const angle = (i / orbitProducts.length) * 2 * Math.PI;
+                const angle = -Math.PI / 2 + (i / itemCount) * 2 * Math.PI;
                 const x = Math.cos(angle) * orbitRadius;
                 const y = Math.sin(angle) * orbitRadius;
                 return (
@@ -247,7 +248,8 @@ const PortalSlider = () => {
             </div>
 
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 pb-10 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+              style={{ justifyItems: 'center' }}
               onClick={(e) => e.stopPropagation()}
             >
               {orbitProducts.map((item, i) => (
@@ -284,10 +286,10 @@ const PortalSlider = () => {
                       style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
                     />
                   </div>
-                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
+                  <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 truncate max-w-full ${hasBengali(item.name) ? 'font-bengali' : ''}`}>
                     {item.name}
                   </span>
-                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{item.subtitle}</span>
+                  <span className="text-[10px] text-muted-foreground mt-0.5 leading-tight line-clamp-1">{item.subtitle}</span>
                   <ExternalLink className="w-3 h-3 text-muted-foreground mt-1.5 group-hover:text-neon-cyan transition-colors duration-300" />
                 </motion.a>
               ))}

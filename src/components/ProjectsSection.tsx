@@ -62,10 +62,10 @@ const ProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: number; 
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className={`text-base md:text-lg font-bold text-foreground truncate group-hover:text-glow transition-all duration-300 mb-2 ${hasBengali(p.name) ? 'font-bengali' : ''}`}>
+                <h3 className={`text-base md:text-lg font-bold text-foreground truncate group-hover:text-glow transition-all duration-300 mb-1.5 ${hasBengali(p.name) ? 'font-bengali' : ''}`}>
                   {p.name}
                 </h3>
-                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{p.subtitle}</p>
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed line-clamp-2">{p.subtitle}</p>
               </div>
             </div>
 

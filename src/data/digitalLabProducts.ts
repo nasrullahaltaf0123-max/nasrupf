@@ -40,7 +40,7 @@ export const digitalLabProducts: DigitalLabProduct[] = [
     name: 'মাছে ভাতে বাঙ্গালী',
     subtitle: 'Traditional Bengali Food Website',
     icon: macheBhateIcon,
-    href: 'https://machebhatebanglai.pro.bd',
+    href: 'https://machevatebangali.lovable.app/',
     accent: '--neon-orange',
     featured: true,
     tooltip: 'Bengali food heritage platform',
