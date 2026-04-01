@@ -248,7 +248,8 @@ const PortalSlider = () => {
             </div>
 
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 pb-10 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+              style={{ justifyItems: 'center' }}
               onClick={(e) => e.stopPropagation()}
             >
               {orbitProducts.map((item, i) => (
