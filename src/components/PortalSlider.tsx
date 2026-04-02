@@ -32,7 +32,7 @@ const PortalSlider = () => {
   const iconSize = isMobile ? 48 : 56;
 
   return (
-    <section className="py-16 md:py-24 px-4 relative overflow-hidden snap-section">
+    <section className="py-16 md:py-24 px-4 relative overflow-hidden">
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{

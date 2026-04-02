@@ -3,7 +3,7 @@ import profileImg from '@/assets/profile.jpg';
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2 snap-section">
+    <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2">
       {/* Profile with glow pulse */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}

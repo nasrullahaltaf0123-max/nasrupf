@@ -107,7 +107,7 @@ const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   return (
-    <section className="py-16 md:py-24 px-4 snap-section">
+    <section className="py-16 md:py-24 px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

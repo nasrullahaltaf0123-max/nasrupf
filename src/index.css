@@ -63,18 +63,12 @@
   }
   html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     letter-spacing: -0.03em;
-  }
-
-  /* Mobile scroll snap — proximity so it's natural, not forced */
-  @media (max-width: 767px) {
-    html {
-      scroll-snap-type: y proximity;
-    }
   }
 }
 
@@ -197,12 +191,6 @@
 @media (max-width: 767px) {
   .mobile-tap-glow {
     animation: tapGlow 0.3s ease-out;
-  }
-
-  /* Scroll snap on sections */
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
   }
 }
 
