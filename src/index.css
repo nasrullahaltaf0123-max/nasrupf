@@ -192,12 +192,6 @@
   .mobile-tap-glow {
     animation: tapGlow 0.3s ease-out;
   }
-
-  /* Scroll snap on sections */
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-  }
 }
 
 /* Tool strip fade mask */
