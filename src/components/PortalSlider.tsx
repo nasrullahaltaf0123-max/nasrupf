@@ -94,7 +94,7 @@ const PortalSlider = () => {
                           top: y - iconSize / 2,
                           width: iconSize,
                           height: iconSize,
-                          animation: 'semiRotate 30s linear infinite reverse',
+                          animation: 'semiRotate 14s ease-in-out infinite alternate-reverse',
                           willChange: 'transform',
                         }}
                         whileHover={{ scale: 1.15 }}

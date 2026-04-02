@@ -25,7 +25,7 @@ const WorkVault = () => {
           style={{
             background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.7))',
             border: '1px solid hsl(var(--neon-purple) / 0.2)',
-            boxShadow: '0 0 40px hsl(var(--neon-purple) / 0.12), 0 0 80px hsl(var(--neon-cyan) / 0.06), 0 8px 32px hsl(0 0% 0% / 0.3)',
+            boxShadow: '0 0 30px hsl(var(--neon-purple) / 0.1), 0 8px 24px hsl(0 0% 0% / 0.25)',
             animation: 'labPulse 3s ease-in-out infinite',
           }}
           onMouseEnter={play}

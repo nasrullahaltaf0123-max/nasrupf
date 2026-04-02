@@ -69,7 +69,7 @@ const ProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: number; 
               </div>
             </div>
 
-            <div className="mt-6 flex justify-end">
+            <div className="mt-auto pt-6 flex justify-end">
               <span
                 className="text-[10px] md:text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg transition-all duration-300 group-hover:scale-105"
                 style={{
