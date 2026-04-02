@@ -3,7 +3,7 @@ import { GraduationCap } from 'lucide-react';
 
 const EducationSection = () => {
   return (
-    <section className="py-8 md:py-10 px-4 snap-section">
+    <section className="py-8 md:py-10 px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

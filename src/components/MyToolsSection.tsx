@@ -14,7 +14,7 @@ const MyToolsSection = () => {
   const { mobileTapProps, isPressed, isMobile } = useMobileTap();
 
   return (
-    <section className="py-10 px-4 snap-section">
+    <section className="py-10 px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
