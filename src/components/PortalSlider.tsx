@@ -72,7 +72,7 @@ const PortalSlider = () => {
               height: 0,
               top: '50%',
               left: '50%',
-              animation: 'semiRotate 30s linear infinite',
+            animation: 'semiRotate 14s ease-in-out infinite alternate',
               willChange: 'transform',
             }}
           >
@@ -94,7 +94,7 @@ const PortalSlider = () => {
                           top: y - iconSize / 2,
                           width: iconSize,
                           height: iconSize,
-                          animation: 'semiRotate 30s linear infinite reverse',
+                          animation: 'semiRotate 14s ease-in-out infinite alternate-reverse',
                           willChange: 'transform',
                         }}
                         whileHover={{ scale: 1.15 }}
@@ -248,7 +248,7 @@ const PortalSlider = () => {
             </div>
 
             <div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 p-6 pt-20 pb-10 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 px-6 pt-20 pb-12 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
               style={{ justifyItems: 'center' }}
               onClick={(e) => e.stopPropagation()}
             >

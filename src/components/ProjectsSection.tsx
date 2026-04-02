@@ -22,11 +22,11 @@ const ProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: number; 
             viewport={{ once: true }}
             transition={{ delay: i * 0.12, duration: 0.5 }}
             onClick={onClick}
-            className={`group block rounded-2xl relative overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 ${isMobile && isPressed ? 'mobile-tap-glow' : ''}`}
+            className={`group flex flex-col rounded-2xl relative overflow-hidden cursor-pointer transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 ${isMobile && isPressed ? 'mobile-tap-glow' : ''}`}
             style={{
               background: 'linear-gradient(145deg, hsl(var(--muted) / 0.4), hsl(var(--background) / 0.6))',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
               border: `1px solid hsl(var(${p.accent}) / 0.1)`,
               boxShadow: `0 2px 16px hsl(0 0% 0% / 0.2)`,
               padding: isMobile ? '24px 20px' : '32px 28px',
@@ -69,7 +69,7 @@ const ProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: number; 
               </div>
             </div>
 
-            <div className="mt-6 flex justify-end">
+            <div className="mt-auto pt-6 flex justify-end">
               <span
                 className="text-[10px] md:text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg transition-all duration-300 group-hover:scale-105"
                 style={{
