@@ -72,7 +72,7 @@ const PortalSlider = () => {
               height: 0,
               top: '50%',
               left: '50%',
-              animation: 'semiRotate 30s linear infinite',
+            animation: 'semiRotate 14s ease-in-out infinite alternate',
               willChange: 'transform',
             }}
           >
