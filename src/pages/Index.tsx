@@ -14,10 +14,12 @@ import YouTubeSection from '@/components/YouTubeSection';
 import EducationSection from '@/components/EducationSection';
 import WorkVault from '@/components/WorkVault';
 import ContactSection from '@/components/ContactSection';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const Index = () => {
   return (
     <div className="min-h-screen relative">
+      <ThemeToggle />
       <GradientMesh />
       <Particles />
       <CursorGlow />

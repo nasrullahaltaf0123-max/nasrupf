@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import profileImg from '@/assets/profile.jpg';
+import profileLightImg from '@/assets/profile-light.jpg';
+import { useTheme } from '@/hooks/useTheme';
 
 const HeroSection = () => {
+  const isLight = useTheme();
+
   return (
     <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2">
       {/* Profile with glow pulse */}
@@ -14,25 +18,36 @@ const HeroSection = () => {
       >
         {/* Outer ambient glow */}
         <div
-          className="absolute -inset-8 rounded-full opacity-40 blur-2xl"
+          className="absolute -inset-8 rounded-full blur-2xl"
           style={{
-            background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.3), hsl(var(--neon-purple) / 0.2), transparent 70%)',
+            opacity: isLight ? 0.2 : 0.4,
+            background: isLight
+              ? 'radial-gradient(circle, hsl(195 80% 42% / 0.15), hsl(220 13% 87% / 0.2), transparent 70%)'
+              : 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.3), hsl(var(--neon-purple) / 0.2), transparent 70%)',
             animation: 'glowPulse 4s ease-in-out infinite',
           }}
         />
         {/* Spinning ring */}
         <div
-          className="absolute -inset-3 rounded-full opacity-60 blur-md"
+          className="absolute -inset-3 rounded-full blur-md"
           style={{
-            background: 'conic-gradient(from 0deg, hsl(var(--neon-cyan)), hsl(var(--neon-purple)), hsl(var(--neon-cyan)))',
+            opacity: isLight ? 0.25 : 0.6,
+            background: isLight
+              ? 'conic-gradient(from 0deg, hsl(220 13% 87%), hsl(195 80% 42% / 0.3), hsl(220 13% 87%))'
+              : 'conic-gradient(from 0deg, hsl(var(--neon-cyan)), hsl(var(--neon-purple)), hsl(var(--neon-cyan)))',
             animation: 'glowPulse 3s ease-in-out infinite',
           }}
         />
         <img
-          src={profileImg}
+          src={isLight ? profileLightImg : profileImg}
           alt="Md Nasrullah"
-          className="relative w-36 h-36 md:w-48 md:h-48 rounded-full object-cover border-2 border-background z-10"
-          style={{ boxShadow: '0 0 40px hsl(var(--neon-purple) / 0.2), 0 0 80px hsl(var(--neon-cyan) / 0.1)' }}
+          className="relative w-36 h-36 md:w-48 md:h-48 rounded-full object-cover border-2 z-10"
+          style={{
+            borderColor: isLight ? 'hsl(220 13% 90%)' : 'hsl(var(--background))',
+            boxShadow: isLight
+              ? '0 8px 40px hsl(0 0% 0% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.04)'
+              : '0 0 40px hsl(var(--neon-purple) / 0.2), 0 0 80px hsl(var(--neon-cyan) / 0.1)',
+          }}
         />
       </motion.div>
 
@@ -41,7 +56,7 @@ const HeroSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
         className="text-4xl md:text-6xl lg:text-7xl font-extrabold gradient-text mb-2 tracking-tight"
-        style={{ filter: 'drop-shadow(0 0 25px hsl(var(--neon-purple) / 0.25))' }}
+        style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 25px hsl(var(--neon-purple) / 0.25))' }}
       >
         Md Nasrullah
       </motion.h1>
@@ -50,8 +65,11 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-base md:text-xl lg:text-2xl font-bold text-neon-purple text-glow mb-2 tracking-wide uppercase"
-        style={{ letterSpacing: '0.15em' }}
+        className="text-base md:text-xl lg:text-2xl font-bold text-neon-purple mb-2 tracking-wide uppercase"
+        style={{
+          letterSpacing: '0.15em',
+          textShadow: isLight ? 'none' : '0 0 10px hsl(var(--neon-purple) / 0.6), 0 0 30px hsl(var(--neon-purple) / 0.3)',
+        }}
       >
         AI Creator & Visual Builder
       </motion.p>

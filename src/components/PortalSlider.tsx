@@ -4,6 +4,7 @@ import { MousePointerClick, ExternalLink, X } from 'lucide-react';
 import useHoverSound from '@/hooks/useHoverSound';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useTheme } from '@/hooks/useTheme';
 import { orbitProducts } from '@/data/digitalLabProducts';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -15,6 +16,7 @@ const PortalSlider = () => {
   const { play } = useHoverSound();
   const { mobileTapProps, isPressed } = useMobileTap({ enableVibration: true, vibrationMs: 15 });
   const isMobile = useIsMobile();
+  const isLight = useTheme();
 
   useEffect(() => {
     if (expanded) return;
@@ -36,7 +38,9 @@ const PortalSlider = () => {
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--neon-purple) / 0.04), hsl(var(--neon-cyan) / 0.02) 40%, transparent 70%)',
+          background: isLight
+            ? 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(250 65% 52% / 0.02), hsl(195 80% 42% / 0.01) 40%, transparent 70%)'
+            : 'radial-gradient(ellipse 60% 50% at 50% 50%, hsl(var(--neon-purple) / 0.04), hsl(var(--neon-cyan) / 0.02) 40%, transparent 70%)',
         }}
       />
 
@@ -59,7 +63,9 @@ const PortalSlider = () => {
               left: '50%',
               marginTop: -orbitRadius,
               marginLeft: -orbitRadius,
-              border: '1px dashed hsl(var(--neon-purple) / 0.08)',
+              border: isLight
+                ? '1px dashed hsl(220 13% 85%)'
+                : '1px dashed hsl(var(--neon-purple) / 0.08)',
               willChange: 'transform',
             }}
           />
@@ -72,7 +78,7 @@ const PortalSlider = () => {
               height: 0,
               top: '50%',
               left: '50%',
-            animation: 'semiRotate 14s ease-in-out infinite alternate',
+              animation: 'semiRotate 14s ease-in-out infinite alternate',
               willChange: 'transform',
             }}
           >
@@ -102,11 +108,17 @@ const PortalSlider = () => {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div
-                          className="w-full h-full rounded-full flex items-center justify-center transition-shadow duration-300 hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.3)] overflow-hidden"
+                          className="w-full h-full rounded-full flex items-center justify-center transition-shadow duration-300 overflow-hidden"
                           style={{
-                            background: 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
-                            border: '1px solid hsl(var(--neon-cyan) / 0.12)',
-                            boxShadow: '0 2px 10px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
+                            background: isLight
+                              ? 'linear-gradient(145deg, hsl(0 0% 100%), hsl(220 20% 97%))'
+                              : 'linear-gradient(145deg, hsl(var(--muted) / 0.7), hsl(var(--background) / 0.9))',
+                            border: isLight
+                              ? '1px solid hsl(220 13% 88%)'
+                              : '1px solid hsl(var(--neon-cyan) / 0.12)',
+                            boxShadow: isLight
+                              ? '0 2px 12px hsl(0 0% 0% / 0.06), 0 1px 2px hsl(0 0% 0% / 0.04)'
+                              : '0 2px 10px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(var(--foreground) / 0.03)',
                           }}
                         >
                           <img
@@ -116,7 +128,7 @@ const PortalSlider = () => {
                             width={32}
                             height={32}
                             className="w-8 h-8 object-contain"
-                            style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
+                            style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
                           />
                         </div>
                       </motion.a>
@@ -125,10 +137,10 @@ const PortalSlider = () => {
                       side="top"
                       className="px-3 py-1.5 text-xs font-semibold rounded-lg"
                       style={{
-                        background: 'hsl(var(--muted) / 0.9)',
+                        background: isLight ? 'hsl(0 0% 100% / 0.95)' : 'hsl(var(--muted) / 0.9)',
                         backdropFilter: 'blur(8px)',
-                        border: '1px solid hsl(var(--neon-cyan) / 0.15)',
-                        boxShadow: '0 0 12px hsl(var(--neon-cyan) / 0.1)',
+                        border: isLight ? '1px solid hsl(220 13% 88%)' : '1px solid hsl(var(--neon-cyan) / 0.15)',
+                        boxShadow: isLight ? '0 4px 16px hsl(0 0% 0% / 0.08)' : '0 0 12px hsl(var(--neon-cyan) / 0.1)',
                         color: 'hsl(var(--foreground))',
                       }}
                     >
@@ -162,14 +174,18 @@ const PortalSlider = () => {
             <div
               className="absolute -inset-10 md:-inset-14 rounded-full -z-10"
               style={{
-                background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.06), hsl(var(--neon-purple) / 0.04) 40%, transparent 70%)',
+                background: isLight
+                  ? 'radial-gradient(circle, hsl(195 80% 42% / 0.04), transparent 70%)'
+                  : 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.06), hsl(var(--neon-purple) / 0.04) 40%, transparent 70%)',
                 animation: 'glowPulse 4s ease-in-out infinite',
               }}
             />
             <div
               className="absolute inset-0 rounded-full"
               style={{
-                background: 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.4), hsl(195 100% 50% / 0.2), hsl(270 80% 53% / 0.5), hsl(270 80% 53% / 0.1), transparent 60%)',
+                background: isLight
+                  ? 'conic-gradient(from 0deg, hsl(220 13% 90%), hsl(195 80% 42% / 0.2), hsl(250 65% 52% / 0.15), transparent 60%)'
+                  : 'conic-gradient(from 0deg, hsl(180 100% 50% / 0.4), hsl(195 100% 50% / 0.2), hsl(270 80% 53% / 0.5), hsl(270 80% 53% / 0.1), transparent 60%)',
                 animation: 'semiRotate 10s linear infinite',
                 filter: 'blur(4px)',
                 willChange: 'transform',
@@ -178,8 +194,8 @@ const PortalSlider = () => {
             <div
               className="absolute inset-1.5 md:inset-2 rounded-full"
               style={{
-                border: '1px solid hsl(var(--neon-cyan) / 0.1)',
-                boxShadow: 'inset 0 0 30px hsl(var(--neon-purple) / 0.06)',
+                border: isLight ? '1px solid hsl(220 13% 90%)' : '1px solid hsl(var(--neon-cyan) / 0.1)',
+                boxShadow: isLight ? 'none' : 'inset 0 0 30px hsl(var(--neon-purple) / 0.06)',
               }}
             />
             <div className="absolute inset-3 md:inset-4 rounded-full bg-background flex items-center justify-center">
@@ -194,7 +210,7 @@ const PortalSlider = () => {
                       transition={{ duration: 1.5, times: [0, 0.2, 0.7, 1] }}
                       className="absolute -bottom-4 left-1/2 -translate-x-1/2"
                     >
-                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.5))' }} />
+                      <MousePointerClick className="w-4 h-4 text-neon-cyan" style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.5))' }} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -213,7 +229,10 @@ const PortalSlider = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[100] flex items-center justify-center"
-            style={{ backdropFilter: 'blur(8px)', background: 'hsl(var(--background) / 0.9)' }}
+            style={{
+              backdropFilter: 'blur(8px)',
+              background: isLight ? 'hsl(0 0% 100% / 0.92)' : 'hsl(var(--background) / 0.9)',
+            }}
             onClick={() => setExpanded(false)}
           >
             <motion.button
@@ -223,7 +242,10 @@ const PortalSlider = () => {
               transition={{ delay: 0.15 }}
               onClick={() => setExpanded(false)}
               className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-colors duration-300 hover:bg-muted/60"
-              style={{ background: 'hsl(var(--muted) / 0.4)', border: '1px solid hsl(var(--neon-purple) / 0.1)' }}
+              style={{
+                background: isLight ? 'hsl(220 14% 94% / 0.8)' : 'hsl(var(--muted) / 0.4)',
+                border: isLight ? '1px solid hsl(220 13% 88%)' : '1px solid hsl(var(--neon-purple) / 0.1)',
+              }}
             >
               <X className="w-5 h-5 text-foreground" />
             </motion.button>
@@ -271,9 +293,15 @@ const PortalSlider = () => {
                   <div
                     className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mb-2.5 transition-shadow duration-300 relative overflow-hidden"
                     style={{
-                      background: 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))',
-                      border: '1px solid hsl(var(--neon-cyan) / 0.1)',
-                      boxShadow: '0 2px 10px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(var(--foreground) / 0.02)',
+                      background: isLight
+                        ? 'linear-gradient(145deg, hsl(0 0% 100%), hsl(220 20% 97%))'
+                        : 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))',
+                      border: isLight
+                        ? '1px solid hsl(220 13% 88%)'
+                        : '1px solid hsl(var(--neon-cyan) / 0.1)',
+                      boxShadow: isLight
+                        ? '0 2px 12px hsl(0 0% 0% / 0.06)'
+                        : '0 2px 10px hsl(0 0% 0% / 0.2), inset 0 1px 0 hsl(var(--foreground) / 0.02)',
                     }}
                   >
                     <img
@@ -283,7 +311,7 @@ const PortalSlider = () => {
                       width={36}
                       height={36}
                       className="w-9 h-9 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform duration-300"
-                      style={{ filter: 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
+                      style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }}
                     />
                   </div>
                   <span className={`text-xs md:text-sm font-bold text-foreground group-hover:text-glow transition-all duration-300 truncate max-w-full ${hasBengali(item.name) ? 'font-bengali' : ''}`}>

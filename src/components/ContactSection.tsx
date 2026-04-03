@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Linkedin, Facebook, Rocket, MessageCircle, Mail } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
 import useMobileTap from "@/hooks/useMobileTap";
+import { useTheme } from "@/hooks/useTheme";
 
 const socialLinks = [
   {
@@ -19,6 +20,8 @@ const socialLinks = [
 const ContactSection = () => {
   const { play } = useHoverSound();
   const { mobileTapProps, isPressed, isMobile } = useMobileTap();
+  const isLight = useTheme();
+
   return (
     <section className="py-14 md:py-20 px-4 pb-16">
       <motion.div
@@ -29,7 +32,9 @@ const ContactSection = () => {
         className="max-w-2xl mx-auto text-center"
       >
         <h2 className="section-heading mb-3">Ready to Build Something Exceptional?</h2>
-        <p className="text-muted-foreground text-sm mb-10 max-w-md mx-auto">Let's transform your vision into a premium digital product that drives results.</p>
+        <p className="text-muted-foreground text-sm mb-10 max-w-md mx-auto">
+          Let's transform your vision into a premium digital product that drives results.
+        </p>
 
         {/* Primary CTA buttons */}
         <div className="flex flex-wrap justify-center gap-4 mb-10">
@@ -40,7 +45,9 @@ const ContactSection = () => {
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm text-primary-foreground transition-all duration-300"
             style={{
               background: 'linear-gradient(135deg, hsl(var(--neon-purple)), hsl(var(--neon-cyan)))',
-              boxShadow: '0 0 35px hsl(var(--neon-purple) / 0.3), 0 0 70px hsl(var(--neon-cyan) / 0.1), 0 4px 20px hsl(0 0% 0% / 0.3)',
+              boxShadow: isLight
+                ? '0 4px 20px hsl(var(--neon-purple) / 0.2)'
+                : '0 0 35px hsl(var(--neon-purple) / 0.3), 0 0 70px hsl(var(--neon-cyan) / 0.1), 0 4px 20px hsl(0 0% 0% / 0.3)',
             }}
           >
             <Rocket className="w-4 h-4" />
@@ -54,7 +61,7 @@ const ContactSection = () => {
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm text-foreground transition-all duration-300 premium-card"
           >
-            <MessageCircle className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.5))' }} />
+            <MessageCircle className="w-4 h-4 text-neon-cyan" style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.5))' }} />
             WhatsApp
           </motion.a>
           <motion.a
@@ -63,7 +70,7 @@ const ContactSection = () => {
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm text-foreground transition-all duration-300 premium-card"
           >
-            <Mail className="w-4 h-4 text-neon-purple" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-purple) / 0.5))' }} />
+            <Mail className="w-4 h-4 text-neon-purple" style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-purple) / 0.5))' }} />
             Email
           </motion.a>
         </div>
@@ -85,7 +92,7 @@ const ContactSection = () => {
               onMouseEnter={play}
               {...mobileTapProps}
             >
-              <link.icon className="w-5 h-5 text-neon-cyan group-hover:scale-110 transition-transform duration-300" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }} />
+              <link.icon className="w-5 h-5 text-neon-cyan group-hover:scale-110 transition-transform duration-300" style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }} />
               <span className="font-semibold text-foreground text-sm">{link.label}</span>
             </motion.a>
           ))}
