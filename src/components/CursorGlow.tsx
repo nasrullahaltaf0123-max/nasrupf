@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 
 const CursorGlow = () => {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -6,6 +7,7 @@ const CursorGlow = () => {
   const pos = useRef({ x: 0, y: 0 });
   const trailPos = useRef({ x: 0, y: 0 });
   const raf = useRef<number>(0);
+  const isLight = useTheme();
 
   const animate = useCallback(() => {
     trailPos.current.x += (pos.current.x - trailPos.current.x) * 0.08;
@@ -23,7 +25,6 @@ const CursorGlow = () => {
   }, []);
 
   useEffect(() => {
-    // Skip on touch devices
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
     const handler = (e: MouseEvent) => {
@@ -46,7 +47,9 @@ const CursorGlow = () => {
         style={{
           width: 200,
           height: 200,
-          background: 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.07) 0%, hsl(var(--neon-purple) / 0.05) 40%, transparent 70%)',
+          background: isLight
+            ? 'radial-gradient(circle, hsl(195 80% 42% / 0.04) 0%, hsl(250 65% 52% / 0.02) 40%, transparent 70%)'
+            : 'radial-gradient(circle, hsl(var(--neon-cyan) / 0.07) 0%, hsl(var(--neon-purple) / 0.05) 40%, transparent 70%)',
           willChange: 'left, top',
         }}
       />
@@ -56,7 +59,9 @@ const CursorGlow = () => {
         style={{
           width: 320,
           height: 320,
-          background: 'radial-gradient(circle, hsl(var(--neon-purple) / 0.04) 0%, hsl(var(--neon-cyan) / 0.02) 50%, transparent 70%)',
+          background: isLight
+            ? 'radial-gradient(circle, hsl(250 65% 52% / 0.02) 0%, hsl(195 80% 42% / 0.01) 50%, transparent 70%)'
+            : 'radial-gradient(circle, hsl(var(--neon-purple) / 0.04) 0%, hsl(var(--neon-cyan) / 0.02) 50%, transparent 70%)',
           filter: 'blur(8px)',
           willChange: 'left, top',
         }}
