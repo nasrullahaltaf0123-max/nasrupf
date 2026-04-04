@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 const ThemeToggle = () => {
   const [isLight, setIsLight] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'light';
+      const saved = localStorage.getItem('theme');
+      // Default to light if no preference saved
+      return saved ? saved === 'light' : true;
     }
-    return false;
+    return true;
   });
 
   useEffect(() => {

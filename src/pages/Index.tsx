@@ -36,20 +36,19 @@ const Index = () => {
       <EducationSection />
       <WorkVault />
       <ContactSection />
-      <footer className="relative text-center py-10 md:py-12">
+      <footer className="relative text-center py-12 md:py-16">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-md h-px"
           style={{
-            background: 'linear-gradient(90deg, transparent, hsl(var(--neon-cyan) / 0.15), hsl(var(--neon-purple) / 0.15), transparent)',
+            background: 'linear-gradient(90deg, transparent, hsl(var(--border)), transparent)',
           }}
         />
         <p
           className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-muted-foreground font-semibold"
-          style={{ textShadow: '0 0 12px hsl(var(--neon-purple) / 0.25)' }}
         >
           Crafted with AI Precision{' '}
           <span className="inline-block mx-1" style={{ color: 'hsl(var(--neon-cyan))' }}>✦</span>
-          {' '}Built by Md Nasrullah
+          {' '}Md Nasrullah
         </p>
       </footer>
     </div>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Sparkles, Cpu, Palette, Zap } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 const highlights = [
   { icon: Cpu, text: 'AI-Powered Tools' },
@@ -9,6 +10,8 @@ const highlights = [
 ];
 
 const AboutSection = () => {
+  const isLight = useTheme();
+
   return (
     <section className="py-14 md:py-20 px-4">
       <motion.div
@@ -26,7 +29,7 @@ const AboutSection = () => {
           transition={{ delay: 0.15, duration: 0.5 }}
           className="text-foreground/90 text-sm md:text-base lg:text-lg leading-relaxed mb-4 max-w-2xl mx-auto"
         >
-          I am an <span className="text-neon-purple font-bold text-glow">AI Creator & Visual Builder</span>.
+          I am an <span className="text-neon-purple font-bold" style={{ textShadow: isLight ? 'none' : '0 0 10px hsl(var(--neon-purple) / 0.6), 0 0 30px hsl(var(--neon-purple) / 0.3)' }}>AI Creator & Visual Builder</span>.
           I build AI-powered tools, websites, and digital experiences that help creators and businesses grow.
         </motion.p>
         <motion.p
@@ -49,7 +52,10 @@ const AboutSection = () => {
               transition={{ delay: 0.1 * i + 0.3, duration: 0.4 }}
               className="premium-card flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
             >
-              <item.icon className="w-4 h-4 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }} />
+              <item.icon
+                className="w-4 h-4 text-neon-cyan"
+                style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }}
+              />
               <span className="text-foreground">{item.text}</span>
             </motion.div>
           ))}

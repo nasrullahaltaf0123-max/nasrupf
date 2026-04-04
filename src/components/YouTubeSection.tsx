@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Youtube } from 'lucide-react';
 import useMobileTap from '@/hooks/useMobileTap';
+import { useTheme } from '@/hooks/useTheme';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const channels = [
@@ -20,6 +21,8 @@ const channels = [
 
 const YouTubeSection = () => {
   const { mobileTapProps, isPressed, isMobile } = useMobileTap();
+  const isLight = useTheme();
+
   return (
     <section className="py-10 md:py-14 px-4">
       <motion.div
@@ -47,13 +50,19 @@ const YouTubeSection = () => {
                     {...mobileTapProps}
                   >
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center group-hover:shadow-[0_0_18px_hsl(0_80%_50%/0.3)] transition-all duration-300"
-                      style={{ background: 'hsl(0 80% 50% / 0.08)', border: '1px solid hsl(0 80% 50% / 0.1)' }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300"
+                      style={{
+                        background: isLight ? 'hsl(0 80% 50% / 0.04)' : 'hsl(0 80% 50% / 0.08)',
+                        border: isLight ? '1px solid hsl(0 80% 50% / 0.08)' : '1px solid hsl(0 80% 50% / 0.1)',
+                      }}
                     >
-                      <Youtube className="w-6 h-6 text-red-500 group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 6px hsl(0 80% 50% / 0.5))' }} />
+                      <Youtube
+                        className="w-6 h-6 text-red-500 group-hover:scale-110 transition-all duration-300"
+                        style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 6px hsl(0 80% 50% / 0.5))' }}
+                      />
                     </div>
                     <div className="text-left">
-                      <p className="font-bold text-foreground group-hover:text-glow transition-all duration-300">{ch.name}</p>
+                      <p className="font-bold text-foreground transition-all duration-300">{ch.name}</p>
                       <p className="text-xs text-muted-foreground">{ch.emoji} YouTube Channel</p>
                     </div>
                   </motion.a>
@@ -62,10 +71,10 @@ const YouTubeSection = () => {
                   side="top"
                   className="px-3 py-1.5 text-xs font-semibold rounded-lg"
                   style={{
-                    background: 'hsl(var(--muted) / 0.9)',
+                    background: isLight ? 'hsl(0 0% 100%)' : 'hsl(var(--muted) / 0.9)',
                     backdropFilter: 'blur(8px)',
-                    border: '1px solid hsl(var(--neon-cyan) / 0.15)',
-                    boxShadow: '0 0 12px hsl(var(--neon-cyan) / 0.1)',
+                    border: isLight ? '1px solid hsl(220 14% 91%)' : '1px solid hsl(var(--neon-cyan) / 0.15)',
+                    boxShadow: isLight ? '0 4px 16px hsl(0 0% 0% / 0.08)' : '0 0 12px hsl(var(--neon-cyan) / 0.1)',
                     color: 'hsl(var(--foreground))',
                   }}
                 >
