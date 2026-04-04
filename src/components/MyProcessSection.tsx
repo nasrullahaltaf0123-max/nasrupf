@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Lightbulb, PenTool, Code2, Rocket } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 const steps = [
   { icon: Lightbulb, step: '01', title: 'Idea & Planning', desc: 'Understanding goals & mapping the vision' },
@@ -9,6 +10,8 @@ const steps = [
 ];
 
 const MyProcessSection = () => {
+  const isLight = useTheme();
+
   return (
     <section className="py-14 md:py-20 px-4">
       <motion.div
@@ -32,20 +35,36 @@ const MyProcessSection = () => {
             >
               <span
                 className="text-[10px] font-extrabold uppercase tracking-[0.2em] mb-3 block"
-                style={{ color: 'hsl(var(--neon-cyan))', textShadow: '0 0 10px hsl(var(--neon-cyan) / 0.3)' }}
+                style={{
+                  color: 'hsl(var(--neon-cyan))',
+                  textShadow: isLight ? 'none' : '0 0 10px hsl(var(--neon-cyan) / 0.3)',
+                }}
               >
                 Step {s.step}
               </span>
               <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-[0_0_18px_hsl(var(--neon-purple)/0.3)] transition-all duration-300"
-                style={{ background: 'hsl(var(--neon-purple) / 0.06)', border: '1px solid hsl(var(--neon-purple) / 0.1)' }}
+                className="w-11 h-11 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300"
+                style={{
+                  background: `hsl(var(--neon-purple) / ${isLight ? '0.04' : '0.06'})`,
+                  border: `1px solid hsl(var(--neon-purple) / ${isLight ? '0.08' : '0.1'})`,
+                }}
               >
-                <s.icon className="w-5 h-5 text-neon-purple group-hover:scale-110 transition-transform duration-300" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-purple) / 0.4))' }} />
+                <s.icon
+                  className="w-5 h-5 text-neon-purple group-hover:scale-110 transition-transform duration-300"
+                  style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-purple) / 0.4))' }}
+                />
               </div>
               <p className="text-xs md:text-sm font-bold text-foreground mb-1.5">{s.title}</p>
               <p className="text-[10px] text-muted-foreground hidden md:block leading-relaxed">{s.desc}</p>
               {i < 3 && (
-                <div className="hidden md:block absolute top-1/2 -right-2.5 w-5 h-px bg-gradient-to-r from-[hsl(var(--neon-purple)/0.3)] to-transparent" />
+                <div
+                  className="hidden md:block absolute top-1/2 -right-2.5 w-5 h-px"
+                  style={{
+                    background: isLight
+                      ? 'linear-gradient(to right, hsl(220 14% 88%), transparent)'
+                      : 'linear-gradient(to right, hsl(var(--neon-purple) / 0.3), transparent)',
+                  }}
+                />
               )}
             </motion.div>
           ))}

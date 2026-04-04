@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Bot, Globe, Settings, Figma, Package } from 'lucide-react';
 import useMobileTap from '@/hooks/useMobileTap';
+import { useTheme } from '@/hooks/useTheme';
 
 const services = [
   { icon: Bot, title: 'AI Tools Development', desc: 'Building intelligent tools powered by AI' },
@@ -12,6 +13,7 @@ const services = [
 
 const WhatIDoSection = () => {
   const { mobileTapProps, isPressed, isMobile } = useMobileTap();
+  const isLight = useTheme();
 
   return (
     <section className="py-14 md:py-20 px-4">
@@ -36,10 +38,16 @@ const WhatIDoSection = () => {
               {...mobileTapProps}
             >
               <div
-                className="w-11 h-11 md:w-13 md:h-13 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-[0_0_18px_hsl(var(--neon-cyan)/0.3)] transition-all duration-300"
-                style={{ background: 'hsl(var(--neon-cyan) / 0.06)', border: '1px solid hsl(var(--neon-cyan) / 0.08)' }}
+                className="w-11 h-11 md:w-13 md:h-13 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300"
+                style={{
+                  background: `hsl(var(--neon-cyan) / ${isLight ? '0.04' : '0.06'})`,
+                  border: `1px solid hsl(var(--neon-cyan) / ${isLight ? '0.08' : '0.08'})`,
+                }}
               >
-                <s.icon className="w-5 h-5 md:w-6 md:h-6 text-neon-cyan group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 5px hsl(var(--neon-cyan) / 0.5))' }} />
+                <s.icon
+                  className="w-5 h-5 md:w-6 md:h-6 text-neon-cyan group-hover:scale-110 transition-all duration-300"
+                  style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 5px hsl(var(--neon-cyan) / 0.5))' }}
+                />
               </div>
               <p className="text-xs md:text-sm font-bold text-foreground mb-1.5">{s.title}</p>
               <p className="text-[10px] md:text-xs text-muted-foreground hidden md:block leading-relaxed">{s.desc}</p>

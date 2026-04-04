@@ -1,6 +1,7 @@
 import { motion, animate } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Rocket, Eye, Globe } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 const stats = [
   { icon: Rocket, value: 10, suffix: '+', label: 'Projects Built', color: '--neon-purple' },
@@ -38,6 +39,8 @@ const AnimatedNumber = ({ value, suffix }: { value: number; suffix: string }) =>
 };
 
 const StatsSection = () => {
+  const isLight = useTheme();
+
   return (
     <section className="py-14 md:py-20 px-4">
       <motion.div
@@ -59,10 +62,16 @@ const StatsSection = () => {
               className="premium-card rounded-2xl p-5 md:p-7 text-center group transition-all duration-300 hover:scale-105 hover:-translate-y-1"
             >
               <div
-                className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:shadow-[0_0_20px_hsl(var(--neon-cyan)/0.3)]"
-                style={{ background: `hsl(var(${s.color}) / 0.08)`, border: `1px solid hsl(var(${s.color}) / 0.1)` }}
+                className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300"
+                style={{
+                  background: `hsl(var(${s.color}) / ${isLight ? '0.04' : '0.08'})`,
+                  border: `1px solid hsl(var(${s.color}) / ${isLight ? '0.08' : '0.1'})`,
+                }}
               >
-                <s.icon className="w-6 h-6 md:w-7 md:h-7 text-neon-cyan group-hover:scale-110 transition-all duration-300" style={{ filter: 'drop-shadow(0 0 6px hsl(var(--neon-cyan) / 0.4))' }} />
+                <s.icon
+                  className="w-6 h-6 md:w-7 md:h-7 text-neon-cyan group-hover:scale-110 transition-all duration-300"
+                  style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 6px hsl(var(--neon-cyan) / 0.4))' }}
+                />
               </div>
               <p className="text-3xl md:text-5xl font-extrabold gradient-text mb-2 tracking-tight">
                 <AnimatedNumber value={s.value} suffix={s.suffix} />

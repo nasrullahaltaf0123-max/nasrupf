@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { GraduationCap } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 const EducationSection = () => {
+  const isLight = useTheme();
+
   return (
     <section className="py-8 md:py-10 px-4">
       <motion.div
@@ -16,9 +19,15 @@ const EducationSection = () => {
         >
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ background: 'hsl(var(--neon-cyan) / 0.06)', border: '1px solid hsl(var(--neon-cyan) / 0.1)' }}
+            style={{
+              background: `hsl(var(--neon-cyan) / ${isLight ? '0.04' : '0.06'})`,
+              border: `1px solid hsl(var(--neon-cyan) / ${isLight ? '0.08' : '0.1'})`,
+            }}
           >
-            <GraduationCap className="w-5 h-5 text-neon-cyan" style={{ filter: 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }} />
+            <GraduationCap
+              className="w-5 h-5 text-neon-cyan"
+              style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }}
+            />
           </div>
           <div className="text-left">
             <p className="text-sm font-bold text-foreground">Student — Department of English</p>
