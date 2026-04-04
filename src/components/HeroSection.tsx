@@ -1,14 +1,23 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import profileImg from '@/assets/profile.jpg';
 import profileLightImg from '@/assets/profile-light.jpg';
 import { useTheme } from '@/hooks/useTheme';
+
+// Preload both images on module load
+const preloadImage = (src: string) => {
+  const img = new Image();
+  img.src = src;
+};
+preloadImage(profileImg);
+preloadImage(profileLightImg);
 
 const HeroSection = () => {
   const isLight = useTheme();
 
   return (
     <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2">
-      {/* Profile with glow pulse */}
+      {/* Profile with crossfade */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -38,17 +47,29 @@ const HeroSection = () => {
             animation: 'glowPulse 3s ease-in-out infinite',
           }}
         />
-        <img
-          src={isLight ? profileLightImg : profileImg}
-          alt="Md Nasrullah"
-          className="relative w-36 h-36 md:w-48 md:h-48 rounded-full object-cover border-2 z-10"
-          style={{
-            borderColor: isLight ? 'hsl(220 13% 90%)' : 'hsl(var(--background))',
-            boxShadow: isLight
-              ? '0 8px 40px hsl(0 0% 0% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.04)'
-              : '0 0 40px hsl(var(--neon-purple) / 0.2), 0 0 80px hsl(var(--neon-cyan) / 0.1)',
-          }}
-        />
+        {/* Crossfade image container */}
+        <div className="relative w-36 h-36 md:w-48 md:h-48 rounded-full z-10">
+          <img
+            src={profileImg}
+            alt="Md Nasrullah"
+            className="absolute inset-0 w-full h-full rounded-full object-cover border-2 transition-opacity duration-300 ease-in-out"
+            style={{
+              opacity: isLight ? 0 : 1,
+              borderColor: 'hsl(var(--background))',
+              boxShadow: '0 0 40px hsl(var(--neon-purple) / 0.2), 0 0 80px hsl(var(--neon-cyan) / 0.1)',
+            }}
+          />
+          <img
+            src={profileLightImg}
+            alt="Md Nasrullah"
+            className="absolute inset-0 w-full h-full rounded-full object-cover border-2 transition-opacity duration-300 ease-in-out"
+            style={{
+              opacity: isLight ? 1 : 0,
+              borderColor: 'hsl(220 13% 90%)',
+              boxShadow: '0 8px 40px hsl(0 0% 0% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.04)',
+            }}
+          />
+        </div>
       </motion.div>
 
       <motion.h1
