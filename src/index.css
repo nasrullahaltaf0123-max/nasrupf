@@ -112,7 +112,8 @@
     -moz-osx-font-smoothing: grayscale;
   }
   .light body {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-family: 'Sora', 'Plus Jakarta Sans', 'Inter', sans-serif;
+    background: linear-gradient(180deg, hsl(220 20% 97%) 0%, hsl(220 18% 95%) 100%);
   }
   html {
     scroll-behavior: smooth;
@@ -124,8 +125,9 @@
     letter-spacing: -0.03em;
   }
   .light h1, .light h2, .light h3, .light h4, .light h5, .light h6 {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    letter-spacing: -0.025em;
+    font-family: 'Sora', 'Plus Jakarta Sans', 'Inter', sans-serif;
+    letter-spacing: -0.035em;
+    font-weight: 700;
   }
 }
 
