@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -51,45 +51,52 @@
 
   /* ===== EXECUTIVE LIGHT THEME ===== */
   .light {
-    --background: 0 0% 100%;
-    --foreground: 220 25% 10%;
+    --background: 220 20% 97%;
+    --foreground: 222 30% 12%;
 
-    --card: 220 20% 98%;
-    --card-foreground: 220 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 222 30% 12%;
 
-    --primary: 250 60% 48%;
+    --primary: 222 47% 18%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 75% 38%;
+    --secondary: 195 80% 36%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 16% 96%;
-    --muted-foreground: 220 8% 48%;
+    --muted: 220 18% 94%;
+    --muted-foreground: 220 10% 42%;
 
-    --accent: 200 75% 38%;
+    --accent: 195 80% 36%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 14% 91%;
-    --input: 220 14% 91%;
-    --ring: 250 60% 48%;
+    --border: 220 16% 88%;
+    --input: 220 16% 88%;
+    --ring: 195 80% 36%;
 
-    --neon-purple: 250 60% 48%;
-    --neon-blue: 215 75% 45%;
-    --neon-cyan: 200 75% 38%;
+    --neon-purple: 222 47% 18%;
+    --neon-blue: 215 60% 32%;
+    --neon-cyan: 195 80% 36%;
     --neon-orange: 25 85% 50%;
 
-    --glow-purple: 0 4px 24px hsl(250 60% 48% / 0.1), 0 1px 3px hsl(0 0% 0% / 0.03);
-    --glow-blue: 0 4px 24px hsl(215 75% 45% / 0.1), 0 1px 3px hsl(0 0% 0% / 0.03);
-    --glow-cyan: 0 4px 24px hsl(200 75% 38% / 0.1), 0 1px 3px hsl(0 0% 0% / 0.03);
+    --glow-purple: 0 2px 16px hsl(222 47% 18% / 0.06), 0 1px 3px hsl(0 0% 0% / 0.02);
+    --glow-blue: 0 2px 16px hsl(215 60% 32% / 0.06), 0 1px 3px hsl(0 0% 0% / 0.02);
+    --glow-cyan: 0 2px 16px hsl(195 80% 36% / 0.08), 0 1px 3px hsl(0 0% 0% / 0.02);
 
-    --gradient-neon: linear-gradient(135deg, hsl(250 60% 48%), hsl(215 75% 45%), hsl(200 75% 38%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 20% 98%));
+    --gradient-neon: linear-gradient(135deg, hsl(222 47% 18%), hsl(195 80% 36%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 18% 96%));
+
+    /* Executive light-only tokens */
+    --surface-elevated: 0 0% 100%;
+    --surface-sunken: 220 20% 95%;
+    --divider-silver: 220 16% 88%;
+    --shadow-executive: 0 1px 3px hsl(0 0% 0% / 0.04), 0 6px 24px hsl(0 0% 0% / 0.06);
+    --shadow-executive-hover: 0 2px 6px hsl(0 0% 0% / 0.04), 0 12px 40px hsl(0 0% 0% / 0.08);
   }
 }
 
@@ -105,7 +112,8 @@
     -moz-osx-font-smoothing: grayscale;
   }
   .light body {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-family: 'Sora', 'Plus Jakarta Sans', 'Inter', sans-serif;
+    background: linear-gradient(180deg, hsl(220 20% 97%) 0%, hsl(220 18% 95%) 100%);
   }
   html {
     scroll-behavior: smooth;
@@ -117,8 +125,9 @@
     letter-spacing: -0.03em;
   }
   .light h1, .light h2, .light h3, .light h4, .light h5, .light h6 {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    letter-spacing: -0.025em;
+    font-family: 'Sora', 'Plus Jakarta Sans', 'Inter', sans-serif;
+    letter-spacing: -0.035em;
+    font-weight: 700;
   }
 }
 
@@ -195,22 +204,32 @@
       inset 0 1px 0 hsl(var(--foreground) / 0.05);
   }
 
-  /* EXECUTIVE Light premium card — completely different feel */
+  /* EXECUTIVE Light premium card */
   .light .premium-card {
     background: hsl(0 0% 100%);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border: 1px solid hsl(220 14% 92%);
-    box-shadow:
-      0 1px 2px hsl(0 0% 0% / 0.03),
-      0 4px 16px hsl(0 0% 0% / 0.04);
+    border: 1px solid hsl(220 16% 90%);
+    box-shadow: var(--shadow-executive);
+    border-radius: 1rem;
   }
   .light .premium-card:hover {
-    border-color: hsl(220 14% 88%);
-    box-shadow:
-      0 2px 4px hsl(0 0% 0% / 0.03),
-      0 8px 32px hsl(0 0% 0% / 0.06);
-    transform: translateY(-2px);
+    border-color: hsl(195 80% 36% / 0.2);
+    box-shadow: var(--shadow-executive-hover);
+    transform: translateY(-3px);
+  }
+
+  /* Executive elevated surface */
+  .light .executive-surface {
+    background: hsl(0 0% 100%);
+    border: 1px solid hsl(220 16% 90%);
+    box-shadow: var(--shadow-executive);
+    border-radius: 1rem;
+  }
+
+  /* Light mode section alternating backgrounds */
+  .light .section-alt {
+    background: hsl(220 20% 95%);
   }
 
   /* Section heading style */
@@ -224,11 +243,12 @@
   }
   .light .section-heading {
     filter: none;
-    background: none;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: hsl(220 25% 10%);
-    background-clip: unset;
-    color: hsl(220 25% 10%);
+    background: var(--gradient-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    letter-spacing: -0.04em;
   }
 }
 
