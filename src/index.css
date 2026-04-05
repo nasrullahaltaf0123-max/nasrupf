@@ -204,22 +204,32 @@
       inset 0 1px 0 hsl(var(--foreground) / 0.05);
   }
 
-  /* EXECUTIVE Light premium card — completely different feel */
+  /* EXECUTIVE Light premium card */
   .light .premium-card {
     background: hsl(0 0% 100%);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border: 1px solid hsl(220 14% 92%);
-    box-shadow:
-      0 1px 2px hsl(0 0% 0% / 0.03),
-      0 4px 16px hsl(0 0% 0% / 0.04);
+    border: 1px solid hsl(220 16% 90%);
+    box-shadow: var(--shadow-executive);
+    border-radius: 1rem;
   }
   .light .premium-card:hover {
-    border-color: hsl(220 14% 88%);
-    box-shadow:
-      0 2px 4px hsl(0 0% 0% / 0.03),
-      0 8px 32px hsl(0 0% 0% / 0.06);
-    transform: translateY(-2px);
+    border-color: hsl(195 80% 36% / 0.2);
+    box-shadow: var(--shadow-executive-hover);
+    transform: translateY(-3px);
+  }
+
+  /* Executive elevated surface */
+  .light .executive-surface {
+    background: hsl(0 0% 100%);
+    border: 1px solid hsl(220 16% 90%);
+    box-shadow: var(--shadow-executive);
+    border-radius: 1rem;
+  }
+
+  /* Light mode section alternating backgrounds */
+  .light .section-alt {
+    background: hsl(220 20% 95%);
   }
 
   /* Section heading style */
