@@ -15,8 +15,11 @@ import EducationSection from '@/components/EducationSection';
 import WorkVault from '@/components/WorkVault';
 import ContactSection from '@/components/ContactSection';
 import ThemeToggle from '@/components/ThemeToggle';
+import { useTheme } from '@/hooks/useTheme';
 
 const Index = () => {
+  const isLight = useTheme();
+
   return (
     <div className="min-h-screen relative">
       <ThemeToggle />
@@ -36,20 +39,40 @@ const Index = () => {
       <EducationSection />
       <WorkVault />
       <ContactSection />
+
+      {/* Footer */}
       <footer className="relative text-center py-12 md:py-16">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-md h-px"
           style={{
-            background: 'linear-gradient(90deg, transparent, hsl(var(--border)), transparent)',
+            background: isLight
+              ? 'linear-gradient(90deg, transparent, hsl(220 16% 85%), transparent)'
+              : 'linear-gradient(90deg, transparent, hsl(var(--border)), transparent)',
           }}
         />
-        <p
-          className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-muted-foreground font-semibold"
-        >
-          Crafted with AI Precision{' '}
-          <span className="inline-block mx-1" style={{ color: 'hsl(var(--neon-cyan))' }}>✦</span>
-          {' '}Md Nasrullah
-        </p>
+
+        {isLight ? (
+          <div>
+            <p
+              className="text-xs font-semibold tracking-wide mb-1"
+              style={{ color: 'hsl(222 30% 12%)' }}
+            >
+              Md Nasrullah
+            </p>
+            <p
+              className="text-[10px] tracking-[0.2em] uppercase"
+              style={{ color: 'hsl(220 10% 55%)' }}
+            >
+              AI Product Architect • Crafted with Precision
+            </p>
+          </div>
+        ) : (
+          <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-muted-foreground font-semibold">
+            Crafted with AI Precision{' '}
+            <span className="inline-block mx-1" style={{ color: 'hsl(var(--neon-cyan))' }}>✦</span>
+            {' '}Md Nasrullah
+          </p>
+        )}
       </footer>
     </div>
   );
