@@ -15,13 +15,12 @@ const EducationSection = () => {
         className="max-w-2xl mx-auto text-center"
       >
         <div
-          className="inline-flex items-center gap-4 rounded-full px-9 py-5 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+          className={`inline-flex items-center gap-4 rounded-full px-9 py-5 transition-all duration-300 hover:scale-105 hover:-translate-y-1 ${!isLight ? 'premium-card' : ''}`}
           style={isLight ? {
             background: 'hsl(0 0% 100%)',
             border: '1.5px solid hsl(220 13% 88%)',
             boxShadow: '0 2px 8px hsl(0 0% 0% / 0.04), 0 4px 20px hsl(0 0% 0% / 0.05)',
           } : undefined}
-          className={`inline-flex items-center gap-4 rounded-full px-9 py-5 transition-all duration-300 hover:scale-105 hover:-translate-y-1 ${!isLight ? 'premium-card' : ''}`}
         >
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center"
