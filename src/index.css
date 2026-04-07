@@ -49,54 +49,60 @@
     --gradient-card: linear-gradient(145deg, hsl(240 15% 10%), hsl(240 15% 6%));
   }
 
-  /* ===== EXECUTIVE LIGHT THEME ===== */
+  /* ===== CREATIVE LUXURY LIGHT THEME ===== */
   .light {
-    --background: 220 20% 97%;
-    --foreground: 222 30% 12%;
+    --background: 0 0% 99%;
+    --foreground: 230 25% 14%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 30% 12%;
+    --card-foreground: 230 25% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 30% 12%;
+    --popover-foreground: 230 25% 14%;
 
-    --primary: 222 47% 18%;
+    --primary: 240 65% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 195 80% 36%;
+    --secondary: 190 85% 45%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 18% 94%;
-    --muted-foreground: 220 10% 42%;
+    --muted: 230 15% 95%;
+    --muted-foreground: 230 10% 45%;
 
-    --accent: 195 80% 36%;
+    --accent: 260 70% 58%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 16% 88%;
-    --input: 220 16% 88%;
-    --ring: 195 80% 36%;
+    --border: 230 15% 90%;
+    --input: 230 15% 90%;
+    --ring: 240 65% 55%;
 
-    --neon-purple: 222 47% 18%;
-    --neon-blue: 215 60% 32%;
-    --neon-cyan: 195 80% 36%;
-    --neon-orange: 25 85% 50%;
+    /* Creative palette tokens */
+    --neon-purple: 260 70% 58%;
+    --neon-blue: 240 65% 55%;
+    --neon-cyan: 190 85% 45%;
+    --neon-orange: 25 90% 55%;
 
-    --glow-purple: 0 2px 16px hsl(222 47% 18% / 0.06), 0 1px 3px hsl(0 0% 0% / 0.02);
-    --glow-blue: 0 2px 16px hsl(215 60% 32% / 0.06), 0 1px 3px hsl(0 0% 0% / 0.02);
-    --glow-cyan: 0 2px 16px hsl(195 80% 36% / 0.08), 0 1px 3px hsl(0 0% 0% / 0.02);
+    --creative-royal: 240 65% 55%;
+    --creative-violet: 260 70% 58%;
+    --creative-cyan: 190 85% 45%;
+    --creative-coral: 10 80% 62%;
+    --creative-amber: 38 92% 55%;
+    --creative-mint: 162 60% 50%;
+    --creative-slate: 230 15% 30%;
 
-    --gradient-neon: linear-gradient(135deg, hsl(222 47% 18%), hsl(195 80% 36%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 18% 96%));
+    --glow-purple: 0 4px 24px hsl(260 70% 58% / 0.12);
+    --glow-blue: 0 4px 24px hsl(240 65% 55% / 0.12);
+    --glow-cyan: 0 4px 24px hsl(190 85% 45% / 0.12);
 
-    /* Executive light-only tokens */
-    --surface-elevated: 0 0% 100%;
-    --surface-sunken: 220 20% 95%;
-    --divider-silver: 220 16% 88%;
-    --shadow-executive: 0 1px 3px hsl(0 0% 0% / 0.04), 0 6px 24px hsl(0 0% 0% / 0.06);
-    --shadow-executive-hover: 0 2px 6px hsl(0 0% 0% / 0.04), 0 12px 40px hsl(0 0% 0% / 0.08);
+    --gradient-neon: linear-gradient(135deg, hsl(240 65% 55%), hsl(260 70% 58%), hsl(190 85% 45%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(230 15% 97%));
+
+    --shadow-soft: 0 2px 8px hsl(230 30% 20% / 0.04), 0 8px 32px hsl(230 30% 20% / 0.06);
+    --shadow-lifted: 0 4px 12px hsl(230 30% 20% / 0.06), 0 16px 48px hsl(230 30% 20% / 0.1);
+    --shadow-color: 0 8px 32px hsl(240 65% 55% / 0.12), 0 2px 8px hsl(260 70% 58% / 0.08);
   }
 }
 
@@ -113,7 +119,7 @@
   }
   .light body {
     font-family: 'Sora', 'Plus Jakarta Sans', 'Inter', sans-serif;
-    background: linear-gradient(180deg, hsl(220 20% 97%) 0%, hsl(220 18% 95%) 100%);
+    background: hsl(0 0% 99%);
   }
   html {
     scroll-behavior: smooth;
@@ -126,8 +132,8 @@
   }
   .light h1, .light h2, .light h3, .light h4, .light h5, .light h6 {
     font-family: 'Sora', 'Plus Jakarta Sans', 'Inter', sans-serif;
-    letter-spacing: -0.035em;
-    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-weight: 800;
   }
 }
 
@@ -155,16 +161,16 @@
     border: 1px solid hsl(var(--neon-purple) / 0.4);
   }
   .light .glow-border {
-    box-shadow: 0 1px 3px hsl(0 0% 0% / 0.04);
-    border: 1px solid hsl(220 14% 91%);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid hsl(var(--border));
   }
   .glow-border-cyan {
     box-shadow: var(--glow-cyan);
     border: 1px solid hsl(var(--neon-cyan) / 0.4);
   }
   .light .glow-border-cyan {
-    box-shadow: 0 1px 3px hsl(0 0% 0% / 0.04);
-    border: 1px solid hsl(220 14% 91%);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid hsl(var(--border));
   }
 
   /* Premium card — dark theme */
@@ -204,32 +210,19 @@
       inset 0 1px 0 hsl(var(--foreground) / 0.05);
   }
 
-  /* EXECUTIVE Light premium card */
+  /* Creative light card */
   .light .premium-card {
     background: hsl(0 0% 100%);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border: 1px solid hsl(220 16% 90%);
-    box-shadow: var(--shadow-executive);
-    border-radius: 1rem;
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-soft);
+    border-radius: 1.25rem;
   }
   .light .premium-card:hover {
-    border-color: hsl(195 80% 36% / 0.2);
-    box-shadow: var(--shadow-executive-hover);
-    transform: translateY(-3px);
-  }
-
-  /* Executive elevated surface */
-  .light .executive-surface {
-    background: hsl(0 0% 100%);
-    border: 1px solid hsl(220 16% 90%);
-    box-shadow: var(--shadow-executive);
-    border-radius: 1rem;
-  }
-
-  /* Light mode section alternating backgrounds */
-  .light .section-alt {
-    background: hsl(220 20% 95%);
+    border-color: hsl(var(--creative-violet) / 0.2);
+    box-shadow: var(--shadow-lifted);
+    transform: translateY(-4px);
   }
 
   /* Section heading style */
@@ -243,12 +236,22 @@
   }
   .light .section-heading {
     filter: none;
-    background: var(--gradient-neon);
+    background: linear-gradient(135deg, hsl(var(--creative-royal)), hsl(var(--creative-violet)), hsl(var(--creative-cyan)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 800;
     letter-spacing: -0.04em;
+  }
+
+  /* Creative light floating shapes */
+  .light .creative-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
@@ -263,6 +266,23 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(15px) rotate(-2deg); }
+}
+
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 60% / 30% 50% 70% 60%; }
+  75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
 }
 
 @keyframes ringRotate {
@@ -293,8 +313,8 @@
 }
 
 .light @keyframes labPulse {
-  0%, 100% { box-shadow: 0 1px 8px hsl(var(--neon-purple) / 0.06); }
-  50% { box-shadow: 0 4px 20px hsl(var(--neon-purple) / 0.1); }
+  0%, 100% { box-shadow: var(--shadow-soft); }
+  50% { box-shadow: var(--shadow-lifted); }
 }
 
 /* Mobile tap glow flash */

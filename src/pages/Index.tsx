@@ -46,24 +46,18 @@ const Index = () => {
           className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-md h-px"
           style={{
             background: isLight
-              ? 'linear-gradient(90deg, transparent, hsl(220 16% 85%), transparent)'
+              ? 'linear-gradient(90deg, transparent, hsl(240 65% 55% / 0.15), transparent)'
               : 'linear-gradient(90deg, transparent, hsl(var(--border)), transparent)',
           }}
         />
 
         {isLight ? (
           <div>
-            <p
-              className="text-xs font-semibold tracking-wide mb-1"
-              style={{ color: 'hsl(222 30% 12%)' }}
-            >
+            <p className="text-xs font-bold tracking-wide mb-1" style={{ color: 'hsl(230 25% 14%)' }}>
               Md Nasrullah
             </p>
-            <p
-              className="text-[10px] tracking-[0.2em] uppercase"
-              style={{ color: 'hsl(220 10% 55%)' }}
-            >
-              AI Product Architect • Crafted with Precision
+            <p className="text-[10px] tracking-[0.2em] uppercase" style={{ color: 'hsl(230 10% 55%)' }}>
+              AI Product Architect • Crafted with ✦ Precision
             </p>
           </div>
         ) : (
