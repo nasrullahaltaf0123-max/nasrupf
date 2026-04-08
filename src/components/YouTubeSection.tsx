@@ -15,7 +15,7 @@ const YouTubeSection = () => {
 
   if (isLight) {
     return (
-      <section className="py-12 md:py-16 px-4 relative">
+      <section className="py-14 md:py-20 px-4 relative">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -23,12 +23,10 @@ const YouTubeSection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto text-center"
         >
-          <div className="mb-8">
-            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(0 70% 50%)' }}>
-              Media
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight" style={{
-              background: 'linear-gradient(135deg, hsl(230 25% 14%), hsl(0 70% 50%))',
+          <div className="mb-10">
+            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(0 70% 50%)' }}>Media</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight" style={{
+              background: 'linear-gradient(135deg, hsl(230 25% 14%) 20%, hsl(0 70% 50%) 70%, hsl(10 80% 62%))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}>
               Channels
@@ -48,24 +46,24 @@ const YouTubeSection = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.15, duration: 0.5 }}
-                      className="rounded-2xl flex items-center gap-4 cursor-pointer group transition-all duration-300"
+                      className="rounded-2xl flex items-center gap-4 cursor-pointer group transition-all duration-300 backdrop-blur-sm"
                       style={{
-                        background: 'hsl(0 0% 100%)',
-                        border: `1.5px solid ${ch.color}15`,
+                        background: `linear-gradient(145deg, hsl(0 0% 100% / 0.95), ${ch.color}05)`,
+                        border: `1.5px solid ${ch.color}18`,
                         boxShadow: `0 2px 12px ${ch.color}08`,
                         padding: isMobile ? '20px' : '24px',
                       }}
-                      whileHover={{ y: -4, boxShadow: `0 12px 40px ${ch.color}15` }}
+                      whileHover={{ y: -6, boxShadow: `0 16px 48px ${ch.color}18` }}
                       {...mobileTapProps}
                     >
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110" style={{ background: 'hsl(0 80% 50% / 0.06)', border: '1px solid hsl(0 80% 50% / 0.1)' }}>
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110" style={{ background: 'hsl(0 80% 50% / 0.06)', border: '1px solid hsl(0 80% 50% / 0.12)' }}>
                         <Youtube className="w-6 h-6" style={{ color: 'hsl(0 80% 45%)' }} />
                       </div>
                       <div className="text-left flex-1">
                         <p className="font-bold" style={{ color: 'hsl(230 20% 15%)' }}>{ch.name}</p>
-                        <p className="text-xs" style={{ color: 'hsl(230 10% 50%)' }}>{ch.emoji} YouTube Channel</p>
+                        <p className="text-xs" style={{ color: 'hsl(230 10% 48%)' }}>{ch.emoji} YouTube Channel</p>
                       </div>
-                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" style={{ color: 'hsl(0 70% 45%)' }} />
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" style={{ color: ch.color }} />
                     </motion.a>
                   </TooltipTrigger>
                   <TooltipContent side="top" className="px-3 py-1.5 text-xs font-semibold rounded-lg" style={{ background: 'hsl(0 0% 100%)', border: '1.5px solid hsl(230 15% 88%)', boxShadow: '0 4px 20px hsl(0 0% 0% / 0.08)', color: 'hsl(230 20% 15%)' }}>

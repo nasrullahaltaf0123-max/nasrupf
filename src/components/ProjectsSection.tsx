@@ -9,20 +9,19 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
-/* Bento tile colors for light mode */
 const bentoColors = [
-  { bg: 'hsl(240 65% 55% / 0.04)', accent: 'hsl(240 65% 55%)', border: 'hsl(240 65% 55% / 0.12)' },
-  { bg: 'hsl(260 70% 58% / 0.04)', accent: 'hsl(260 70% 58%)', border: 'hsl(260 70% 58% / 0.12)' },
-  { bg: 'hsl(190 85% 45% / 0.04)', accent: 'hsl(190 85% 45%)', border: 'hsl(190 85% 45% / 0.12)' },
-  { bg: 'hsl(10 80% 62% / 0.04)', accent: 'hsl(10 80% 62%)', border: 'hsl(10 80% 62% / 0.12)' },
-  { bg: 'hsl(38 92% 55% / 0.04)', accent: 'hsl(38 92% 55%)', border: 'hsl(38 92% 55% / 0.12)' },
-  { bg: 'hsl(162 60% 50% / 0.04)', accent: 'hsl(162 60% 50%)', border: 'hsl(162 60% 50% / 0.12)' },
+  { bg: 'linear-gradient(145deg, hsl(240 65% 55% / 0.06), hsl(240 65% 55% / 0.02))', accent: 'hsl(240 65% 55%)', border: 'hsl(240 65% 55% / 0.15)' },
+  { bg: 'linear-gradient(145deg, hsl(260 70% 58% / 0.06), hsl(260 70% 58% / 0.02))', accent: 'hsl(260 70% 58%)', border: 'hsl(260 70% 58% / 0.15)' },
+  { bg: 'linear-gradient(145deg, hsl(190 85% 45% / 0.06), hsl(190 85% 45% / 0.02))', accent: 'hsl(190 85% 45%)', border: 'hsl(190 85% 45% / 0.15)' },
+  { bg: 'linear-gradient(145deg, hsl(10 80% 62% / 0.06), hsl(10 80% 62% / 0.02))', accent: 'hsl(10 80% 62%)', border: 'hsl(10 80% 62% / 0.15)' },
+  { bg: 'linear-gradient(145deg, hsl(38 92% 55% / 0.06), hsl(38 92% 55% / 0.02))', accent: 'hsl(38 92% 55%)', border: 'hsl(38 92% 55% / 0.15)' },
+  { bg: 'linear-gradient(145deg, hsl(162 60% 50% / 0.06), hsl(162 60% 50% / 0.02))', accent: 'hsl(162 60% 50%)', border: 'hsl(162 60% 50% / 0.15)' },
 ];
 
 const LightProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: number; onClick: () => void }) => {
   const { play } = useHoverSound();
   const bc = bentoColors[i % bentoColors.length];
-  const isLarge = i === 0 || i === 3; // First and fourth get larger
+  const isLarge = i === 0 || i === 3;
 
   return (
     <motion.div
@@ -38,37 +37,35 @@ const LightProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: num
         padding: '28px 24px',
         minHeight: isLarge ? '240px' : '200px',
       }}
-      whileHover={{ y: -6, boxShadow: `0 16px 48px ${bc.accent}15` }}
+      whileHover={{ y: -8, boxShadow: `0 20px 60px ${bc.accent}18, 0 4px 16px ${bc.accent}10` }}
       onMouseEnter={play}
     >
-      {/* Floating accent shape */}
-      <div
-        className="absolute -top-8 -right-8 w-24 h-24 rounded-full opacity-30 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${bc.accent}30, transparent 70%)`,
-          filter: 'blur(20px)',
-        }}
-      />
+      {/* Floating colorful accent blob */}
+      <div className="absolute -top-10 -right-10 w-28 h-28 rounded-full opacity-40 pointer-events-none" style={{
+        background: `radial-gradient(circle, ${bc.accent}35, transparent 70%)`,
+        filter: 'blur(25px)',
+      }} />
+      <div className="absolute bottom-4 left-4 w-16 h-16 rounded-full opacity-20 pointer-events-none" style={{
+        background: `radial-gradient(circle, ${bc.accent}25, transparent 70%)`,
+        filter: 'blur(15px)',
+      }} />
 
       <div className="flex items-start gap-4 relative z-10">
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 overflow-hidden group-hover:scale-110"
+          className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 overflow-hidden group-hover:scale-110 group-hover:rotate-3"
           style={{
-            background: 'hsl(0 0% 100%)',
+            background: `linear-gradient(145deg, hsl(0 0% 100%), ${bc.accent}08)`,
             border: `1.5px solid ${bc.border}`,
-            boxShadow: `0 2px 12px ${bc.accent}10`,
+            boxShadow: `0 4px 16px ${bc.accent}12`,
           }}
         >
           <img src={p.icon} alt={p.name} loading="lazy" width={36} height={36} className="w-9 h-9 object-contain" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3
-            className={`text-base md:text-lg font-bold truncate mb-1 ${hasBengali(p.name) ? 'font-bengali' : ''}`}
-            style={{ color: 'hsl(230 25% 14%)' }}
-          >
+          <h3 className={`text-base md:text-lg font-bold truncate mb-1 ${hasBengali(p.name) ? 'font-bengali' : ''}`} style={{ color: 'hsl(230 25% 14%)' }}>
             {p.name}
           </h3>
-          <p className="text-xs md:text-sm leading-relaxed line-clamp-2" style={{ color: 'hsl(230 10% 50%)' }}>
+          <p className="text-xs md:text-sm leading-relaxed line-clamp-2" style={{ color: 'hsl(230 10% 48%)' }}>
             {p.subtitle}
           </p>
         </div>
@@ -77,7 +74,7 @@ const LightProjectCard = memo(({ p, i, onClick }: { p: DigitalLabProduct; i: num
       <div className="mt-auto pt-5 flex justify-end relative z-10">
         <span
           className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-xl transition-all duration-300 group-hover:scale-105"
-          style={{ background: `${bc.accent}10`, color: bc.accent, border: `1px solid ${bc.accent}15` }}
+          style={{ background: `${bc.accent}10`, color: bc.accent, border: `1px solid ${bc.accent}18` }}
         >
           Explore <ArrowUpRight className="w-3 h-3" />
         </span>
@@ -145,7 +142,20 @@ const ProjectsSection = () => {
   const isLight = useTheme();
 
   return (
-    <section className="py-16 md:py-24 px-4" style={{ background: isLight ? 'hsl(0 0% 99%)' : 'transparent' }}>
+    <section className="py-20 md:py-28 px-4 relative overflow-hidden" style={{ background: isLight ? 'transparent' : 'transparent' }}>
+      {/* Light mode colorful background */}
+      {isLight && (
+        <>
+          <div className="absolute inset-0 -z-10 pointer-events-none" style={{
+            background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 25% 97%) 50%, hsl(0 0% 99%) 100%)',
+          }} />
+          <div className="absolute top-20 right-0 w-48 h-48 pointer-events-none" style={{
+            background: 'radial-gradient(circle, hsl(260 70% 58% / 0.06), transparent 70%)',
+            borderRadius: '50%', filter: 'blur(30px)', animation: 'floatSlow 12s ease-in-out infinite',
+          }} />
+        </>
+      )}
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -154,17 +164,15 @@ const ProjectsSection = () => {
         className="max-w-4xl mx-auto"
       >
         {isLight ? (
-          <div className="text-center mb-12">
-            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(240 65% 55%)' }}>
-              Flagship Products
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3" style={{
-              background: 'linear-gradient(135deg, hsl(230 25% 14%), hsl(260 70% 58%))',
+          <div className="text-center mb-14">
+            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(240 65% 55%)' }}>Flagship Products</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3" style={{
+              background: 'linear-gradient(135deg, hsl(230 25% 14%) 20%, hsl(260 70% 58%) 60%, hsl(190 85% 45%))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}>
               Featured Digital Products
             </h2>
-            <p className="text-sm max-w-lg mx-auto leading-relaxed" style={{ color: 'hsl(230 10% 50%)' }}>
+            <p className="text-sm max-w-lg mx-auto leading-relaxed" style={{ color: 'hsl(230 10% 48%)' }}>
               Crafted with precision, powered by AI — each product built to solve real problems.
             </p>
           </div>
@@ -175,11 +183,7 @@ const ProjectsSection = () => {
           </>
         )}
 
-        {/* Bento grid for light, standard grid for dark */}
-        <div className={isLight
-          ? 'grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6'
-          : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6'
-        }>
+        <div className={isLight ? 'grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6'}>
           {featuredProducts.map((p, i) =>
             isLight
               ? <LightProjectCard key={p.id} p={p} i={i} onClick={() => setSelectedProject(i)} />
@@ -200,7 +204,7 @@ const ProjectsSection = () => {
               className="fixed inset-0 z-[100] flex items-center justify-center px-4"
               onClick={() => setSelectedProject(null)}
             >
-              <div className="absolute inset-0" style={{ backdropFilter: 'blur(16px)', background: isLight ? 'hsl(0 0% 100% / 0.85)' : 'hsl(var(--background) / 0.8)' }} />
+              <div className="absolute inset-0" style={{ backdropFilter: 'blur(16px)', background: isLight ? 'hsl(240 30% 97% / 0.88)' : 'hsl(var(--background) / 0.8)' }} />
               <motion.div
                 initial={{ opacity: 0, scale: 0.92, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -212,9 +216,11 @@ const ProjectsSection = () => {
                   background: isLight ? 'hsl(0 0% 100%)' : `linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))`,
                   backdropFilter: 'blur(16px)',
                   border: isLight ? `2px solid ${bc.border}` : `1px solid hsl(var(${project.accent}) / 0.15)`,
-                  boxShadow: isLight ? `0 16px 64px ${bc.accent}20` : `0 0 30px hsl(var(${project.accent}) / 0.08), 0 8px 32px hsl(0 0% 0% / 0.35)`,
+                  boxShadow: isLight ? `0 20px 80px ${bc.accent}25, 0 4px 16px hsl(0 0% 0% / 0.06)` : `0 0 30px hsl(var(${project.accent}) / 0.08), 0 8px 32px hsl(0 0% 0% / 0.35)`,
                 }}
               >
+                {/* Gradient accent top bar */}
+                {isLight && <div className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl" style={{ background: `linear-gradient(90deg, ${bc.accent}, hsl(190 85% 45%))` }} />}
                 <button onClick={() => setSelectedProject(null)} className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-200" style={{ background: isLight ? 'hsl(230 15% 95%)' : 'hsl(var(--muted) / 0.5)', color: isLight ? 'hsl(230 10% 40%)' : 'hsl(var(--muted-foreground))' }}>
                   <X className="w-4 h-4" />
                 </button>
@@ -223,9 +229,9 @@ const ProjectsSection = () => {
                     <img src={project.icon} alt={project.name} width={48} height={48} className="w-12 h-12 object-contain" style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 4px hsl(var(--neon-cyan) / 0.4))' }} />
                   </div>
                   <h3 className={`text-xl md:text-2xl font-extrabold mb-1.5 ${hasBengali(project.name) ? 'font-bengali' : ''}`} style={{ color: isLight ? 'hsl(230 25% 14%)' : 'hsl(var(--foreground))' }}>{project.name}</h3>
-                  <p className="text-sm mb-6 leading-relaxed" style={{ color: isLight ? 'hsl(230 10% 50%)' : 'hsl(var(--muted-foreground))' }}>{project.subtitle}</p>
+                  <p className="text-sm mb-6 leading-relaxed" style={{ color: isLight ? 'hsl(230 10% 48%)' : 'hsl(var(--muted-foreground))' }}>{project.subtitle}</p>
                   <div className="flex gap-3 justify-center">
-                    <a href={project.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white transition-all duration-300 hover:scale-105" style={{ background: isLight ? bc.accent : 'linear-gradient(135deg, hsl(var(--neon-purple)), hsl(var(--neon-cyan)))', boxShadow: isLight ? `0 4px 20px ${bc.accent}30` : '0 0 16px hsl(var(--neon-purple) / 0.15)' }}>
+                    <a href={project.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white transition-all duration-300 hover:scale-105" style={{ background: isLight ? `linear-gradient(135deg, ${bc.accent}, hsl(260 70% 58%))` : 'linear-gradient(135deg, hsl(var(--neon-purple)), hsl(var(--neon-cyan)))', boxShadow: isLight ? `0 4px 20px ${bc.accent}30` : '0 0 16px hsl(var(--neon-purple) / 0.15)' }}>
                       Live Project <ExternalLink className="w-4 h-4" />
                     </a>
                     <button onClick={() => setSelectedProject(null)} className="px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-105" style={{ background: isLight ? 'hsl(230 15% 95%)' : 'hsl(var(--muted) / 0.4)', border: isLight ? '1.5px solid hsl(230 15% 90%)' : '1px solid hsl(var(--neon-purple) / 0.1)', color: isLight ? 'hsl(230 25% 14%)' : 'hsl(var(--foreground))' }}>

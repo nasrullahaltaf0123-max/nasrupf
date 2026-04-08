@@ -17,10 +17,16 @@ const WhyChooseMeSection = () => {
 
   if (isLight) {
     return (
-      <section className="py-16 md:py-24 px-4 relative overflow-hidden">
-        {/* Offset layered background */}
+      <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
-          background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 20% 97%) 50%, hsl(0 0% 99%) 100%)',
+          background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 25% 97%) 40%, hsl(38 20% 98%) 100%)',
+        }} />
+        {/* Floating blob */}
+        <div className="absolute top-20 right-0 w-52 h-52 pointer-events-none" style={{
+          background: 'radial-gradient(circle, hsl(38 92% 55% / 0.07), transparent 70%)',
+          borderRadius: '40% 60% 70% 30% / 50% 40% 60% 50%',
+          animation: 'morphBlob 16s ease-in-out infinite',
+          filter: 'blur(35px)',
         }} />
 
         <motion.div
@@ -30,20 +36,17 @@ const WhyChooseMeSection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="text-center mb-12">
-            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(38 92% 55%)' }}>
-              Advantages
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3" style={{
-              background: 'linear-gradient(135deg, hsl(230 25% 14%), hsl(38 92% 50%))',
+          <div className="text-center mb-14">
+            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(38 92% 55%)' }}>Advantages</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3" style={{
+              background: 'linear-gradient(135deg, hsl(230 25% 14%) 20%, hsl(38 92% 50%) 70%, hsl(10 80% 62%))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}>
               Why Choose Me
             </h2>
-            <p className="text-sm" style={{ color: 'hsl(230 10% 50%)' }}>The difference that sets my work apart</p>
+            <p className="text-sm" style={{ color: 'hsl(230 10% 48%)' }}>The difference that sets my work apart</p>
           </div>
 
-          {/* Capsule blocks — offset layout */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
             {reasons.map((r, i) => (
               <motion.div
@@ -52,24 +55,24 @@ const WhyChooseMeSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="group rounded-2xl text-center transition-all duration-300 ease-out cursor-default"
+                className="group rounded-2xl text-center transition-all duration-300 ease-out cursor-default backdrop-blur-sm"
                 style={{
-                  background: 'hsl(0 0% 100%)',
-                  border: `1px solid ${r.color}15`,
+                  background: `linear-gradient(145deg, hsl(0 0% 100% / 0.95), ${r.color}06)`,
+                  border: `1.5px solid ${r.color}18`,
                   boxShadow: `0 2px 8px ${r.color}08`,
                   padding: isMobile ? '20px 16px' : '28px 20px',
                   marginTop: i % 2 !== 0 ? '16px' : '0',
                 }}
-                whileHover={{ y: -6, boxShadow: `0 12px 40px ${r.color}15` }}
+                whileHover={{ y: -8, boxShadow: `0 16px 48px ${r.color}18, 0 4px 12px ${r.color}10` }}
               >
                 <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
-                  style={{ background: `${r.color}08`, border: `1px solid ${r.color}12` }}
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
+                  style={{ background: `${r.color}08`, border: `1px solid ${r.color}15` }}
                 >
                   <r.icon className="w-5 h-5" style={{ color: r.color }} />
                 </div>
                 <p className="text-xs md:text-sm font-bold mb-1.5" style={{ color: 'hsl(230 20% 15%)' }}>{r.title}</p>
-                <p className="text-[10px] md:text-xs leading-relaxed hidden md:block" style={{ color: 'hsl(230 10% 50%)' }}>{r.desc}</p>
+                <p className="text-[10px] md:text-xs leading-relaxed hidden md:block" style={{ color: 'hsl(230 10% 48%)' }}>{r.desc}</p>
               </motion.div>
             ))}
           </div>

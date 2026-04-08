@@ -10,7 +10,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
-/* Tile colors for ecosystem wall */
 const tileColors = [
   'hsl(240 65% 55%)', 'hsl(260 70% 58%)', 'hsl(190 85% 45%)',
   'hsl(10 80% 62%)', 'hsl(38 92% 55%)', 'hsl(162 60% 50%)',
@@ -23,14 +22,24 @@ const EcosystemWall = ({ onExpand }: { onExpand: () => void }) => {
   const { play } = useHoverSound();
 
   return (
-    <section className="py-16 md:py-24 px-4 relative overflow-hidden">
-      {/* Background with diagonal cut */}
-      <div
-        className="absolute inset-0 -z-10 pointer-events-none"
-        style={{
-          background: 'linear-gradient(135deg, hsl(260 30% 97%) 0%, hsl(240 25% 96%) 50%, hsl(190 20% 97%) 100%)',
-        }}
-      />
+    <section className="py-20 md:py-28 px-4 relative overflow-hidden">
+      {/* Colorful background with diagonal */}
+      <div className="absolute inset-0 -z-10 pointer-events-none" style={{
+        background: 'linear-gradient(135deg, hsl(260 30% 97%) 0%, hsl(240 25% 96%) 40%, hsl(190 20% 97%) 70%, hsl(10 15% 98%) 100%)',
+      }} />
+      {/* Floating blobs */}
+      <div className="absolute top-10 -left-10 w-48 h-48 pointer-events-none" style={{
+        background: 'radial-gradient(circle, hsl(260 70% 58% / 0.08), transparent 70%)',
+        borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+        animation: 'morphBlob 14s ease-in-out infinite',
+        filter: 'blur(35px)',
+      }} />
+      <div className="absolute bottom-10 right-0 w-40 h-40 pointer-events-none" style={{
+        background: 'radial-gradient(circle, hsl(190 85% 45% / 0.06), transparent 70%)',
+        borderRadius: '50%',
+        animation: 'floatSlow 10s ease-in-out infinite',
+        filter: 'blur(30px)',
+      }} />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -39,21 +48,18 @@ const EcosystemWall = ({ onExpand }: { onExpand: () => void }) => {
         transition={{ duration: 0.6 }}
         className="max-w-4xl mx-auto"
       >
-        <div className="text-center mb-12">
-          <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(260 70% 58%)' }}>
-            Creative Universe
-          </p>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3" style={{
+        <div className="text-center mb-14">
+          <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(260 70% 58%)' }}>Creative Universe</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3" style={{
             background: 'linear-gradient(135deg, hsl(240 65% 55%), hsl(260 70% 58%), hsl(190 85% 45%))',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
             Product Ecosystem
           </h2>
-          <p className="text-sm" style={{ color: 'hsl(230 10% 50%)' }}>Every tool, project & experiment I've built</p>
+          <p className="text-sm" style={{ color: 'hsl(230 10% 48%)' }}>Every tool, project & experiment I've built</p>
         </div>
 
-        {/* Mosaic Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 mb-8">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 mb-10">
           {orbitProducts.slice(0, 10).map((item, i) => {
             const color = tileColors[i % tileColors.length];
             return (
@@ -66,19 +72,19 @@ const EcosystemWall = ({ onExpand }: { onExpand: () => void }) => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.4 }}
-                whileHover={{ y: -5, scale: 1.05 }}
+                whileHover={{ y: -6, scale: 1.06 }}
                 onMouseEnter={play}
                 onClick={(e) => e.stopPropagation()}
-                className="flex flex-col items-center text-center group rounded-2xl p-3 md:p-4 transition-all duration-300"
+                className="flex flex-col items-center text-center group rounded-2xl p-3 md:p-4 transition-all duration-300 backdrop-blur-sm"
                 style={{
-                  background: 'hsl(0 0% 100%)',
+                  background: `linear-gradient(145deg, hsl(0 0% 100% / 0.9), ${color}06)`,
                   border: `1.5px solid ${color}18`,
                   boxShadow: `0 2px 8px ${color}08`,
                 }}
               >
                 <div
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mb-2 transition-all duration-300 group-hover:scale-110 overflow-hidden"
-                  style={{ background: `${color}08`, border: `1px solid ${color}12` }}
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mb-2 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 overflow-hidden"
+                  style={{ background: `${color}08`, border: `1px solid ${color}15` }}
                 >
                   <img src={item.icon} alt={item.name} loading="lazy" width={32} height={32} className="w-8 h-8 object-contain" />
                 </div>
@@ -90,18 +96,17 @@ const EcosystemWall = ({ onExpand }: { onExpand: () => void }) => {
           })}
         </div>
 
-        {/* Expand CTA */}
         {orbitProducts.length > 10 && (
           <div className="text-center">
             <motion.button
-              whileHover={{ scale: 1.04, y: -2 }}
+              whileHover={{ scale: 1.04, y: -3 }}
               whileTap={{ scale: 0.97 }}
               onClick={onExpand}
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-bold text-sm transition-all duration-300"
               style={{
                 background: 'linear-gradient(135deg, hsl(240 65% 55%), hsl(260 70% 58%))',
                 color: 'white',
-                boxShadow: '0 4px 20px hsl(240 65% 55% / 0.2)',
+                boxShadow: '0 4px 24px hsl(240 65% 55% / 0.25)',
               }}
             >
               <Grid3X3 className="w-4 h-4" />
@@ -203,7 +208,7 @@ const PortalSlider = () => {
 
       <AnimatePresence>
         {expanded && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="fixed inset-0 z-[100] flex items-center justify-center" style={{ backdropFilter: 'blur(12px)', background: isLight ? 'hsl(0 0% 100% / 0.9)' : 'hsl(var(--background) / 0.9)' }} onClick={() => setExpanded(false)}>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="fixed inset-0 z-[100] flex items-center justify-center" style={{ backdropFilter: 'blur(12px)', background: isLight ? 'hsl(240 30% 97% / 0.92)' : 'hsl(var(--background) / 0.9)' }} onClick={() => setExpanded(false)}>
             <motion.button initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} transition={{ delay: 0.15 }} onClick={() => setExpanded(false)} className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-colors duration-300" style={{ background: isLight ? 'hsl(230 15% 95%)' : 'hsl(var(--muted) / 0.4)', border: isLight ? '1.5px solid hsl(230 15% 88%)' : '1px solid hsl(var(--neon-purple) / 0.1)' }}>
               <X className="w-5 h-5" style={{ color: isLight ? 'hsl(230 15% 30%)' : 'hsl(var(--foreground))' }} />
             </motion.button>
@@ -212,18 +217,18 @@ const PortalSlider = () => {
                 background: isLight ? 'linear-gradient(135deg, hsl(240 65% 55%), hsl(260 70% 58%))' : 'linear-gradient(135deg, hsl(var(--neon-cyan)), hsl(var(--neon-purple)))',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               }}>My Creations ✦</motion.h2>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-xs mt-1.5" style={{ color: isLight ? 'hsl(230 10% 50%)' : 'hsl(var(--muted-foreground))' }}>Tools, projects & experiments</motion.p>
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-xs mt-1.5" style={{ color: isLight ? 'hsl(230 10% 48%)' : 'hsl(var(--muted-foreground))' }}>Tools, projects & experiments</motion.p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 md:gap-7 px-6 pt-20 pb-12 max-w-3xl w-full max-h-[80vh] overflow-y-auto" style={{ justifyItems: 'center' }} onClick={(e) => e.stopPropagation()}>
               {orbitProducts.map((item, i) => {
                 const color = tileColors[i % tileColors.length];
                 return (
                   <motion.a key={item.id} href={item.href} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} transition={{ delay: 0.08 + i * 0.05, type: 'spring', stiffness: 200, damping: 18 }} whileHover={{ scale: 1.06, y: -4 }} whileTap={{ scale: 0.95 }} onMouseEnter={play} className="flex flex-col items-center text-center group" onClick={(e) => e.stopPropagation()}>
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mb-2.5 transition-all duration-300 relative overflow-hidden" style={{ background: isLight ? 'hsl(0 0% 100%)' : 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))', border: isLight ? `1.5px solid ${color}18` : '1px solid hsl(var(--neon-cyan) / 0.1)', boxShadow: isLight ? `0 2px 12px ${color}10` : '0 2px 10px hsl(0 0% 0% / 0.2)' }}>
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mb-2.5 transition-all duration-300 relative overflow-hidden" style={{ background: isLight ? `linear-gradient(145deg, hsl(0 0% 100%), ${color}08)` : 'linear-gradient(145deg, hsl(var(--muted) / 0.5), hsl(var(--background) / 0.8))', border: isLight ? `1.5px solid ${color}18` : '1px solid hsl(var(--neon-cyan) / 0.1)', boxShadow: isLight ? `0 4px 16px ${color}12` : '0 2px 10px hsl(0 0% 0% / 0.2)' }}>
                       <img src={item.icon} alt={item.name} loading="lazy" width={36} height={36} className="w-9 h-9 md:w-10 md:h-10 object-contain group-hover:scale-110 transition-transform duration-300" style={{ filter: isLight ? 'none' : 'drop-shadow(0 0 3px hsl(var(--neon-cyan) / 0.4))' }} />
                     </div>
                     <span className={`text-xs md:text-sm font-bold truncate max-w-full ${hasBengali(item.name) ? 'font-bengali' : ''}`} style={{ color: isLight ? 'hsl(230 20% 15%)' : 'hsl(var(--foreground))' }}>{item.name}</span>
-                    <span className="text-[10px] mt-0.5 leading-tight line-clamp-1" style={{ color: isLight ? 'hsl(230 10% 50%)' : 'hsl(var(--muted-foreground))' }}>{item.subtitle}</span>
+                    <span className="text-[10px] mt-0.5 leading-tight line-clamp-1" style={{ color: isLight ? 'hsl(230 10% 48%)' : 'hsl(var(--muted-foreground))' }}>{item.subtitle}</span>
                     <ExternalLink className="w-3 h-3 mt-1.5 transition-colors duration-300" style={{ color: isLight ? color : 'hsl(var(--muted-foreground))' }} />
                   </motion.a>
                 );
