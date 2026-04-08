@@ -3,10 +3,10 @@ import { Sparkles, Cpu, Palette, Zap } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 
 const highlights = [
-  { icon: Cpu, text: 'AI-Powered Tools', color: 'hsl(240 65% 55%)' },
-  { icon: Palette, text: 'Modern Design', color: 'hsl(260 70% 58%)' },
-  { icon: Zap, text: 'Automation', color: 'hsl(190 85% 45%)' },
-  { icon: Sparkles, text: 'Digital Products', color: 'hsl(10 80% 62%)' },
+  { icon: Cpu, text: 'AI-Powered Tools', color: 'hsl(240 65% 55%)', gradient: 'linear-gradient(135deg, hsl(240 65% 55% / 0.12), hsl(240 65% 55% / 0.03))' },
+  { icon: Palette, text: 'Modern Design', color: 'hsl(260 70% 58%)', gradient: 'linear-gradient(135deg, hsl(260 70% 58% / 0.12), hsl(260 70% 58% / 0.03))' },
+  { icon: Zap, text: 'Automation', color: 'hsl(190 85% 45%)', gradient: 'linear-gradient(135deg, hsl(190 85% 45% / 0.12), hsl(190 85% 45% / 0.03))' },
+  { icon: Sparkles, text: 'Digital Products', color: 'hsl(10 80% 62%)', gradient: 'linear-gradient(135deg, hsl(10 80% 62% / 0.12), hsl(10 80% 62% / 0.03))' },
 ];
 
 const AboutSection = () => {
@@ -14,14 +14,18 @@ const AboutSection = () => {
 
   if (isLight) {
     return (
-      <section className="py-16 md:py-24 px-4 relative overflow-hidden">
-        {/* Diagonal background accent */}
-        <div
-          className="absolute inset-0 -z-10 pointer-events-none"
-          style={{
-            background: 'linear-gradient(170deg, hsl(0 0% 99%) 0%, hsl(240 30% 97%) 50%, hsl(0 0% 99%) 100%)',
-          }}
-        />
+      <section className="py-20 md:py-28 px-4 relative overflow-hidden">
+        {/* Colorful diagonal background */}
+        <div className="absolute inset-0 -z-10 pointer-events-none" style={{
+          background: 'linear-gradient(170deg, hsl(240 35% 97%) 0%, hsl(260 25% 96%) 40%, hsl(190 20% 97%) 70%, hsl(0 0% 99%) 100%)',
+        }} />
+        {/* Floating blob */}
+        <div className="absolute top-20 right-0 w-60 h-60 pointer-events-none" style={{
+          background: 'radial-gradient(circle, hsl(260 70% 58% / 0.08), transparent 70%)',
+          borderRadius: '60% 40% 70% 30% / 40% 60% 30% 70%',
+          animation: 'morphBlob 15s ease-in-out infinite',
+          filter: 'blur(40px)',
+        }} />
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -40,12 +44,10 @@ const AboutSection = () => {
             Who I Am
           </motion.p>
           <h2
-            className="text-3xl md:text-4xl font-extrabold tracking-tight mb-8"
+            className="text-3xl md:text-5xl font-extrabold tracking-tight mb-8"
             style={{
-              background: 'linear-gradient(135deg, hsl(230 25% 14%), hsl(240 65% 55%))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              background: 'linear-gradient(135deg, hsl(230 25% 14%) 20%, hsl(240 65% 55%) 60%, hsl(260 70% 58%))',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}
           >
             About Me
@@ -57,9 +59,9 @@ const AboutSection = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.15, duration: 0.5 }}
             className="text-sm md:text-base lg:text-lg leading-relaxed mb-4 max-w-2xl mx-auto"
-            style={{ color: 'hsl(230 15% 30%)' }}
+            style={{ color: 'hsl(230 15% 28%)' }}
           >
-            I am an <span className="font-bold" style={{ color: 'hsl(240 65% 55%)' }}>AI Creator & Visual Builder</span>.
+            I am an <span className="font-bold" style={{ color: 'hsl(240 65% 55%)' }}>AI Creator</span> & <span className="font-bold" style={{ color: 'hsl(260 70% 58%)' }}>Visual Builder</span>.
             I build AI-powered tools, websites, and digital experiences that help creators and businesses grow.
           </motion.p>
           <motion.p
@@ -67,8 +69,8 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.25, duration: 0.5 }}
-            className="text-sm md:text-base leading-relaxed mb-10 max-w-2xl mx-auto"
-            style={{ color: 'hsl(230 10% 50%)' }}
+            className="text-sm md:text-base leading-relaxed mb-12 max-w-2xl mx-auto"
+            style={{ color: 'hsl(230 10% 48%)' }}
           >
             I turn ideas into real digital products using modern design and automation.
           </motion.p>
@@ -81,15 +83,15 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 * i + 0.3, duration: 0.4 }}
-                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
+                className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-lg"
                 style={{
-                  background: 'hsl(0 0% 100%)',
+                  background: item.gradient,
                   border: `1.5px solid ${item.color}20`,
                   boxShadow: `0 2px 12px ${item.color}10`,
                 }}
               >
                 <item.icon className="w-4 h-4" style={{ color: item.color }} />
-                <span style={{ color: 'hsl(230 20% 20%)' }}>{item.text}</span>
+                <span style={{ color: 'hsl(230 20% 18%)' }}>{item.text}</span>
               </motion.div>
             ))}
           </div>

@@ -26,10 +26,18 @@ const TestimonialSection = () => {
 
   if (isLight) {
     return (
-      <section className="py-16 md:py-24 px-4 relative overflow-hidden">
-        {/* Warm layered background */}
+      <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
-          background: 'linear-gradient(180deg, hsl(260 20% 97%) 0%, hsl(240 25% 96%) 50%, hsl(0 0% 99%) 100%)',
+          background: 'linear-gradient(180deg, hsl(260 25% 97%) 0%, hsl(240 30% 96%) 50%, hsl(0 0% 99%) 100%)',
+        }} />
+        {/* Floating decorative shapes */}
+        <div className="absolute top-16 left-10 w-32 h-32 pointer-events-none" style={{
+          background: 'radial-gradient(circle, hsl(260 70% 58% / 0.06), transparent 70%)',
+          borderRadius: '50%', filter: 'blur(25px)', animation: 'float 7s ease-in-out infinite',
+        }} />
+        <div className="absolute bottom-20 right-10 w-24 h-24 pointer-events-none rounded-xl rotate-12" style={{
+          background: 'radial-gradient(circle, hsl(240 65% 55% / 0.05), transparent 70%)',
+          filter: 'blur(20px)', animation: 'floatReverse 9s ease-in-out infinite',
         }} />
 
         <motion.div
@@ -39,39 +47,35 @@ const TestimonialSection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="text-center mb-12">
-            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(260 70% 58%)' }}>
-              Testimonials
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight" style={{
-              background: 'linear-gradient(135deg, hsl(230 25% 14%), hsl(260 70% 55%))',
+          <div className="text-center mb-14">
+            <p className="text-[11px] uppercase tracking-[0.3em] font-bold mb-3" style={{ color: 'hsl(260 70% 58%)' }}>Testimonials</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight" style={{
+              background: 'linear-gradient(135deg, hsl(230 25% 14%) 20%, hsl(260 70% 55%) 70%, hsl(240 65% 55%))',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             }}>
               What clients say
             </h2>
           </div>
 
-          {/* Stacked paper cards with rotation */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
             {testimonials.map((t, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 24, rotate: i === 0 ? -1 : 1 }}
+                initial={{ opacity: 0, y: 24, rotate: i === 0 ? -1.5 : 1.5 }}
                 whileInView={{ opacity: 1, y: 0, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -6, rotate: i === 0 ? -0.5 : 0.5 }}
-                className="rounded-3xl p-6 md:p-8 relative group transition-all duration-300"
+                whileHover={{ y: -8, rotate: i === 0 ? -0.5 : 0.5 }}
+                className="rounded-3xl p-6 md:p-8 relative group transition-all duration-300 backdrop-blur-sm"
                 style={{
-                  background: 'hsl(0 0% 100%)',
-                  border: `1.5px solid ${t.color}15`,
-                  boxShadow: `0 4px 24px ${t.color}08, 0 1px 3px hsl(0 0% 0% / 0.04)`,
+                  background: `linear-gradient(145deg, hsl(0 0% 100% / 0.95), ${t.color}04)`,
+                  border: `1.5px solid ${t.color}18`,
+                  boxShadow: `0 4px 24px ${t.color}10, 0 1px 3px hsl(0 0% 0% / 0.04)`,
                 }}
               >
                 {/* Color accent bar */}
-                <div className="absolute top-0 left-8 w-12 h-1 rounded-b-full" style={{ background: t.color }} />
+                <div className="absolute top-0 left-8 w-14 h-1.5 rounded-b-full" style={{ background: `linear-gradient(90deg, ${t.color}, ${t.color}80)` }} />
 
-                {/* Stars */}
                 <div className="flex items-center gap-0.5 mb-4">
                   {[...Array(5)].map((_, j) => (
                     <Star key={j} className="w-3.5 h-3.5" style={{ fill: 'hsl(45 93% 55%)', color: 'hsl(45 93% 55%)' }} />
@@ -79,26 +83,25 @@ const TestimonialSection = () => {
                 </div>
 
                 <Quote className="w-5 h-5 mb-3" style={{ color: `${t.color}40` }} />
-                <p className="text-sm leading-relaxed mb-6 italic" style={{ color: 'hsl(230 15% 28%)' }}>
+                <p className="text-sm leading-relaxed mb-6 italic" style={{ color: 'hsl(230 15% 26%)' }}>
                   "{t.text}"
                 </p>
 
-                {/* Author */}
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: t.color }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `linear-gradient(135deg, ${t.color}, ${t.color}cc)` }}>
                     <span className="text-sm font-bold text-white">{t.name[0]}</span>
                   </div>
                   <div className="text-left flex-1">
                     <p className="text-sm font-bold" style={{ color: 'hsl(230 25% 14%)' }}>{t.name}</p>
-                    <p className="text-[10px]" style={{ color: 'hsl(230 10% 50%)' }}>{t.role}</p>
+                    <p className="text-[10px]" style={{ color: 'hsl(230 10% 48%)' }}>{t.role}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between mt-4 pt-4" style={{ borderTop: `1px solid ${t.color}10` }}>
-                  <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: `${t.color}08`, color: t.color, border: `1px solid ${t.color}12` }}>
+                  <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full" style={{ background: `${t.color}08`, color: t.color, border: `1px solid ${t.color}15` }}>
                     {t.project}
                   </span>
-                  <span className="text-[10px] flex items-center gap-1" style={{ color: 'hsl(230 10% 55%)' }}>
+                  <span className="text-[10px] flex items-center gap-1" style={{ color: 'hsl(230 10% 52%)' }}>
                     <MapPin className="w-2.5 h-2.5" /> {t.location}
                   </span>
                 </div>

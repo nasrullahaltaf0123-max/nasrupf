@@ -4,18 +4,20 @@ const GradientMesh = () => {
   const isLight = useTheme();
 
   if (isLight) {
-    // Creative colorful mesh for light mode
     return (
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        {/* Multi-color mesh gradient */}
         <div
           className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%]"
           style={{
-            opacity: 0.4,
+            opacity: 0.5,
             background: `
-              radial-gradient(ellipse 700px 500px at 15% 20%, hsl(240 65% 55% / 0.06), transparent),
-              radial-gradient(ellipse 500px 400px at 75% 50%, hsl(260 70% 58% / 0.05), transparent),
-              radial-gradient(ellipse 600px 300px at 40% 80%, hsl(190 85% 45% / 0.04), transparent),
-              radial-gradient(ellipse 400px 400px at 85% 15%, hsl(10 80% 62% / 0.03), transparent)
+              radial-gradient(ellipse 700px 500px at 10% 15%, hsl(240 65% 55% / 0.08), transparent),
+              radial-gradient(ellipse 500px 400px at 80% 25%, hsl(260 70% 58% / 0.06), transparent),
+              radial-gradient(ellipse 600px 500px at 50% 70%, hsl(190 85% 45% / 0.05), transparent),
+              radial-gradient(ellipse 400px 400px at 90% 60%, hsl(10 80% 62% / 0.05), transparent),
+              radial-gradient(ellipse 500px 300px at 20% 80%, hsl(162 60% 50% / 0.04), transparent),
+              radial-gradient(ellipse 300px 300px at 60% 10%, hsl(38 92% 55% / 0.04), transparent)
             `,
             animation: 'meshMove 25s ease-in-out infinite',
           }}

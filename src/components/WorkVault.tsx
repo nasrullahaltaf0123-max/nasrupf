@@ -19,7 +19,7 @@ const WorkVault = () => {
         className="max-w-2xl mx-auto text-center"
       >
         <h2 className="section-heading mb-3">Digital Lab</h2>
-        <p className="text-xs mb-6" style={{ color: isLight ? 'hsl(230 10% 50%)' : 'hsl(var(--muted-foreground))' }}>
+        <p className="text-xs mb-6" style={{ color: isLight ? 'hsl(230 10% 48%)' : 'hsl(var(--muted-foreground))' }}>
           Exclusive access to experiments & innovation
         </p>
 
@@ -28,21 +28,21 @@ const WorkVault = () => {
             href="https://drive.google.com/drive/folders/1Cv_Rnev1EzoyB9hnwia7JdY7AfPSAD6H"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-4 rounded-2xl px-10 py-7 group transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 relative"
+            className="inline-flex items-center gap-4 rounded-2xl px-10 py-7 group transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1.5 relative backdrop-blur-sm"
             style={{
-              background: 'hsl(0 0% 100%)',
-              border: '1.5px solid hsl(260 70% 58% / 0.12)',
-              boxShadow: '0 2px 12px hsl(260 70% 58% / 0.06), 0 1px 3px hsl(0 0% 0% / 0.04)',
+              background: 'linear-gradient(145deg, hsl(0 0% 100% / 0.95), hsl(260 30% 98% / 0.9))',
+              border: '1.5px solid hsl(260 70% 58% / 0.15)',
+              boxShadow: '0 4px 20px hsl(260 70% 58% / 0.08), 0 1px 3px hsl(0 0% 0% / 0.04)',
             }}
             onMouseEnter={play}
             {...mobileTapProps}
           >
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'hsl(260 70% 58% / 0.06)', border: '1px solid hsl(260 70% 58% / 0.1)' }}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, hsl(260 70% 58% / 0.08), hsl(240 65% 55% / 0.04))', border: '1px solid hsl(260 70% 58% / 0.12)' }}>
               <FolderOpen className="w-5 h-5" style={{ color: 'hsl(260 70% 58%)' }} />
             </div>
             <div className="text-left">
               <span className="font-bold text-sm md:text-base tracking-wide block" style={{ color: 'hsl(230 20% 15%)' }}>Access Innovation Lab</span>
-              <span className="text-[11px]" style={{ color: 'hsl(230 10% 50%)' }}>View experiments & prototypes</span>
+              <span className="text-[11px]" style={{ color: 'hsl(230 10% 48%)' }}>View experiments & prototypes</span>
             </div>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" style={{ color: 'hsl(260 70% 58%)' }} />
           </a>
