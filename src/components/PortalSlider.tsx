@@ -24,6 +24,7 @@ const EcosystemWall = ({ onExpand }: { onExpand: () => void }) => {
 
   return (
     <section className="py-20 md:py-28 px-4 relative overflow-hidden">
+      <SparkleField count={18} light />
       {/* Colorful background with diagonal */}
       <div className="absolute inset-0 -z-10 pointer-events-none" style={{
         background: 'linear-gradient(135deg, hsl(260 30% 97%) 0%, hsl(240 25% 96%) 40%, hsl(190 20% 97%) 70%, hsl(10 15% 98%) 100%)',
