@@ -3,6 +3,7 @@ import { FolderOpen, ExternalLink, Sparkles, ArrowUpRight } from "lucide-react";
 import useHoverSound from "@/hooks/useHoverSound";
 import useMobileTap from "@/hooks/useMobileTap";
 import { useTheme } from "@/hooks/useTheme";
+import SparkleField from '@/components/SparkleField';
 
 const WorkVault = () => {
   const { play } = useHoverSound();
@@ -10,7 +11,8 @@ const WorkVault = () => {
   const isLight = useTheme();
 
   return (
-    <section className="py-10 md:py-14 px-4">
+    <section className="py-10 md:py-14 px-4 relative overflow-hidden">
+      {isLight && <SparkleField count={10} light />}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

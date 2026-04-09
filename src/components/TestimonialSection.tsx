@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Quote, Star, MapPin } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import SparkleField from '@/components/SparkleField';
 
 const testimonials = [
   {
@@ -27,6 +28,7 @@ const TestimonialSection = () => {
   if (isLight) {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
+        <SparkleField count={14} light />
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(180deg, hsl(260 25% 97%) 0%, hsl(240 30% 96%) 50%, hsl(0 0% 99%) 100%)',
         }} />

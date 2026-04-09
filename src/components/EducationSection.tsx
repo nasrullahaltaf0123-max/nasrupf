@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
 import { GraduationCap } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import SparkleField from '@/components/SparkleField';
 
 const EducationSection = () => {
   const isLight = useTheme();
 
   if (isLight) {
     return (
-      <section className="py-8 md:py-10 px-4">
+      <section className="py-8 md:py-10 px-4 relative overflow-hidden">
+        <SparkleField count={8} light />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

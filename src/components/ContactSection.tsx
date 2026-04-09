@@ -3,6 +3,7 @@ import { Linkedin, Facebook, Rocket, MessageCircle, Mail, ArrowRight } from "luc
 import useHoverSound from "@/hooks/useHoverSound";
 import useMobileTap from "@/hooks/useMobileTap";
 import { useTheme } from "@/hooks/useTheme";
+import SparkleField from '@/components/SparkleField';
 
 const socialLinks = [
   { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/md-nasrullah-abb499330/", color: 'hsl(210 80% 50%)' },
@@ -17,6 +18,7 @@ const ContactSection = () => {
   if (isLight) {
     return (
       <section className="py-20 md:py-28 px-4 pb-16 relative overflow-hidden">
+        <SparkleField count={16} light />
         {/* Colorful gradient background */}
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(135deg, hsl(240 35% 97%) 0%, hsl(260 25% 96%) 40%, hsl(190 20% 97%) 100%)',

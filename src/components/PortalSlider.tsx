@@ -7,6 +7,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useTheme } from '@/hooks/useTheme';
 import { orbitProducts } from '@/data/digitalLabProducts';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import SparkleField from '@/components/SparkleField';
 
 const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
