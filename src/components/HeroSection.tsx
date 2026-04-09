@@ -83,6 +83,7 @@ DualPortrait.displayName = 'DualPortrait';
 /* ─── DARK MODE HERO (unchanged) ─── */
 const DarkHero = ({ isLight }: { isLight: boolean }) => (
   <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2">
+    <SparkleField count={14} />
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -127,6 +128,7 @@ const DarkHero = ({ isLight }: { isLight: boolean }) => (
    ═══════════════════════════════════════════════════════════ */
 const LightHero = ({ isLight }: { isLight: boolean }) => (
   <section className="min-h-screen flex items-center justify-center relative px-5 pt-16 pb-20 overflow-hidden">
+    <SparkleField count={22} light />
     {/* ── BACKGROUND SYSTEM ── */}
     <div className="absolute inset-0 -z-10 pointer-events-none" style={{
       background: 'linear-gradient(170deg, hsl(240 50% 98%) 0%, hsl(0 0% 100%) 25%, hsl(260 40% 97%) 50%, hsl(190 30% 98%) 75%, hsl(10 40% 99%) 100%)',
