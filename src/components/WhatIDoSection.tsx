@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Bot, Globe, Settings, Figma, Package } from 'lucide-react';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useTheme } from '@/hooks/useTheme';
+import SparkleField from '@/components/SparkleField';
 
 const services = [
   { icon: Bot, title: 'AI Tools Development', desc: 'Building intelligent tools powered by AI', color: 'hsl(240 65% 55%)', bg: 'hsl(240 65% 55% / 0.06)' },
@@ -18,6 +19,7 @@ const WhatIDoSection = () => {
   if (isLight) {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
+        <SparkleField count={14} light />
         {/* Warm gradient + wave top */}
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(240 30% 97%) 40%, hsl(190 20% 97%) 100%)',

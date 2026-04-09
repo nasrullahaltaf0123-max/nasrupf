@@ -2,6 +2,7 @@ import { motion, animate } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Rocket, Eye, Globe } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import SparkleField from '@/components/SparkleField';
 
 const stats = [
   { icon: Rocket, value: 10, suffix: '+', label: 'Projects Built', color: 'hsl(240 65% 55%)', gradient: 'linear-gradient(135deg, hsl(240 65% 55% / 0.1), hsl(240 65% 55% / 0.03))' },
