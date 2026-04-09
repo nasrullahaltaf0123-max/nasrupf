@@ -147,6 +147,7 @@ const ProjectsSection = () => {
       {/* Light mode colorful background */}
       {isLight && (
         <>
+          <SparkleField count={16} light />
           <div className="absolute inset-0 -z-10 pointer-events-none" style={{
             background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 25% 97%) 50%, hsl(0 0% 99%) 100%)',
           }} />
