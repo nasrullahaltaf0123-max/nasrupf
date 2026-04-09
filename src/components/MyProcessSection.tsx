@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Lightbulb, PenTool, Code2, Rocket } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import SparkleField from '@/components/SparkleField';
 
 const steps = [
   { icon: Lightbulb, step: '01', title: 'Idea & Planning', desc: 'Understanding goals & mapping the vision', color: 'hsl(240 65% 55%)' },
@@ -15,6 +16,7 @@ const MyProcessSection = () => {
   if (isLight) {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
+        <SparkleField count={12} light />
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(165deg, hsl(190 25% 97%) 0%, hsl(0 0% 99%) 40%, hsl(260 20% 97%) 100%)',
         }} />

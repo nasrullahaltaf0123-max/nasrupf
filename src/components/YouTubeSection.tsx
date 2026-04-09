@@ -3,6 +3,7 @@ import { Youtube, ArrowUpRight } from 'lucide-react';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useTheme } from '@/hooks/useTheme';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import SparkleField from '@/components/SparkleField';
 
 const channels = [
   { name: 'SlurpNova ASMR', emoji: '🎧', href: 'https://youtube.com/@slurpnovaasmr?si=Hw_CW6pTNRzJZh5M', tooltip: 'Satisfying ASMR eating content', color: 'hsl(10 80% 62%)' },
@@ -15,7 +16,8 @@ const YouTubeSection = () => {
 
   if (isLight) {
     return (
-      <section className="py-14 md:py-20 px-4 relative">
+      <section className="py-14 md:py-20 px-4 relative overflow-hidden">
+        <SparkleField count={10} light />
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

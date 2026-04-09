@@ -6,6 +6,7 @@ import useMobileTap from '@/hooks/useMobileTap';
 import { useTheme } from '@/hooks/useTheme';
 import { featuredProducts, type DigitalLabProduct } from '@/data/digitalLabProducts';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import SparkleField from '@/components/SparkleField';
 
 const hasBengali = (s: string) => /[\u0980-\u09FF]/.test(s);
 
@@ -146,6 +147,7 @@ const ProjectsSection = () => {
       {/* Light mode colorful background */}
       {isLight && (
         <>
+          <SparkleField count={16} light />
           <div className="absolute inset-0 -z-10 pointer-events-none" style={{
             background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 25% 97%) 50%, hsl(0 0% 99%) 100%)',
           }} />
