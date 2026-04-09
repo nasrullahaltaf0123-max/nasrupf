@@ -1,9 +1,51 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Eye } from 'lucide-react';
 import profileImg from '@/assets/profile.jpg';
 import profileLightImg from '@/assets/profile-light.jpg';
 import { useTheme } from '@/hooks/useTheme';
+
+/* ─── SPARKLE FIELD — scattered animated sparkles ─── */
+const SparkleField = memo(({ count = 18, light = false }: { count?: number; light?: boolean }) => {
+  const sparkles = useMemo(() =>
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: 3 + Math.random() * 5,
+      delay: Math.random() * 4,
+      duration: 2 + Math.random() * 3,
+    })), [count]);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
+      {sparkles.map(s => (
+        <div
+          key={s.id}
+          className="absolute"
+          style={{
+            left: s.left,
+            top: s.top,
+            width: s.size,
+            height: s.size,
+            animation: `sparkle ${s.duration}s ease-in-out ${s.delay}s infinite`,
+          }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" width="100%" height="100%">
+            <path
+              d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z"
+              fill={light
+                ? `hsl(${[240, 260, 190, 10, 38][s.id % 5]} ${[65, 70, 85, 80, 92][s.id % 5]}% ${[55, 58, 45, 62, 55][s.id % 5]}% / 0.35)`
+                : `hsl(${[270, 195, 180][s.id % 3]} ${[80, 100, 100][s.id % 3]}% ${[53, 50, 50][s.id % 3]}% / 0.5)`
+              }
+            />
+          </svg>
+        </div>
+      ))}
+    </div>
+  );
+});
+SparkleField.displayName = 'SparkleField';
 
 /* ─── DATA ─── */
 const trustChips = [
@@ -41,6 +83,7 @@ DualPortrait.displayName = 'DualPortrait';
 /* ─── DARK MODE HERO (unchanged) ─── */
 const DarkHero = ({ isLight }: { isLight: boolean }) => (
   <section className="min-h-[55vh] flex flex-col items-center justify-center relative px-4 pt-10 pb-2">
+    <SparkleField count={14} />
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -85,6 +128,7 @@ const DarkHero = ({ isLight }: { isLight: boolean }) => (
    ═══════════════════════════════════════════════════════════ */
 const LightHero = ({ isLight }: { isLight: boolean }) => (
   <section className="min-h-screen flex items-center justify-center relative px-5 pt-16 pb-20 overflow-hidden">
+    <SparkleField count={22} light />
     {/* ── BACKGROUND SYSTEM ── */}
     <div className="absolute inset-0 -z-10 pointer-events-none" style={{
       background: 'linear-gradient(170deg, hsl(240 50% 98%) 0%, hsl(0 0% 100%) 25%, hsl(260 40% 97%) 50%, hsl(190 30% 98%) 75%, hsl(10 40% 99%) 100%)',
