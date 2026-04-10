@@ -298,95 +298,47 @@ const LightHero = ({ isLight }: { isLight: boolean }) => (
         </motion.div>
       </motion.div>
 
-      {/* ── RIGHT: Creative Portrait Showpiece ── */}
+      {/* ── RIGHT: Clean Portrait with Running Color Lines ── */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className="relative flex-shrink-0 order-1 md:order-2"
       >
-        {/* Outer halo — conic gradient */}
-        <div className="absolute -inset-10 rounded-[2.5rem]" style={{
-          background: 'conic-gradient(from 120deg, hsl(240 65% 55% / 0.15), hsl(260 70% 58% / 0.1), hsl(190 85% 45% / 0.1), hsl(10 80% 62% / 0.08), hsl(38 92% 55% / 0.06), hsl(240 65% 55% / 0.12))',
-          filter: 'blur(25px)',
-          animation: 'floatSlow 8s ease-in-out infinite',
+        {/* Animated running color line ring */}
+        <div className="absolute -inset-5 md:-inset-7 rounded-[2.5rem] pointer-events-none" style={{
+          border: '2px solid transparent',
+          background: 'conic-gradient(from var(--line-angle, 0deg), hsl(240 65% 55% / 0.6), hsl(260 70% 58% / 0.5), hsl(190 85% 45% / 0.5), hsl(10 80% 62% / 0.4), hsl(38 92% 55% / 0.4), hsl(162 60% 50% / 0.3), transparent 60%) border-box',
+          WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+          animation: 'borderSpin 4s linear infinite',
         }} />
 
-        {/* Inner gradient ring */}
-        <div className="absolute -inset-4 rounded-[2rem]" style={{
-          background: 'linear-gradient(135deg, hsl(240 65% 55% / 0.08), hsl(260 70% 58% / 0.06), hsl(190 85% 45% / 0.06))',
-          filter: 'blur(8px)',
-          animation: 'floatReverse 6s ease-in-out infinite',
+        {/* Second ring — counter-rotating */}
+        <div className="absolute -inset-3 md:-inset-4 rounded-[2rem] pointer-events-none" style={{
+          border: '1.5px solid transparent',
+          background: 'conic-gradient(from var(--line-angle, 180deg), hsl(190 85% 45% / 0.5), hsl(162 60% 50% / 0.4), hsl(330 70% 58% / 0.4), hsl(240 65% 55% / 0.3), transparent 50%) border-box',
+          WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          maskComposite: 'exclude',
+          animation: 'borderSpin 6s linear infinite reverse',
         }} />
 
-        {/* Decorative floating elements */}
-        <div className="absolute -top-5 -right-5 w-10 h-10 rounded-full" style={{
-          background: 'linear-gradient(135deg, hsl(10 80% 62%), hsl(38 92% 55%))',
-          opacity: 0.6, animation: 'float 4s ease-in-out infinite',
-          boxShadow: '0 4px 16px hsl(10 80% 62% / 0.3)',
-        }} />
-        <div className="absolute -bottom-4 -left-6 w-7 h-7 rounded-full" style={{
-          background: 'linear-gradient(135deg, hsl(190 85% 45%), hsl(162 60% 50%))',
-          opacity: 0.5, animation: 'floatReverse 5s ease-in-out infinite',
-          boxShadow: '0 4px 12px hsl(190 85% 45% / 0.3)',
-        }} />
-        <div className="absolute top-1/2 -right-8 w-4 h-4 rounded-full" style={{
-          background: 'hsl(260 70% 58%)', opacity: 0.45,
-          animation: 'float 7s ease-in-out infinite',
-        }} />
-        <div className="absolute -top-7 left-1/4 w-5 h-5 rounded-xl rotate-45" style={{
-          background: 'hsl(240 65% 55% / 0.2)',
-          animation: 'floatSlow 9s ease-in-out infinite',
-        }} />
-        <div className="absolute -bottom-6 right-1/4 w-3 h-3 rounded-full" style={{
-          background: 'hsl(38 92% 55% / 0.4)',
-          animation: 'float 6s ease-in-out infinite',
+        {/* Soft glow behind */}
+        <div className="absolute -inset-8 rounded-[3rem] pointer-events-none" style={{
+          background: 'radial-gradient(circle, hsl(240 65% 55% / 0.06), hsl(260 70% 58% / 0.04), transparent 70%)',
+          animation: 'glowPulse 3s ease-in-out infinite',
         }} />
 
-        {/* Achievement chips around portrait */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.1, duration: 0.5, type: 'spring' }}
-          className="absolute -right-4 top-6 md:-right-12 md:top-8 px-3 py-1.5 rounded-xl text-[9px] font-bold tracking-wider uppercase backdrop-blur-md z-20"
-          style={{
-            background: 'hsl(0 0% 100% / 0.85)',
-            border: '1px solid hsl(240 65% 55% / 0.15)',
-            color: 'hsl(240 65% 55%)',
-            boxShadow: '0 4px 16px hsl(240 65% 55% / 0.1)',
-            animation: 'float 5s ease-in-out infinite',
-          }}
-        >
-          🚀 50+ Products
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.3, duration: 0.5, type: 'spring' }}
-          className="absolute -left-4 bottom-8 md:-left-14 md:bottom-12 px-3 py-1.5 rounded-xl text-[9px] font-bold tracking-wider uppercase backdrop-blur-md z-20"
-          style={{
-            background: 'hsl(0 0% 100% / 0.85)',
-            border: '1px solid hsl(190 85% 45% / 0.15)',
-            color: 'hsl(190 85% 45%)',
-            boxShadow: '0 4px 16px hsl(190 85% 45% / 0.1)',
-            animation: 'floatReverse 6s ease-in-out infinite',
-          }}
-        >
-          ⚡ AI Powered
-        </motion.div>
-
-        {/* Portrait frame */}
+        {/* Portrait frame — clean */}
         <div
           className="relative w-52 h-52 md:w-72 md:h-72 rounded-[2rem] overflow-hidden"
           style={{
-            boxShadow: '0 12px 50px hsl(240 65% 55% / 0.15), 0 4px 16px hsl(260 70% 58% / 0.08), 0 0 0 3px hsl(0 0% 100%), 0 0 0 5px hsl(240 65% 55% / 0.08)',
+            boxShadow: '0 8px 40px hsl(240 65% 55% / 0.1), 0 2px 8px hsl(0 0% 0% / 0.04)',
           }}
         >
           <DualPortrait isLight={isLight} className="w-full h-full rounded-[inherit]" />
-          {/* Subtle inner gradient overlay */}
-          <div className="absolute inset-0 rounded-[inherit] pointer-events-none" style={{
-            background: 'linear-gradient(180deg, transparent 60%, hsl(240 65% 55% / 0.05) 100%)',
-          }} />
         </div>
       </motion.div>
     </div>
