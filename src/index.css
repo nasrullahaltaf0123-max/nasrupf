@@ -329,6 +329,28 @@
   50% { opacity: 1; transform: scale(1) rotate(180deg); }
 }
 
+@keyframes borderSpin {
+  from { --line-angle: 0deg; }
+  to { --line-angle: 360deg; }
+}
+
+@keyframes weaveFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  33% { transform: translateY(-18px) rotate(8deg) scale(1.04); }
+  66% { transform: translateY(12px) rotate(-5deg) scale(0.97); }
+}
+
+@keyframes weaveFloat2 {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(25px) rotate(12deg); }
+}
+
+@property --line-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 @media (max-width: 767px) {
   .mobile-tap-glow {
     animation: tapGlow 0.3s ease-out;
