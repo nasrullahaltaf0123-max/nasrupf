@@ -3,6 +3,7 @@ import { Zap, Paintbrush, Bot, Heart, Headphones } from 'lucide-react';
 import useMobileTap from '@/hooks/useMobileTap';
 import { useTheme } from '@/hooks/useTheme';
 import SparkleField from '@/components/SparkleField';
+import WeaveBackground from '@/components/WeaveBackground';
 
 const reasons = [
   { icon: Zap, title: 'Fast Delivery', desc: 'Quick turnaround without compromising quality', color: 'hsl(38 92% 55%)' },
@@ -20,6 +21,7 @@ const WhyChooseMeSection = () => {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <SparkleField count={14} light />
+        <WeaveBackground variant={2} opacity={0.07} />
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 25% 97%) 40%, hsl(38 20% 98%) 100%)',
         }} />

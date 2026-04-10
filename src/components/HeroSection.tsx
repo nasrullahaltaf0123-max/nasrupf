@@ -319,7 +319,8 @@ const LightHero = ({ isLight }: { isLight: boolean }) => (
           WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
           WebkitMaskComposite: 'xor',
           maskComposite: 'exclude',
-          animation: 'borderSpin 4s linear infinite',
+          animation: 'borderSpin 2s linear infinite',
+          filter: 'drop-shadow(0 0 6px hsl(240 65% 55% / 0.4)) drop-shadow(0 0 12px hsl(190 85% 45% / 0.2))',
         }} />
 
         {/* Second ring — counter-rotating */}
@@ -329,7 +330,8 @@ const LightHero = ({ isLight }: { isLight: boolean }) => (
           WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
           WebkitMaskComposite: 'xor',
           maskComposite: 'exclude',
-          animation: 'borderSpin 6s linear infinite reverse',
+          animation: 'borderSpin 3s linear infinite reverse',
+          filter: 'drop-shadow(0 0 5px hsl(190 85% 45% / 0.35)) drop-shadow(0 0 10px hsl(260 70% 58% / 0.15))',
         }} />
 
         {/* Soft glow behind */}
