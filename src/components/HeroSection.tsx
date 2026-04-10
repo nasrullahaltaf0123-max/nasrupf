@@ -119,22 +119,29 @@ const LightHero = ({ isLight }: { isLight: boolean }) => (
       filter: 'blur(40px)',
     }} />
 
-    {/* Subtle geometric accents */}
-    <div className="absolute top-[12%] left-[6%] w-20 h-20 rounded-full pointer-events-none" style={{
-      background: 'linear-gradient(135deg, hsl(240 65% 55% / 0.08), hsl(260 70% 58% / 0.04))',
-      animation: 'float 7s ease-in-out infinite',
+    {/* Colorful weave shapes — low opacity */}
+    <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.12 }} viewBox="0 0 800 600" fill="none" preserveAspectRatio="xMidYMid slice">
+      <path d="M0 300 Q200 150 400 300 T800 300" stroke="hsl(240 65% 55%)" strokeWidth="2" style={{ animation: 'weaveFloat 14s ease-in-out infinite' }} />
+      <path d="M0 250 Q250 400 500 250 T800 250" stroke="hsl(260 70% 58%)" strokeWidth="1.5" style={{ animation: 'weaveFloat 16s ease-in-out infinite 2s' }} />
+      <path d="M0 350 Q150 200 350 350 Q550 500 800 350" stroke="hsl(190 85% 45%)" strokeWidth="2" style={{ animation: 'weaveFloat2 12s ease-in-out infinite' }} />
+      <path d="M0 200 Q300 350 600 200 T800 220" stroke="hsl(10 80% 62%)" strokeWidth="1.5" style={{ animation: 'weaveFloat 18s ease-in-out infinite 1s' }} />
+      <path d="M0 400 Q200 280 450 400 Q700 520 800 380" stroke="hsl(38 92% 55%)" strokeWidth="1.5" style={{ animation: 'weaveFloat2 15s ease-in-out infinite 3s' }} />
+      <path d="M0 150 Q350 300 700 150" stroke="hsl(162 60% 50%)" strokeWidth="1.5" style={{ animation: 'weaveFloat 20s ease-in-out infinite 4s' }} />
+      <path d="M0 450 Q250 350 500 450 T800 430" stroke="hsl(330 70% 58%)" strokeWidth="1.5" style={{ animation: 'weaveFloat2 17s ease-in-out infinite 2s' }} />
+    </svg>
+
+    {/* Floating weave circles */}
+    <div className="absolute top-[15%] left-[8%] w-32 h-32 rounded-full pointer-events-none" style={{
+      border: '1.5px solid hsl(240 65% 55% / 0.1)',
+      animation: 'weaveFloat 10s ease-in-out infinite',
     }} />
-    <div className="absolute top-[8%] right-[15%] w-12 h-12 rounded-2xl pointer-events-none rotate-12" style={{
-      background: 'linear-gradient(135deg, hsl(10 80% 62% / 0.1), hsl(38 92% 55% / 0.06))',
-      animation: 'floatReverse 9s ease-in-out infinite',
+    <div className="absolute top-[55%] right-[12%] w-24 h-24 rounded-full pointer-events-none" style={{
+      border: '1.5px solid hsl(10 80% 62% / 0.1)',
+      animation: 'weaveFloat2 13s ease-in-out infinite',
     }} />
-    <div className="absolute bottom-[30%] right-[8%] w-8 h-8 rounded-full pointer-events-none" style={{
-      background: 'hsl(190 85% 45% / 0.12)',
-      animation: 'float 5s ease-in-out infinite',
-    }} />
-    <div className="absolute bottom-[15%] left-[20%] w-6 h-6 rounded-lg pointer-events-none rotate-45" style={{
-      background: 'hsl(260 70% 58% / 0.1)',
-      animation: 'floatSlow 11s ease-in-out infinite',
+    <div className="absolute bottom-[20%] left-[25%] w-16 h-16 rounded-full pointer-events-none" style={{
+      border: '1.5px solid hsl(190 85% 45% / 0.1)',
+      animation: 'weaveFloat 11s ease-in-out infinite 2s',
     }} />
 
     {/* Floating trust tags (hidden on mobile for cleanliness) */}
