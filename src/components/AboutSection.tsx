@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, Cpu, Palette, Zap } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import SparkleField from '@/components/SparkleField';
+import WeaveBackground from '@/components/WeaveBackground';
 
 const highlights = [
   { icon: Cpu, text: 'AI-Powered Tools', color: 'hsl(240 65% 55%)', gradient: 'linear-gradient(135deg, hsl(240 65% 55% / 0.12), hsl(240 65% 55% / 0.03))' },
@@ -17,6 +18,7 @@ const AboutSection = () => {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <SparkleField count={16} light />
+        <WeaveBackground variant={0} opacity={0.08} />
         {/* Colorful diagonal background */}
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(170deg, hsl(240 35% 97%) 0%, hsl(260 25% 96%) 40%, hsl(190 20% 97%) 70%, hsl(0 0% 99%) 100%)',

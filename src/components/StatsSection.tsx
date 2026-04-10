@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Rocket, Eye, Globe } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import SparkleField from '@/components/SparkleField';
+import WeaveBackground from '@/components/WeaveBackground';
 
 const stats = [
   { icon: Rocket, value: 10, suffix: '+', label: 'Projects Built', color: 'hsl(240 65% 55%)', gradient: 'linear-gradient(135deg, hsl(240 65% 55% / 0.1), hsl(240 65% 55% / 0.03))' },
@@ -46,6 +47,7 @@ const StatsSection = () => {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <SparkleField count={14} light />
+        <WeaveBackground variant={2} opacity={0.08} />
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(160deg, hsl(240 30% 97%) 0%, hsl(260 20% 96%) 50%, hsl(0 0% 99%) 100%)',
         }} />

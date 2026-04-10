@@ -4,6 +4,7 @@ import useHoverSound from "@/hooks/useHoverSound";
 import useMobileTap from "@/hooks/useMobileTap";
 import { useTheme } from "@/hooks/useTheme";
 import SparkleField from '@/components/SparkleField';
+import WeaveBackground from '@/components/WeaveBackground';
 
 const WorkVault = () => {
   const { play } = useHoverSound();
@@ -12,7 +13,7 @@ const WorkVault = () => {
 
   return (
     <section className="py-10 md:py-14 px-4 relative overflow-hidden">
-      {isLight && <SparkleField count={10} light />}
+      {isLight && <><SparkleField count={10} light /><WeaveBackground variant={2} opacity={0.07} /></>}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
