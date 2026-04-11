@@ -149,7 +149,7 @@ const ProjectsSection = () => {
       {isLight && (
         <>
            <SparkleField count={16} light />
-           <WeaveBackground variant={0} opacity={0.08} />
+           <WeaveBackground variant={0} opacity={0.08} speed={0.18} />
           <div className="absolute inset-0 -z-10 pointer-events-none" style={{
             background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(260 25% 97%) 50%, hsl(0 0% 99%) 100%)',
           }} />

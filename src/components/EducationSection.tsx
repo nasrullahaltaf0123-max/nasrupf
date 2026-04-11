@@ -11,7 +11,7 @@ const EducationSection = () => {
     return (
       <section className="py-8 md:py-10 px-4 relative overflow-hidden">
         <SparkleField count={8} light />
-        <WeaveBackground variant={1} opacity={0.06} />
+        <WeaveBackground variant={1} opacity={0.06} speed={0.1} />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

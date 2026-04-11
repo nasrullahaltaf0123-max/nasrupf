@@ -13,7 +13,7 @@ const WorkVault = () => {
 
   return (
     <section className="py-10 md:py-14 px-4 relative overflow-hidden">
-      {isLight && <><SparkleField count={10} light /><WeaveBackground variant={2} opacity={0.07} /></>}
+      {isLight && <><SparkleField count={10} light /><WeaveBackground variant={2} opacity={0.07} speed={0.14} /></>}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

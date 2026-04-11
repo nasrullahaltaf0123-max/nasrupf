@@ -18,7 +18,7 @@ const AboutSection = () => {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <SparkleField count={16} light />
-        <WeaveBackground variant={0} opacity={0.08} />
+        <WeaveBackground variant={0} opacity={0.08} speed={0.12} />
         {/* Colorful diagonal background */}
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(170deg, hsl(240 35% 97%) 0%, hsl(260 25% 96%) 40%, hsl(190 20% 97%) 70%, hsl(0 0% 99%) 100%)',

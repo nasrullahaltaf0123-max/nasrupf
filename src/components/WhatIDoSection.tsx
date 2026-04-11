@@ -21,7 +21,7 @@ const WhatIDoSection = () => {
     return (
       <section className="py-20 md:py-28 px-4 relative overflow-hidden">
         <SparkleField count={14} light />
-        <WeaveBackground variant={1} opacity={0.07} />
+        <WeaveBackground variant={1} opacity={0.07} speed={0.22} />
         {/* Warm gradient + wave top */}
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{
           background: 'linear-gradient(180deg, hsl(0 0% 99%) 0%, hsl(240 30% 97%) 40%, hsl(190 20% 97%) 100%)',
