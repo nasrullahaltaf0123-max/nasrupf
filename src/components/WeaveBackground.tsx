@@ -4,7 +4,7 @@ import { memo, useRef, useEffect, useState } from 'react';
  * Colorful weave SVG background for light mode sections.
  * Uses lightweight scroll-based parallax instead of heavy CSS animations.
  */
-const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.08 }: { opacity?: number; variant?: number; speed?: number }) => {
+const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.15 }: { opacity?: number; variant?: number; speed?: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(0);
 
