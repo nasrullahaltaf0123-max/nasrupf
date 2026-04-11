@@ -19,7 +19,7 @@ const YouTubeSection = () => {
     return (
       <section className="py-14 md:py-20 px-4 relative overflow-hidden">
         <SparkleField count={10} light />
-        <WeaveBackground variant={2} opacity={0.07} />
+        <WeaveBackground variant={2} opacity={0.07} speed={0.17} />
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
