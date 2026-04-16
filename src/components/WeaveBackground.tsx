@@ -64,8 +64,29 @@ const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.15 }: { op
         fill="none"
         preserveAspectRatio="xMidYMid slice"
       >
+        <defs>
+          {paths.map((p, i) => (
+            <filter key={`f${i}`} id={`glow-${variant}-${i}`}>
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          ))}
+        </defs>
         {paths.map((p, i) => (
-          <path key={i} d={p.d} stroke={p.stroke} strokeWidth={p.w} />
+          <path
+            key={i}
+            d={p.d}
+            stroke={p.stroke}
+            strokeWidth={p.w}
+            filter={`url(#glow-${variant}-${i})`}
+            style={{
+              animation: `glowPulse ${2.5 + i * 0.6}s ease-in-out infinite`,
+              animationDelay: `${i * 0.4}s`,
+            }}
+          />
         ))}
       </svg>
     </div>
