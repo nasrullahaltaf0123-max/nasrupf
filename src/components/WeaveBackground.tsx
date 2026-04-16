@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect, useState } from 'react';
+import React, { memo, useRef, useEffect, useState } from 'react';
 
 /**
  * Colorful weave SVG background for light mode sections.
