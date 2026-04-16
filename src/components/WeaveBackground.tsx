@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect, useState } from 'react';
+import { memo, useRef, useEffect, useState, Fragment } from 'react';
 
 /**
  * Colorful weave SVG background for light mode sections.
@@ -77,7 +77,7 @@ const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.15 }: { op
           {paths.map((p, i) => {
             const colors = colorCycles[i % colorCycles.length];
             return (
-              <React.Fragment key={`defs-${i}`}>
+              <Fragment key={`defs-${i}`}>
                 <linearGradient id={`grad-${variant}-${i}`} x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor={colors[0]}>
                     <animate attributeName="stop-color" values={colors.join(';')} dur={`${4 + i * 0.8}s`} repeatCount="indefinite" />
@@ -98,7 +98,7 @@ const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.15 }: { op
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
-              </React.Fragment>
+              </Fragment>
             );
           })}
         </defs>
