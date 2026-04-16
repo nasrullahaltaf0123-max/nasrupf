@@ -80,19 +80,20 @@ const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.15 }: { op
               <Fragment key={`defs-${i}`}>
                 <linearGradient id={`grad-${variant}-${i}`} x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor={colors[0]}>
-                    <animate attributeName="stop-color" values={colors.join(';')} dur={`${4 + i * 0.8}s`} repeatCount="indefinite" />
+                    <animate attributeName="stop-color" values={colors.join(';')} dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
                   </stop>
                   <stop offset="50%" stopColor={colors[1]}>
-                    <animate attributeName="stop-color" values={[...colors.slice(1), colors[0]].join(';')} dur={`${4 + i * 0.8}s`} repeatCount="indefinite" />
+                    <animate attributeName="stop-color" values={[...colors.slice(1), colors[0]].join(';')} dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
                   </stop>
                   <stop offset="100%" stopColor={colors[2]}>
-                    <animate attributeName="stop-color" values={[...colors.slice(2), ...colors.slice(0, 2)].join(';')} dur={`${4 + i * 0.8}s`} repeatCount="indefinite" />
+                    <animate attributeName="stop-color" values={[...colors.slice(2), ...colors.slice(0, 2)].join(';')} dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
                   </stop>
                 </linearGradient>
                 <filter id={`glow-${variant}-${i}`}>
-                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feGaussianBlur stdDeviation="10" result="blur" />
                   <feComposite in="blur" in2="SourceGraphic" operator="over" />
                   <feMerge>
+                    <feMergeNode in="blur" />
                     <feMergeNode in="blur" />
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
@@ -111,8 +112,8 @@ const WeaveBackground = memo(({ opacity = 0.1, variant = 0, speed = 0.15 }: { op
             strokeLinecap="round"
             filter={`url(#glow-${variant}-${i})`}
             style={{
-              animation: `glowPulse ${2 + i * 0.5}s ease-in-out infinite`,
-              animationDelay: `${i * 0.3}s`,
+              animation: `glowPulse ${1.5 + i * 0.3}s ease-in-out infinite`,
+              animationDelay: `${i * 0.2}s`,
             }}
           />
         ))}
